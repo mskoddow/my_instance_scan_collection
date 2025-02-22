@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>performance</category>
+        <conditions table="sys_script_client">table=global^active=true^EQ<item endquery="false" field="table" goto="false" newquery="false" operator="=" or="false" value="global"/>
+            <item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>A global client script is any client script where the selected Table is "global". Global client scripts have no table restrictions; therefore they will load on every page in the system introducing browser load delay in the process. There is no benefit to loading this kind of scripts on every page.</description>
+        <documentation_url>https://developer.servicenow.com/dev.do#!/guides/latest/now-platform/tpb-guide/client_scripting_technical_best_practices#avoid-global-client-scripts</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Active "global" Client Scripts</name>
+        <priority>2</priority>
+        <resolution_details>As an alternative, and for a more modular and scalable approach, consider moving client scripts to a base table (such as Task [task] or Configuration Item [cmdb_ci]) that can be inherited for all the child/extending tables. This eliminates the system loading the scripts on every form in the UI - such as home pages or Service Catalog where they are rarely (if ever) needed.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_9ed2c8bf1be3f010ef13a9b4bd4bcb8c','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Active "global" Client Scripts</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2021-11-07 15:01:20</sys_created_on>
+        <sys_id>9ed2c8bf1be3f010ef13a9b4bd4bcb8c</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Active "global" Client Scripts</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_9ed2c8bf1be3f010ef13a9b4bd4bcb8c</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:40</sys_updated_on>
+        <table>sys_script_client</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=9ed2c8bf1be3f010ef13a9b4bd4bcb8c"/>
+</record_update>

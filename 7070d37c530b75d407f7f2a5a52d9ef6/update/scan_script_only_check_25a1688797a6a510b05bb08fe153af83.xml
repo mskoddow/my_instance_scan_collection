@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>Scan through user-related tables to find invalid records. Invalid as in it has a Sys ID value, though the referenced record doesn't exist. This results in so-called "broken" references. Obviously this could lead to the relationship between both records not working, not being visible, logic based on this which won't work, etcetera.
+
+With the help of the following filter condition, you can filter them: &lt;FIELD&gt; is not empty AND &lt;FIELD.SysID&gt; is empty</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Table "sys_user_grmember" with broken References</name>
+        <priority>2</priority>
+        <resolution_details>Especially on older instances, you could be faced with thousands of findings. Obviously you need to consider fixing the data, though also searching for the issue which is actually causing this.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_25a1688797a6a510b05bb08fe153af83','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grGroupMember = new GlideRecord('sys_user_grmember');
+
+	_grGroupMember.addEncodedQuery('group.sys_idISEMPTY^ORuser.sys_idISEMPTY');
+	_grGroupMember.setLimit(1000);
+	_grGroupMember.query();
+
+	while (_grGroupMember.next()) {	
+		engine.finding.setCurrentSource(_grGroupMember);
+		engine.finding.increment();
+	}
+	
+})(engine);]]></script>
+        <short_description>Table "sys_user_grmember" with broken References</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-06 04:51:08</sys_created_on>
+        <sys_id>25a1688797a6a510b05bb08fe153af83</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Table "sys_user_grmember" with broken References</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_25a1688797a6a510b05bb08fe153af83</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:30</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=25a1688797a6a510b05bb08fe153af83"/>
+</record_update>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>Controls how invalid GlideRecord queries are handled with respect to invalid or undefined field names. When this property is "true", invalid queries containing invalid or undefined field names always return no rows. When this property is "false" (default), if a query is incorrect, and includes invalid or undefined field names, the invalid part of the query condition is ignored and results are based on the valid part of the query. That causes a high risk for executing unwanted code such as deleting complete data of a table!</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0866929</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Protection against invalid Queries is not enabled</name>
+        <priority>1</priority>
+        <resolution_details>Ensure the property "glide.invalid_query.returns_no_rows" is set to "true".
+</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_6859341397d66510b05bb08fe153af0a','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+	var _strPropertyName = 'glide.invalid_query.returns_no_rows';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+})(engine);]]></script>
+        <short_description>Protection against invalid Queries is not enabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-24 14:58:42</sys_created_on>
+        <sys_id>6859341397d66510b05bb08fe153af0a</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>Protection against invalid Queries is not enabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_6859341397d66510b05bb08fe153af0a</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 13:33:46</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=6859341397d66510b05bb08fe153af0a"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>6859341397d66510b05bb08fe153af0a</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-04 13:33:45</sys_created_on>
+        <sys_id>8e37302d83815210c1321429feaad3c4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 13:33:45</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

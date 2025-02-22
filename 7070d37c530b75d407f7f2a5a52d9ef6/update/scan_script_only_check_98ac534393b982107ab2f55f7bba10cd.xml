@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>When you create ACLs, if no roles are specified and the com.glide.explicit_roles plugin is active, ServiceNow will automatically add the "snc_internal" role to the ACL.  This can lead to unintended data exposure if you add later a business role like "itil" and forget to remove the "snc_internal" role as still all internal user will pass the ACL check.  The same applies to the "snc_external" role for all scenarios with access by external users.</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Explicit Roles along with additional Roles in ACLs</name>
+        <priority>2</priority>
+        <resolution_details>Remove the "snc_external" / "snc_internal" role if there are already roles in the corresponding ACL that manage access properly.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_98ac534393b982107ab2f55f7bba10cd','')=='' &amp;&amp; GlidePluginManager.isActive('com.glide.explicit_roles')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grAcl = new GlideRecord('sys_security_acl');
+
+	_grAcl.addEncodedQuery(
+		'active=true' +
+		'^type=record' +
+		'^RLQUERY' +
+			'sys_security_acl_role.sys_security_acl,' +
+			'>=1,m2m^' +
+			'sys_user_role.nameINsnc_internal,snc_external' +
+		'^ENDRLQUERY'
+	);
+	_grAcl.query();
+
+
+	while (_grAcl.next()) {
+		var _grAclRole          = new GlideRecord('sys_security_acl_role');
+		var _arrAdditionalRoles = [];
+
+		_grAclRole.addQuery('sys_security_acl', _grAcl.getUniqueValue());
+		_grAclRole.addQuery('sys_user_role.name', 'NOT IN', ['snc_internal','snc_external']);
+		_grAclRole.query();
+
+		while (_grAclRole.next()) {
+			var _strRoleName = _grAclRole.sys_user_role.name.toString();
+
+			if (_arrAdditionalRoles.indexOf(_strRoleName) === -1) {
+				_arrAdditionalRoles.push(_strRoleName);
+			}
+		}
+
+		if (_arrAdditionalRoles.length > 0) {
+			engine.finding.setCurrentSource(_grAcl);
+			engine.finding.increment();
+			engine.finding.setValue(
+				'finding_details',
+				'The following roles are available in addition to "snc_internal" and ' +
+				'"snc_external" which can lead to security vulnerabilities: ' + _arrAdditionalRoles
+			);            			
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>Explicit Roles along with additional Roles in ACLs</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-05-01 04:04:44</sys_created_on>
+        <sys_id>98ac534393b982107ab2f55f7bba10cd</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>Explicit Roles along with additional Roles in ACLs</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_98ac534393b982107ab2f55f7bba10cd</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-06 12:44:27</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=98ac534393b982107ab2f55f7bba10cd"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>98ac534393b982107ab2f55f7bba10cd</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-06 12:44:27</sys_created_on>
+        <sys_id>d31f3a4283491610c1321429feaad3f6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-06 12:44:27</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

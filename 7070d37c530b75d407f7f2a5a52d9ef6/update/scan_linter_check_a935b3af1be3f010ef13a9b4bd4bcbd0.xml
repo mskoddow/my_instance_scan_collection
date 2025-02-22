@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_linter_check">
+    <scan_linter_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>Hard coding instance URL is not a best practice as they reduce the usability of your code. The URL remains static and it does not change when you move the code to a different instance or it can get overwritten during clone backs. This can break the related functionalities or create unexpected results</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Usage of hard coded Instance URLs</name>
+        <priority>3</priority>
+        <resolution_details>For server side scripts, Use gs.getProperty("instance_name") for dynamic generation of URL
+For client side scripts, you can either access the URL via scractpad from server side or use GlideURL() or top.location</resolution_details>
+        <run_condition>gs.getProperty('scan_linter_check_a935b3af1be3f010ef13a9b4bd4bcbd0','')=='' &amp;&amp; (String(gs.getProperty('instance_name', '')).trim().length &gt; 0)</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+	
+	//only include customized artifacts as we cannot take care of OOTB artifacts
+	var _grArtifact = new GlideRecord('sys_metadata');
+
+	_grArtifact.addQuery('sys_id', engine.current.getUniqueValue());
+	_grArtifact.setLimit(1);
+	_grArtifact.query();
+
+	if (new global.UpdateVersionAPI().getCustomerFileIds(_grArtifact).length == 0) {
+		return;
+	}
+
+
+	//don't continue if current table is on the exclusion list
+	var _strPropertyName     = 'my_instance_scan_collection.table_exclusion_list';
+	var _strExcludedTables   = String(gs.getProperty(_strPropertyName, '')).trim();
+
+	if (_strExcludedTables.length > 0) {
+		var _arrExcludedTables      = _strExcludedTables.split(',');
+		var _arrFinalExcludedTables = [];
+
+		for (var _numIndex = 0; _numIndex < _arrExcludedTables.length; _numIndex++) {
+			var _strExcludedTableName = _arrExcludedTables[_numIndex].trim();
+
+			if (_strExcludedTableName.length > 0) {
+				if (gs.tableExists(_strExcludedTableName)) {
+					_arrFinalExcludedTables.push(_strExcludedTableName);
+				}
+			}				
+		}
+
+		if (_arrFinalExcludedTables.length > 0) {
+			if (_arrFinalExcludedTables.indexOf(engine.current.getTableName()) !== -1) {
+				return;
+			}
+		}		
+	}
+	
+
+    var _strInstanceName = String(gs.getProperty('instance_name', '')).trim();
+	
+    engine.rootNode.visit(function(node) {
+        if (node.getTypeName() === "STRING") {
+            //For any string variables or method arguments
+            var _strText = node.toSource();
+			
+            if (_strText.indexOf(_strInstanceName) > -1) {
+                engine.finding.incrementWithNode(node);
+			}
+        } 
+    });
+	
+})(engine);]]></script>
+        <short_description>Usage of hard coded Instance URLs</short_description>
+        <sys_class_name>scan_linter_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2021-11-07 14:01:46</sys_created_on>
+        <sys_id>a935b3af1be3f010ef13a9b4bd4bcbd0</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>Usage of hard coded Instance URLs</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_linter_check_a935b3af1be3f010ef13a9b4bd4bcbd0</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2025-02-22 02:51:46</sys_updated_on>
+    </scan_linter_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=a935b3af1be3f010ef13a9b4bd4bcbd0"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>a935b3af1be3f010ef13a9b4bd4bcbd0</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2025-02-22 02:51:46</sys_created_on>
+        <sys_id>e47cac7e83ff1210c1321429feaad343</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2025-02-22 02:51:46</sys_updated_on>
+        <table>scan_linter_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

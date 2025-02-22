@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>Use the "glide.ui.magellan.favorites.allow_public" to specify whether unauthenticated users are allowed to see Favorites in the navigator</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=public-access-favorites.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Public Access to Favorites is not disabled</name>
+        <priority>3</priority>
+        <resolution_details>Ensure the property "glide.ui.magellan.favorites.allow_public" is set to "false".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_ed02fd331bf52110ef13a9b4bd4bcb45','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.ui.magellan.favorites.allow_public';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'false';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+
+		engine.finding.increment();		
+	}
+
+})(engine);
+]]></script>
+        <short_description>Public Access to Favorites is not disabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-01 11:50:39</sys_created_on>
+        <sys_id>ed02fd331bf52110ef13a9b4bd4bcb45</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Public Access to Favorites is not disabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_ed02fd331bf52110ef13a9b4bd4bcb45</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 14:02:12</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=ed02fd331bf52110ef13a9b4bd4bcb45"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>ed02fd331bf52110ef13a9b4bd4bcb45</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-04 14:02:12</sys_created_on>
+        <sys_id>aebd34a583c15210c1321429feaad326</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 14:02:12</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

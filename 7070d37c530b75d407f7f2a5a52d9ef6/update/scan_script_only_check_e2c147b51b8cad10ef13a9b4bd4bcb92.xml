@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>performance</category>
+        <description>Using getRowCount method of GlideRecord can cause performance issues while quering on tables with high record count. The method counts each row one by one to determine the total row count and hence more the number of rows, more time it would take to execute scripts that uses it.</description>
+        <documentation_url>https://developer.servicenow.com/dev.do#!/reference/api/latest/server_legacy/c_GlideAggregateAPI</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Usage of "GlideRecord.getRowCount()"</name>
+        <priority>3</priority>
+        <resolution_details>Instead of using "getRowCount()", use API "GlideAggregate" to retrieve table row count as this will improve performance because it works like a stored procedure.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_e2c147b51b8cad10ef13a9b4bd4bcb92','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strScanPattern      = 'getRowCount()';
+	var _grDictionary        = new GlideRecord('sys_dictionary');
+	var _objUpdateVersionAPI = new global.UpdateVersionAPI();
+	var _strPropertyName     = 'my_instance_scan_collection.table_exclusion_list';
+	var _strExcludedTables   = String(gs.getProperty(_strPropertyName, '')).trim();	
+	var _strEncodedQuery = 
+		'sys_class_name=sys_dictionary^' +
+		'internal_typeINscript,script_client,script_plain,script_server';
+
+	if (_strExcludedTables.length > 0) {
+		var _arrExcludedTables      = _strExcludedTables.split(',');
+		var _arrFinalExcludedTables = [];
+
+		for (var _numIndex1 = 0; _numIndex1 < _arrExcludedTables.length; _numIndex1++) {
+			var _strExcludedTableName = _arrExcludedTables[_numIndex1].trim();
+
+			if (_strExcludedTableName.length > 0) {
+				if (gs.tableExists(_strExcludedTableName)) {
+					_arrFinalExcludedTables.push(_strExcludedTableName);
+				}
+			}
+		}
+
+		if (_arrFinalExcludedTables.length > 0) {
+			_strEncodedQuery = _strEncodedQuery + '^nameNOT IN' + _strExcludedTables;
+		}
+	}
+
+	//lookup all table columns of any of the script types
+	_grDictionary.addEncodedQuery(_strEncodedQuery);	
+	_grDictionary.query();
+
+	while (_grDictionary.next()) {
+		var _strTableName  = _grDictionary.getValue('name') || '';
+		var _strColumnName = _grDictionary.getValue('element') || '';
+
+		if (_strTableName.length > 0 && _strColumnName.length > 0) {
+			try {
+				var _grTableWithScript = new GlideRecord(_strTableName);
+
+				//search within the respective table & field for all occurences of getRowCount()
+				_grTableWithScript.addEncodedQuery(_strColumnName + 'LIKE' + _strScanPattern);
+				_grTableWithScript.query();
+
+				//reduce the result set to all custom records as we cannot fix 
+				//all the OOTB records
+				var _arrCustomArtifactSysIDs = _objUpdateVersionAPI.getCustomerFileIds(_grTableWithScript); 
+				var _numFindings             = _arrCustomArtifactSysIDs.length || 0;
+
+				for (var _numIndex2 = 0; _numIndex2 < _numFindings; _numIndex2++) {
+					if (_grTableWithScript.get(_arrCustomArtifactSysIDs[_numIndex2])) {
+						engine.finding.setCurrentSource(_grTableWithScript);
+						engine.finding.increment();
+					}
+				}
+			}
+			catch (e) {
+				gs.error('Could not query table "' + _strTableName + '"!');
+				gs.error(e);
+			}
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>Usage of "GlideRecord.getRowCount()"</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-12-29 12:45:38</sys_created_on>
+        <sys_id>e2c147b51b8cad10ef13a9b4bd4bcb92</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>Usage of "GlideRecord.getRowCount()"</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_e2c147b51b8cad10ef13a9b4bd4bcb92</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2025-02-22 02:42:11</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=e2c147b51b8cad10ef13a9b4bd4bcb92"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>e2c147b51b8cad10ef13a9b4bd4bcb92</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2025-02-22 02:42:10</sys_created_on>
+        <sys_id>004ae0fa83ff1210c1321429feaad399</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2025-02-22 02:42:10</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

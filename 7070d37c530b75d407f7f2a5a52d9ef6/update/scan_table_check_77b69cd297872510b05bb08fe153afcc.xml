@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <category>user_experience</category>
+        <conditions table="item_option_new">active=true^typeIN21,22,18,8,5<item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item display_value="21,22,18,8,5" endquery="false" field="type" goto="false" newquery="false" operator="IN" or="false" value="21,22,18,8,5"/>
+        </conditions>
+        <description>Catalog variables which point to non-existing tables will cause some errors</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=r_VariableTypes.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Catalog Variable is referencing non-existant table</name>
+        <priority>3</priority>
+        <resolution_details>Update catalog variable with a valid table</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_77b69cd297872510b05bb08fe153afcc','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (finding, current) {
+
+	var _strTableName = '';
+
+	switch (current.type.toString()) {
+		case "21":  // List Collector
+			_strTableName = current.list_table.toString();
+			break;
+
+		case "22":  // Lookup Multiple Choice
+		case "18":  // Lookup Select Box
+			_strTableName = current.lookup_table.toString();
+			break;
+
+		case "8":   // Reference
+			_strTableName = current.reference.toString();
+			break;
+
+		case "5":   // Select Box
+			_strTableName = current.choice_table.toString();
+			break;
+
+		default:
+			break;
+	}
+
+	if (!gs.nil(_strTableName) && !gs.tableExists(_strTableName)) {
+		engine.finding.setCurrentSource(current);
+		engine.finding.increment();
+	}
+
+})(finding, current);]]></script>
+        <short_description>Catalog Variable is referencing a non-existing table</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-28 16:49:22</sys_created_on>
+        <sys_id>77b69cd297872510b05bb08fe153afcc</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Catalog Variable is referencing non-existant table</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_77b69cd297872510b05bb08fe153afcc</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:38</sys_updated_on>
+        <table>item_option_new</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=77b69cd297872510b05bb08fe153afcc"/>
+</record_update>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_package_dependency_m2m">
+    <sys_package_dependency_m2m action="INSERT_OR_UPDATE">
+        <dependency display_value="System Import Sets" source="com.glide.system_import_set">26fa00e0d9313110cedf7dffddb48f58</dependency>
+        <min_version>1.0.0</min_version>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-02-17 13:16:51</sys_created_on>
+        <sys_id>b7a594a3931482107ab2f55f7bba1050</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-02-17 13:16:51</sys_updated_on>
+    </sys_package_dependency_m2m>
+</record_update>

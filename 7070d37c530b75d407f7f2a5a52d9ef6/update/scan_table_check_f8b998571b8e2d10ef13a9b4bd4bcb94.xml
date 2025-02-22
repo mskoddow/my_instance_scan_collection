@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_trigger">name=Email Reader^state=-1<item endquery="false" field="name" goto="false" newquery="false" operator="=" or="false" value="Email Reader"/>
+            <item display_value="Error" endquery="false" field="state" goto="false" newquery="false" operator="=" or="false" value="-1"/>
+        </conditions>
+        <description>The "Email Reader" schedule is responsible for retrieving email messages from the POP3/IMAP server. If this job is not present, emails from these servers will not be retrieved.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=create-email-reader-job.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>"Email Reader" Schedule is not running</name>
+        <priority>1</priority>
+        <resolution_details>Set the "Email Reader" schedule's "State" field to "Ready".</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_f8b998571b8e2d10ef13a9b4bd4bcb94','')=='' &amp;&amp;(gs.getProperty('glide.email.read.active', 'false') === 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>"Email Reader" Schedule is not running</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-12 02:23:29</sys_created_on>
+        <sys_id>f8b998571b8e2d10ef13a9b4bd4bcb94</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>"Email Reader" Schedule is not running</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_f8b998571b8e2d10ef13a9b4bd4bcb94</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:46</sys_updated_on>
+        <table>sys_trigger</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=f8b998571b8e2d10ef13a9b4bd4bcb94"/>
+</record_update>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>This property makes sure that Client-Callable Script Includes, also known as Ajax Script Includes, are not automatically made available to non-authenticated users. If "glide.script.ccsi.ispublic" is not set to the recommended value of "False", then it will allow Script Includes to be run as public scripts and allow unauthenticated users access to instance data.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=privacy-on-client-callable-script-includes.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Client-Callable Script Includes are publicly available</name>
+        <priority>2</priority>
+        <resolution_details>Ensure the property "glide.script.ccsi.ispublic" is set to "false".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_abee24671bb2591058200fa7624bcb38','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.script.ccsi.ispublic';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'false';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+
+		engine.finding.increment();		
+	}
+
+})(engine);
+]]></script>
+        <short_description>Client-Callable Script Includes are publicly available</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-02 09:10:39</sys_created_on>
+        <sys_id>abee24671bb2591058200fa7624bcb38</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Client-Callable Script Includes are publicly available</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_abee24671bb2591058200fa7624bcb38</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 14:35:19</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=abee24671bb2591058200fa7624bcb38"/>
+</record_update>

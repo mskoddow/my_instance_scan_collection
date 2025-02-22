@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>user_experience</category>
+        <conditions table="sys_properties">name=glide.email.test.user^valueISEMPTY^EQ<item endquery="false" field="name" goto="false" newquery="false" operator="=" or="false" value="glide.email.test.user"/>
+            <item endquery="false" field="value" goto="false" newquery="false" operator="ISEMPTY" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>Specify a comma-separated list of email addresses to which the instance sends all email messages to. Typically used in non-production instances for testing purposes. If not doing so and the email sending is enabled, emails are sent out to the real world!</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=r_OutboundMailConfiguration.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Emails are not sent to a Functional Mailbox on Non-PROD</name>
+        <priority>1</priority>
+        <resolution_details>Update system property "glide.email.test.user" with a comma-separated list of email addresses.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_0547b1881ba55110ef13a9b4bd4bcb41','')=='' &amp;&amp;(gs.getProperty('sn_appclient.instance_type', '') != 'production' &amp;&amp; gs.getProperty('glide.email.smtp.active', '') == 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Emails are not sent to a Functional Mailbox on Non-PROD</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-21 14:09:30</sys_created_on>
+        <sys_id>0547b1881ba55110ef13a9b4bd4bcb41</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Emails are not sent to a Functional Mailbox on Non-PROD</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_0547b1881ba55110ef13a9b4bd4bcb41</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:27</sys_updated_on>
+        <table>sys_properties</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=0547b1881ba55110ef13a9b4bd4bcb41"/>
+</record_update>

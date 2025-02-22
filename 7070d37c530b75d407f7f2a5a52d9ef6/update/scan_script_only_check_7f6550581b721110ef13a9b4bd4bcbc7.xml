@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>Sometimes crucial ServiceNow records (e.g. Users, Groups) have to be deleted (e.g. due to any regulations) or were deleted accidentally, although other tables are referencing them (e.g. field "Assignment Group" of task table). This results in so-called "broken" references. With the help of the following filter condition, you can filter them:
+&lt;FIELD&gt; is not empty AND &lt;FIELD.SysID&gt; is empty</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Task Records with broken References</name>
+        <priority>3</priority>
+        <resolution_details>Especially on older instances, you could be faced with thousands of findings. Obviously you need to consider fixing the data, though also searching for the issue which is actually causing this.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_7f6550581b721110ef13a9b4bd4bcbc7','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _arrTables         = j2js(new TableUtils('task').getAllExtensions());
+	var _grDictionaryEntry = new GlideRecord('sys_dictionary');
+
+	_grDictionaryEntry.addEncodedQuery(
+		'internal_type=reference^active=true^nameIN' + _arrTables.join(',')
+	);
+
+	_grDictionaryEntry.query();
+
+	while (_grDictionaryEntry.next()) {
+		var _strTableName = _grDictionaryEntry.getValue('name');
+		var _strFieldName = _grDictionaryEntry.getValue('element');
+		var _grDbObject   = new GlideRecord('sys_db_object');
+
+		if (_grDbObject.get('name', _strTableName)) {
+			var _grRecord  = new GlideRecord(_strTableName);
+			var _arrSysIDs = [];
+
+			_grRecord.addEncodedQuery(
+				'active=true^' + _strFieldName + 'ISNOTEMPTY^' + _strFieldName + '.sys_idISEMPTY'
+			);
+			_grRecord.query();
+
+			while (_grRecord._next()) {
+				var _strRef = _grRecord.getValue(_strFieldName) || '';
+
+				if (_strRef.length === 32 && _arrSysIDs.indexOf(_strRef) === -1) {
+					engine.finding.setValue('finding_details', 'Field: ' + _strFieldName);
+					engine.finding.setCurrentSource(_grRecord);
+					engine.finding.increment();
+
+					_arrSysIDs.push(_strRef);
+
+					if (_arrSysIDs.length >= 1000) {
+						return;
+					}
+				}
+			}
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>Task records with broken references</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-23 05:16:02</sys_created_on>
+        <sys_id>7f6550581b721110ef13a9b4bd4bcbc7</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>Task Records with broken References</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_7f6550581b721110ef13a9b4bd4bcbc7</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-17 05:40:09</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=7f6550581b721110ef13a9b4bd4bcbc7"/>
+</record_update>

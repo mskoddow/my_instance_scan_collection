@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>performance</category>
+        <description>glide.history.max_entries property specifies the maximum number of entries retrieved for display in an activity stream. 
+The default number is 250. </description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=c_JournalFieldDisplayLimits.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Forms with many Activity Stream Entries open slowly </name>
+        <priority>2</priority>
+        <resolution_details>Having a high value for this property is allowed. However, when changing out-of-the-box settings be cautious before increasing this property as it can cause performance issues on your instance.
+Alternatives to increasing could be to remove specific entries to appear in the activity stream.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_c354fddf97343510b05bb08fe153afc7','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.history.max_entries';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = false;
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').trim();
+		var _numPropertyValue = parseInt(_strPropertyValue, 10);
+
+		if (_numPropertyValue === null || isNaN(_numPropertyValue) || _numPropertyValue > 250) {
+			_hasFinding = true;
+		}
+	}
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+
+		engine.finding.increment();		
+	}
+
+})(engine);
+]]></script>
+        <short_description>Forms with many Activity Stream Entries open slowly </short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-08-27 01:54:57</sys_created_on>
+        <sys_id>c354fddf97343510b05bb08fe153afc7</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Forms with many Activity Stream Entries open slowly </sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_c354fddf97343510b05bb08fe153afc7</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:43</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=c354fddf97343510b05bb08fe153afc7"/>
+</record_update>

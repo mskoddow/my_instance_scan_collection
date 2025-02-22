@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <category>manageability</category>
+        <conditions table="sys_update_set_source">active=true^urlISNOTEMPTY^usernameISNOTEMPTY^passwordANYTHING^EQ<item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="false" field="url" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="username" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="password" goto="false" newquery="false" operator="ANYTHING" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>Connection test for the remote instance defined did not result in a positive response. </description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=t_DefineARemoteInstance.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Could not verify Remote Instance Connection</name>
+        <priority>2</priority>
+        <resolution_details>If this occurs for an existing remote instance connection, verify that the user used:
+- Is active;
+- Is not locked out;
+- Has an admin role;
+- Has a correct password set.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_558237e71be3f010ef13a9b4bd4bcb7e','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strInstanceUrl  = engine.current.url.replace(/\/$/, "");
+	var _strUserName     = engine.current.username;
+	var _strUserPassword = engine.current.password.getDecryptedValue();
+	var _objRestMessage  = new sn_ws.RESTMessageV2();
+	
+	_objRestMessage.setEndpoint(
+		_strInstanceUrl + '/api/now/table/sys_user?sysparm_query=user_name=' + _strUserName
+	);
+	_objRestMessage.setHttpMethod('GET');
+	_objRestMessage.setBasicAuth(_strUserName, _strUserPassword);
+	_objRestMessage.setRequestHeader('Accept', 'application/json');
+
+	var _numStatus = _objRestMessage.execute().getStatusCode();
+
+	if (_numStatus != 200) {
+		engine.finding.increment();
+	}
+
+})(engine);]]></script>
+        <short_description>Could not verify Remote Instance Connection</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2021-11-07 13:50:00</sys_created_on>
+        <sys_id>558237e71be3f010ef13a9b4bd4bcb7e</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Could not verify Remote Instance Connection</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_558237e71be3f010ef13a9b4bd4bcb7e</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:35</sys_updated_on>
+        <table>sys_update_set_source</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=558237e71be3f010ef13a9b4bd4bcb7e"/>
+</record_update>

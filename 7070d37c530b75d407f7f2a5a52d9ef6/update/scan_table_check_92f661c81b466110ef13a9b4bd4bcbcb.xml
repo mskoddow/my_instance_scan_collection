@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>security</category>
+        <conditions table="pwd_cred_store">type=e611433fbf020100710071a7bf073921^enable_password_policy=false^EQ<item display_table="pwd_cred_store_type" display_value="Local ServiceNow Instance" endquery="false" field="type" goto="false" newquery="false" operator="=" or="false" value="e611433fbf020100710071a7bf073921"/>
+            <item endquery="false" field="enable_password_policy" goto="false" newquery="false" operator="=" or="false" value="false"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>After settting system property "glide.enable.password_policy" is has to be made sure that in the OOTB "Local ServiceNow Credential Store" (/pwd_cred_store.do?sys_id=6e51033fbf020100710071a7bf0739e0) the checkbox "Enable password policy" is set.
+And if the "glide.apply.password_policy.on_login" property is enabled, the password policy check is enforced against the user during login. During login, the user must adhere to the password policy and change the password for the instance.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=c_CredentialStores.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Password Policy for the Local ServiceNow Credential Store is disabled</name>
+        <priority>2</priority>
+        <resolution_details>Tick the option "Enable password policy" on the "Local ServiceNow Credential Store" record to make sure that the configured password policy is used. Also check whether the default password policy meets your company's security requirements and create your own if necessary.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_92f661c81b466110ef13a9b4bd4bcbcb','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Password Policy for the Local ServiceNow Credential Store is disabled</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-02 05:50:59</sys_created_on>
+        <sys_id>92f661c81b466110ef13a9b4bd4bcbcb</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Password Policy for the Local ServiceNow Credential Store is disabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_92f661c81b466110ef13a9b4bd4bcbcb</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:39</sys_updated_on>
+        <table>pwd_cred_store</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=92f661c81b466110ef13a9b4bd4bcbcb"/>
+</record_update>

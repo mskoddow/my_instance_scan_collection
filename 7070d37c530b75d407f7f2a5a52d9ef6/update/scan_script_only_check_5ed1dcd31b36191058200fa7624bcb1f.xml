@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>This property determines whether a delegated developer can give assign roles to users through scripts. If "com.glide.sys.security.delegateddev.block_grant_roles" is not set to the recommended value of "true",  then a delegated developer could assign roles to any user. This could lead to unapproved privilege escalation.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=block-access-delegated-developers.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Block Access For Delegated Developers</name>
+        <priority>3</priority>
+        <resolution_details>Ensure the property "com.glide.sys.security.delegateddev.block_grant_roles" is set to "true".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_5ed1dcd31b36191058200fa7624bcb1f','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'com.glide.sys.security.delegateddev.block_grant_roles';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+
+		engine.finding.increment();		
+	}
+	
+})(engine);]]></script>
+        <short_description>Block Access For Delegated Developers</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-01 12:25:07</sys_created_on>
+        <sys_id>5ed1dcd31b36191058200fa7624bcb1f</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Block Access For Delegated Developers</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_5ed1dcd31b36191058200fa7624bcb1f</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 13:31:50</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=5ed1dcd31b36191058200fa7624bcb1f"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>5ed1dcd31b36191058200fa7624bcb1f</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-04 13:31:49</sys_created_on>
+        <sys_id>f1c6f8e983815210c1321429feaad36a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 13:31:49</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

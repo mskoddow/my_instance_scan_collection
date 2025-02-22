@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>If "glide.ui.attachment.download_mime_types" does include dangerous items such as "text/html,image/svg,image/svg+xml,application/xml", then dangerous files could be rendered inline in the browser which could lead to Cross Site Scripting attacks (XSS). This property is the list of comma separated attachment mime types which will not render inline in the browser. For example, including text/html will force html files to be downloaded to the client as attachments rather than viewed inline in the browser. Maintaining this list properly will prevent cross site scripting attacks.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=download-mime-types.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Downloadable Mime Type Denylist does not include recommended Values</name>
+        <priority>3</priority>
+        <resolution_details>Ensure the property "glide.ui.attachment.download_mime_types" includes the dangerous items "text/html,image/svg,image/svg+xml,application/xml".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_e0d418971b36191058200fa7624bcb63','')=='' &amp;&amp;(gs.getProperty('glide.ui.attachment.force_download_all_mime_types', 'false') === 'false')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _arrExpectedMimeTypes = ['text/html', 'image/svg', 'image/svg+xml', 'application/xml'];
+	var _strPropertyName      = 'glide.ui.attachment.download_mime_types';
+	var _grProperty           = new GlideRecord('sys_properties');
+	var _hasFinding           = false;
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyValue  = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		var _arrPropertyValues = _strPropertyValue.split(',');
+
+		if (_arrPropertyValues.length > 0) {
+			for (var _numIndex = 0; _numIndex < _arrExpectedMimeTypes.length; _numIndex++) {
+				if (_arrPropertyValues.indexOf(_arrExpectedMimeTypes[_numIndex]) === -1) {
+					_hasFinding = true;
+				} 
+			}
+		} 
+		else {
+			_hasFinding = true;
+		}
+	}
+	else {
+		_hasFinding = true;
+	}
+
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+
+		engine.finding.increment();		
+	}
+})(engine);]]></script>
+        <short_description>Downloadable Mime Type Denylist does not include recommended Values</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-01 12:38:07</sys_created_on>
+        <sys_id>e0d418971b36191058200fa7624bcb63</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Downloadable Mime Type Denylist does not include recommended Values</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_e0d418971b36191058200fa7624bcb63</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:44</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=e0d418971b36191058200fa7624bcb63"/>
+</record_update>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <category>manageability</category>
+        <conditions table="sc_item_variable_assignment">active=true^type=order_guide_variable<item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item display_value="Order Guide Variable" endquery="false" field="type" goto="false" newquery="false" operator="=" or="false" value="order_guide_variable"/>
+        </conditions>
+        <description>Cascading variables require that the same variable be on both the order guide and the ordered items. It can be useful to define each variable once in a variable set, then assign the variable set to both the order guide and the individual catalog item. This approach avoids duplication and ensures that the variable is the same in both locations.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=c_CascadeTheOrderGuideVariables.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Cascade Variable is not working in Order Guide</name>
+        <priority>3</priority>
+        <resolution_details>Check if Order Guide Variable name and Catalog Item Variable name are different. To make this cascade variable work you need to adjust to be the same name</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_4b871b26977e2510b05bb08fe153afc7','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    var foundError = false;
+	
+    if (current.item_variable.nil() || current.guide_variable.nil()) {
+        foundError = true;
+    }
+	else if (!current.item_variable.name.toString().equals(current.guide_variable.name.toString())) {
+        foundError = true;
+    }
+	
+    if (foundError) {
+        engine.finding.setCurrentSource(current);
+        engine.finding.increment();
+    }
+
+})(engine);]]></script>
+        <short_description>Cascade Variable is not working in Order Guide</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-17 15:07:28</sys_created_on>
+        <sys_id>4b871b26977e2510b05bb08fe153afc7</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Cascade Variable is not working in Order Guide</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_4b871b26977e2510b05bb08fe153afc7</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:33</sys_updated_on>
+        <table>sc_item_variable_assignment</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=4b871b26977e2510b05bb08fe153afc7"/>
+</record_update>

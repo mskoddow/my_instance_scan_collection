@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_check_suite_check">
+    <scan_check_suite_check action="INSERT_OR_UPDATE">
+        <check display_value="&quot;Auto Redirect IdP&quot; is Enabled and SSO is down">1ae951cb1b7b1510ef13a9b4bd4bcbc1</check>
+        <score_weight>1</score_weight>
+        <suite display_value="[My Instance Scan Collection] Health">4794850a2f3b11106daa821df699b667</suite>
+        <sys_class_name>scan_check_suite_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-12-20 16:09:10</sys_created_on>
+        <sys_id>b10bd10f1b7b1510ef13a9b4bd4bcbaa</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_check_suite_check_b10bd10f1b7b1510ef13a9b4bd4bcbaa</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2022-12-21 05:30:11</sys_updated_on>
+    </scan_check_suite_check>
+</record_update>

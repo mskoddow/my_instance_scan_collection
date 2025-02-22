@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>performance</category>
+        <conditions table="sys_properties">name=sn_atf.runner.enabled^value=true^EQ<item endquery="false" field="name" goto="false" newquery="false" operator="=" or="false" value="sn_atf.runner.enabled"/>
+            <item endquery="false" field="value" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>By default, the system property that is used to run automated tests is disabled to prevent you from accidentally running these tests on a production system.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=atf-enable-tests.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Enabled Test Suite Executions on PROD</name>
+        <priority>2</priority>
+        <resolution_details>Disable the "sn_atf.runner.enabled" system property.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_5f8a3d801be55110ef13a9b4bd4bcbfa','')=='' &amp;&amp;(gs.getProperty('sn_appclient.instance_type', '') === 'production')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Enabled Test Suite Executions on PROD</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-21 14:23:51</sys_created_on>
+        <sys_id>5f8a3d801be55110ef13a9b4bd4bcbfa</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Enabled Test Suite Executions on PROD</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_5f8a3d801be55110ef13a9b4bd4bcbfa</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:36</sys_updated_on>
+        <table>sys_properties</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=5f8a3d801be55110ef13a9b4bd4bcbfa"/>
+</record_update>

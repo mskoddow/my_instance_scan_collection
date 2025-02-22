@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>Administrators can configure account recovery (ACR) to perform recovery activities such as addressing SSO misconfiguration or expired certificates with local logins. If ACR is enabled and no or only one user is enrolled for ACR then there is a risk of a blocked instance as no user can login and troubleshoot.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=sso-acct-recovery.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Account Recovery with less than 2 enrolled users activated</name>
+        <priority>1</priority>
+        <resolution_details>Ensure at least two users are enrolled to ACR in case the property "glide.sso.acr.enabled" is set to "true".
+
+CAUTTION
+Enabling ACR disables the local interactive logins (username or password based) when SSO is enabled to your instances!</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_ff4154d31b36191058200fa7624bcb51','')=='' &amp;&amp; (GlidePluginManager.isActive('com.snc.integration.sso.multi.installer') &amp;&amp;  gs.getProperty('glide.authenticate.multisso.enabled', '') == 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.sso.acr.enabled';
+	var _grProperty      = new GlideRecord('sys_properties');
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+
+		//ACR is enabled now check how many users are enrolled for that
+		if (_strPropertyType !== 'boolean' && _strPropertyValue === 'true') {
+			var _grUser = new GlideRecord('acr_user');
+			
+			_grUser.addEncodedQuery(
+				'account_recovery_enabled=true^' +
+				'acr_user.active=true^' +
+				'acr_user.locked_out=false'
+			);
+			_grUser.setLimit(2);
+			_grUser.query();
+
+			if (_grUser.getRowCount() < 2) {
+				engine.finding.increment();	
+			}
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>Account Recovery with less than 2 enrolled users activated</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-01 12:22:46</sys_created_on>
+        <sys_id>ff4154d31b36191058200fa7624bcb51</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Account Recovery with less than 2 enrolled users activated</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_ff4154d31b36191058200fa7624bcb51</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-26 17:06:15</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=ff4154d31b36191058200fa7624bcb51"/>
+</record_update>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="wf_workflow_version">active=true^checked_out_byISNOTEMPTY^EQ<item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="false" field="checked_out_by" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>Checked out workflows in a production instance is a situation that theoretically should not exist. This could indicate that a system administrator (unintentional) is working on the workflow, while this should only be done in sub-production instances.</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Checked out Workflows in PROD</name>
+        <priority>2</priority>
+        <resolution_details>Remove the related checked out wf_workflow_version records.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_99da24f41b919510ef13a9b4bd4bcbff','')=='' &amp;&amp;(gs.getProperty('sn_appclient.instance_type') == 'production')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Checked out Workflows in PROD</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-11 06:15:18</sys_created_on>
+        <sys_id>99da24f41b919510ef13a9b4bd4bcbff</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Checked out Workflows in PROD</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_99da24f41b919510ef13a9b4bd4bcbff</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:40</sys_updated_on>
+        <table>wf_workflow_version</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=99da24f41b919510ef13a9b4bd4bcbff"/>
+</record_update>

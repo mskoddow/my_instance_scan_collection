@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>If the system property "glide.knowman.apply_article_read_criteria" is set to "true" users are required to have explicit "Can Read" access to individual articles, even if they have "Can Contribute" access to the entire knowledge base.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=user-access-knowledge.html&amp;version=latest#d248356e552</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Additional read Protection at KB's Article Level is not activated</name>
+        <priority>2</priority>
+        <resolution_details>Ensure the property "glide.knowman.apply_article_read_criteria" is set to "true".&#13;
+</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_782f9ca983015210c1321429feaad332','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+	var _strPropertyName = 'glide.knowman.apply_article_read_criteria';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist!'
+		);
+
+		_hasFinding = true;
+	}
+			
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}	
+})(engine);]]></script>
+        <short_description>Additional read Protection at KB's Article Level is not activated</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-04 11:48:32</sys_created_on>
+        <sys_id>782f9ca983015210c1321429feaad332</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Additional read Protection at KB's Article Level is not activated</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_782f9ca983015210c1321429feaad332</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 11:49:06</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=782f9ca983015210c1321429feaad332"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>782f9ca983015210c1321429feaad332</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-04 11:49:06</sys_created_on>
+        <sys_id>3c4f9ca983015210c1321429feaad338</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 11:49:06</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

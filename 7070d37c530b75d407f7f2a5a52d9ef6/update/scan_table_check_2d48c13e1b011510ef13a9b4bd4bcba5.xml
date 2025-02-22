@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_user">user_name=ml.admin^locked_out=true^ORactive=false^EQ<item endquery="false" field="user_name" goto="false" newquery="false" operator="=" or="false" value="ml.admin"/>
+            <item endquery="false" field="locked_out" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="false" field="active" goto="false" newquery="false" operator="=" or="true" value="false"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>The "ml.admin" user is required for ML update request schedule for Solution/Clustering/Similarity Definitions.  If the "ml.admin" user does not exist, is inactive or is locked out, ML update request schedule for Solution/Clustering/Similarity Definitions fails.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0998555</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>User "ml.admin" is inactive or locked out</name>
+        <priority>2</priority>
+        <resolution_details>Set the "Active" field to "true" and the "Locked out" field to "false" for the "ml.admin" user account.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_2d48c13e1b011510ef13a9b4bd4bcba5','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>User "ml.admin" is inactive or locked out</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-08-05 03:16:05</sys_created_on>
+        <sys_id>2d48c13e1b011510ef13a9b4bd4bcba5</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>User "ml.admin" is inactive or locked out</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_2d48c13e1b011510ef13a9b4bd4bcba5</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:31</sys_updated_on>
+        <table>sys_user</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=2d48c13e1b011510ef13a9b4bd4bcba5"/>
+</record_update>

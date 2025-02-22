@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <category>security</category>
+        <conditions table="sys_user_role">name=snc_internal^EQ<item endquery="false" field="name" goto="false" newquery="false" operator="=" or="false" value="snc_internal"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>This definition checks if the sys_audit table can be accessed by all internal users.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=access-control-rules.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Internal Users have Access to the "sys_audit" Table</name>
+        <priority>2</priority>
+        <resolution_details>System tables usually are not needed to be accessed by all internal and external users and can be restricted to the groups needed.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_4c96545e1b7b5110ef13a9b4bd4bcb8c','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	// Check to see if snc_internal has acl to sys_audit
+	var invalidAccessGR = new GlideRecord('sys_security_acl_role');
+	
+	invalidAccessGR.addEncodedQuery(
+		"sys_user_role=" + engine.current.sys_id + "^" +
+		"sys_security_acl.active=true^" + 
+		"sys_security_acl.advanced=false^" + 
+		"sys_security_acl.name=sys_audit"
+	);
+	invalidAccessGR.query();
+	
+	if (invalidAccessGR.next()) {
+		// snc_internal has access to sys_audit
+		engine.finding.increment();
+	}
+
+})(engine);]]></script>
+        <short_description>Internal Users have Access to the "sys_audit" Table</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-12-18 03:14:36</sys_created_on>
+        <sys_id>4c96545e1b7b5110ef13a9b4bd4bcb8c</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Internal Users have Access to the "sys_audit" Table</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_4c96545e1b7b5110ef13a9b4bd4bcb8c</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:34</sys_updated_on>
+        <table>sys_user_role</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=4c96545e1b7b5110ef13a9b4bd4bcb8c"/>
+</record_update>

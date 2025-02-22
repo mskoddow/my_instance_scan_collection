@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>performance</category>
+        <description>If the system property "sn_kb_social_qa.max_comments_per_user_daily" is not set to the recommended value of "500" or less, then there will be no restriction on number of QA comments per day. This could lead to resource exhaution.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-limit-max-comments-per-user-per-day.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Number of possible Q&amp;A Comments per Day is more than 500</name>
+        <priority>3</priority>
+        <resolution_details>Make sure the system property "sn_kb_social_qa.max_comments_per_user_daily" is set to a value of 500 or less.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_0c63c1f683cdd610c1321429feaad3ac','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+	
+	var _strPropertyName = 'sn_kb_social_qa.max_comments_per_user_daily';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		var _numPropertyValue = parseInt(_strPropertyValue, 10);
+		
+		_hasFinding = 
+			_strPropertyType !== 'integer' || 
+			isNaN(_numPropertyValue) || 
+			_numPropertyValue > 500 || 
+			_numPropertyValue < 0;
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}	
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}	
+})(engine);]]></script>
+        <short_description>Number of possible Q&amp;A Comments per Day is more than 500</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-08 11:39:16</sys_created_on>
+        <sys_id>0c63c1f683cdd610c1321429feaad3ac</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Number of possible Q&amp;A Comments per Day is more than 500</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_0c63c1f683cdd610c1321429feaad3ac</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-08 11:40:04</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=0c63c1f683cdd610c1321429feaad3ac"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>0c63c1f683cdd610c1321429feaad3ac</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-08 11:40:03</sys_created_on>
+        <sys_id>2b83c13a83cdd610c1321429feaad34a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-08 11:40:03</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>By default, CSV exports are limited to 32,000 characters per column.  The CSV export uses the display value when exporting columns with long string values. But if the system property "glide.export.csv.raw.value" is set to "true" CSV exports can have column values in excess of 32,000 characters.
+
+Caution:
+Setting this property will apply this unlimited CSV export to all CSV exports system-wide, so this might not be acceptable for all users.  This also exports RAW values for reference fields, not display values.
+
+Therfore it is not recommended to enable that property.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0621445</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Usage of raw Values is enabled for CSV exports</name>
+        <priority>3</priority>
+        <resolution_details>Ensure the property "glide.export.csv.raw.value" is set to "false".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_a6be936197726110b05bb08fe153af9b','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+	var _strPropertyName = 'glide.export.csv.raw.value';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = false;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'false'
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+})(engine);]]></script>
+        <short_description>Usage of raw Values is enabled for CSV exports</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-14 13:07:40</sys_created_on>
+        <sys_id>a6be936197726110b05bb08fe153af9b</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Usage of raw Values is enabled for CSV exports</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_a6be936197726110b05bb08fe153af9b</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 14:35:18</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=a6be936197726110b05bb08fe153af9b"/>
+</record_update>

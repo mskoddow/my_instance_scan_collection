@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_data_source">import_set_table_nameISEMPTY^EQ<item endquery="false" field="import_set_table_name" goto="false" newquery="false" operator="ISEMPTY" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>The import will not work if the Data Source record does not have a value for the Import Set Table field.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=c_CreateNewDataSource.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Data Source without Import Set Table Name</name>
+        <priority>3</priority>
+        <resolution_details>Add the name of a valid import set table to this Data Source record's Import Set table field.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_9b9aa0f497666110b05bb08fe153af74','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (finding, current) {
+
+    // Add your code here
+
+})(finding, current);]]></script>
+        <short_description>Data Source without Import Set Table Name</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-29 05:43:59</sys_created_on>
+        <sys_id>9b9aa0f497666110b05bb08fe153af74</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Data Source without Import Set Table Name</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_9b9aa0f497666110b05bb08fe153af74</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:40</sys_updated_on>
+        <table>sys_data_source</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=9b9aa0f497666110b05bb08fe153af74"/>
+</record_update>

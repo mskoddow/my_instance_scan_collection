@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>upgradability</category>
+        <description>Checks for specific tables that should not be excluded in the clone engine.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0715621#excludetable</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Critical exclude Tables for Cloning</name>
+        <priority>3</priority>
+        <resolution_details>Please remove these excluders as these tables should not be excluded and can cause issues after the clone completes.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_44c675a297853110b05bb08fe153af65','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grCloneExlude = new GlideRecord('clone_data_exclude');
+
+	_grCloneExlude.addEncodedQuery('name=sys_properties^ORname=sys_trigger^ORname=sys_plugins');
+	_grCloneExlude.query();
+
+	while (_grCloneExlude.next()) {
+		engine.finding.setCurrentSource(_grCloneExlude);
+		engine.finding.increment();
+	}
+	
+})(engine);]]></script>
+        <short_description>Critical exclude Tables for Cloning</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-09-06 04:22:57</sys_created_on>
+        <sys_id>44c675a297853110b05bb08fe153af65</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Critical exclude Tables for Cloning</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_44c675a297853110b05bb08fe153af65</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:33</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=44c675a297853110b05bb08fe153af65"/>
+</record_update>

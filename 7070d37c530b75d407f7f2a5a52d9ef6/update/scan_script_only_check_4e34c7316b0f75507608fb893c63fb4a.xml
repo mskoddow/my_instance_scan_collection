@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>Legacy behavior provided create/update access to tables that did not allow so. In order to prevent legacy customers from having applications broken when this scoped access behavior was patched, the property "glide.record.legacy_cross_scope_access_policy_in_script" was created. When 'true', cross scope access falls back onto legacy behavior (insecure). This property disables scope fencing, allowing scoped apps to access global script interfaces.&#13;
+&#13;
+It is best security practice to have scope fencing restrictions in place. Scoping ensures applications can only access resources with explicit access or within their scope, following the principle of least privilege. Disabling this feature could lead to confidentiality, availability, and integrity impacts.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-enable-gliderecord-scope-fencing-legacy-behavior.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Scope Fencing Legacy Behavior for GlideRecord is enabled</name>
+        <priority>3</priority>
+        <resolution_details>Ensure the property "glide.record.legacy_cross_scope_access_policy_in_script" is set to "false".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_4e34c7316b0f75507608fb893c63fb4a','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+	
+	var _strPropertyName = 'glide.record.legacy_cross_scope_access_policy_in_script';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = false;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'false'
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+	
+})(engine);]]></script>
+        <short_description>Scope Fencing Legacy Behavior for GlideRecord is enabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-12-12 12:11:33</sys_created_on>
+        <sys_id>4e34c7316b0f75507608fb893c63fb4a</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Scope Fencing Legacy Behavior for GlideRecord is enabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_4e34c7316b0f75507608fb893c63fb4a</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 14:35:16</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=4e34c7316b0f75507608fb893c63fb4a"/>
+</record_update>

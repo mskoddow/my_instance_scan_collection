@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>The "glide.knowman.block_access_with_no_user_criteria" system property is used to control the read/write access of users on knowledge based articles. If this property is not set to the recommended value of true, then any user can read and contribute to a KB.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-restrict-knowledge-bases-access.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>User Criteria based Access to Knowledge Bases &amp; Articles is not enforced</name>
+        <priority>2</priority>
+        <resolution_details>Make sure the system property "glide.knowman.block_access_with_no_user_criteria" is set to "true"</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_3ee946c6975f3550b05bb08fe153af53','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+      
+	var _strPropertyName = 'glide.knowman.block_access_with_no_user_criteria';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+		
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+	
+})(engine);
+]]></script>
+        <short_description>User Criteria based Access to Knowledge Bases &amp; Articles is not enforced</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-12-25 13:03:42</sys_created_on>
+        <sys_id>3ee946c6975f3550b05bb08fe153af53</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>User Criteria based Access to Knowledge Bases &amp; Articles is not enforced</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_3ee946c6975f3550b05bb08fe153af53</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 14:35:16</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=3ee946c6975f3550b05bb08fe153af53"/>
+</record_update>

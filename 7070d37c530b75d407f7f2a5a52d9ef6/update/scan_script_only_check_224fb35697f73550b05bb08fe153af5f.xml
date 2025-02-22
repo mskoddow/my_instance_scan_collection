@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>The system property "glide.authenticate.multifactor.email.otp.enabled" controls if a token for the second authentication factor can be sent via email. Email is considered a weak MFA factor which an attacker is more likely to gain access into for defeating MFA. By setting this property to "false", the risk of an attacker successfully bypassing MFA when they have the user's password is reduced.&#13;
+&#13;
+If the property is false:&#13;
+1) The user will not see email OTP option on the MFA validation screen.&#13;
+If the property is true:&#13;
+1) The email factor is shown in cases where the email factor policy is inactive and no other 2fa registered.&#13;
+2) The email factor is shown if the email factor policy is active and evaluated to true.&#13;
+3) The email factor is not shown if the email factor policy is active and evaluated to false.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-enable-email-otp-for-multi-factor-authentication.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Email OTP for Multi-Factor Authentication is not enabled</name>
+        <priority>4</priority>
+        <resolution_details>Ensure the system property "glide.authenticate.multifactor.email.otp.enabled" is set to "true" in case system property "glide.authenticate.multifactor" is "true"</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_224fb35697f73550b05bb08fe153af5f','')=='' &amp;&amp;(String(gs.getProperty('glide.authenticate.multifactor', '')).trim() === 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+      
+	var _strPropertyName = 'glide.authenticate.multifactor.email.otp.enabled';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+		
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+	
+})(engine);
+]]></script>
+        <short_description>Email OTP for Multi-Factor Authentication is not enabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-20 12:33:41</sys_created_on>
+        <sys_id>224fb35697f73550b05bb08fe153af5f</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Email OTP for Multi-Factor Authentication is not enabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_224fb35697f73550b05bb08fe153af5f</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-20 12:36:42</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=224fb35697f73550b05bb08fe153af5f"/>
+</record_update>

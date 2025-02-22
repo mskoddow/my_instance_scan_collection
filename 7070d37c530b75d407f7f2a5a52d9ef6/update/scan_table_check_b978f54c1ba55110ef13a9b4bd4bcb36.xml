@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>security</category>
+        <conditions table="sys_web_service">active=true^scriptLIKEinsert()^ORscriptLIKEupdate()^ORscriptLIKEdeleteRecord()^ORscriptLIKEdeleteMultiple()^EQ<item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="false" field="script" goto="false" newquery="false" operator="LIKE" or="false" value="insert()"/>
+            <item endquery="false" field="script" goto="false" newquery="false" operator="LIKE" or="true" value="update()"/>
+            <item endquery="false" field="script" goto="false" newquery="false" operator="LIKE" or="true" value="deleteRecord()"/>
+            <item endquery="false" field="script" goto="false" newquery="false" operator="LIKE" or="true" value="deleteMultiple()"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>Scripted Web Services insert/update/delete data directly</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=c_ScriptedWebServices.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>SOAP Web Services writing data directly</name>
+        <priority>2</priority>
+        <resolution_details>Any update, insert or delete operations should be done in Script Includes</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_b978f54c1ba55110ef13a9b4bd4bcb36','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (finding, current) {
+
+    // Add your code here
+
+})(finding, current);]]></script>
+        <short_description>SOAP Web Services writing data directly</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-21 14:14:44</sys_created_on>
+        <sys_id>b978f54c1ba55110ef13a9b4bd4bcb36</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>SOAP Web Services writing data directly</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_b978f54c1ba55110ef13a9b4bd4bcb36</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:42</sys_updated_on>
+        <table>sys_web_service</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=b978f54c1ba55110ef13a9b4bd4bcb36"/>
+</record_update>

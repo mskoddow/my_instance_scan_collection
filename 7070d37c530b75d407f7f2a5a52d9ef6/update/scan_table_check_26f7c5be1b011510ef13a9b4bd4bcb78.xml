@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sc_cat_item">active=true^checked_out=true^EQ<item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item display_value="true" endquery="false" field="checked_out" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>Checked out catalog items in a production instance is a situation that theoretically should not exist. This could indicate that a system administrator (unintentional) is working on the sc_cat_item, while this should only be done in sub-production instances.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0996126</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Checked out Catalog Items on PROD</name>
+        <priority>2</priority>
+        <resolution_details>Undo the checked sc_cat_item record.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_26f7c5be1b011510ef13a9b4bd4bcb78','')=='' &amp;&amp;(gs.getProperty('sn_appclient.instance_type') === 'production')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Checked out Catalog Items on PROD</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-08-05 03:14:47</sys_created_on>
+        <sys_id>26f7c5be1b011510ef13a9b4bd4bcb78</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Checked out Catalog Items on PROD</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_26f7c5be1b011510ef13a9b4bd4bcb78</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:30</sys_updated_on>
+        <table>sc_cat_item</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=26f7c5be1b011510ef13a9b4bd4bcb78"/>
+</record_update>

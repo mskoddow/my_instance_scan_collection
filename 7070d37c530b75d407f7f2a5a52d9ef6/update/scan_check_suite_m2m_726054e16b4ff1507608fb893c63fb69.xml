@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_check_suite_m2m">
+    <scan_check_suite_m2m action="INSERT_OR_UPDATE">
+        <child_suite display_value="[My Instance Scan Collection] Health">4794850a2f3b11106daa821df699b667</child_suite>
+        <parent_suite display_value="[My Instance Scan Collection] Main">a6d4b1811bc75110ef13a9b4bd4bcb57</parent_suite>
+        <sys_class_name>scan_check_suite_m2m</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-12-11 04:27:31</sys_created_on>
+        <sys_id>726054e16b4ff1507608fb893c63fb69</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_check_suite_m2m_726054e16b4ff1507608fb893c63fb69</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2023-12-11 04:27:31</sys_updated_on>
+    </scan_check_suite_m2m>
+</record_update>

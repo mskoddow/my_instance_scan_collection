@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module">
+    <sys_app_module action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <application display_value="My Instance Scan Collection">36c79e796b4b75507608fb893c63fbde</application>
+        <assessment/>
+        <device_type/>
+        <filter table="scan_check_suite_check">sys_scope=7070d37c530b75d407f7f2a5a52d9ef6^EQ<item display_table="sys_scope" display_value="My Instance Scan Collection" endquery="false" field="sys_scope" goto="false" newquery="false" operator="=" or="false" value="7070d37c530b75d407f7f2a5a52d9ef6"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter>
+        <hint/>
+        <homepage/>
+        <image/>
+        <link_type>LIST</link_type>
+        <map_page/>
+        <mobile_title>Suites with Checks</mobile_title>
+        <mobile_view_name>Mobile</mobile_view_name>
+        <name>scan_check_suite_check</name>
+        <order>130</order>
+        <override_menu_roles>false</override_menu_roles>
+        <query>^GROUPBYsuite</query>
+        <report/>
+        <require_confirmation>true</require_confirmation>
+        <roles/>
+        <sys_class_name>sys_app_module</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-12-12 09:26:37</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>5bb9923d6b4b75507608fb893c63fb4b</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>All with Checks</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>sys_app_module_5bb9923d6b4b75507608fb893c63fb4b</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2025-02-22 03:05:14</sys_updated_on>
+        <timeline_page/>
+        <title>All with Checks</title>
+        <uncancelable>false</uncancelable>
+        <view_name>my_instance_scan_collection</view_name>
+        <window_name/>
+    </sys_app_module>
+</record_update>

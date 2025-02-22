@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_user">user_nameISEMPTY^sys_class_name=sys_user<item endquery="false" field="user_name" goto="false" newquery="false" operator="ISEMPTY" or="false" value=""/>
+            <item display_value="User" endquery="false" field="sys_class_name" goto="false" newquery="false" operator="=" or="false" value="sys_user"/>
+        </conditions>
+        <description>In ServiceNow the value of the field "User ID" is used as the first authentication criteria during the login process and thus cannot be empty. But unfortunately the field "User ID" is not mandatory and thus can be blank.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=t_CreateAUser.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Users records without "User ID"</name>
+        <priority>2</priority>
+        <resolution_details>Make sure all user records have a defined value in the field "User ID"</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_f93362bf1bcc6550ef13a9b4bd4bcb94','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Users records without "User ID"</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-01-04 15:45:15</sys_created_on>
+        <sys_id>f93362bf1bcc6550ef13a9b4bd4bcb94</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Users records without "User ID"</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_f93362bf1bcc6550ef13a9b4bd4bcb94</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:47</sys_updated_on>
+        <table>sys_user</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=f93362bf1bcc6550ef13a9b4bd4bcb94"/>
+</record_update>

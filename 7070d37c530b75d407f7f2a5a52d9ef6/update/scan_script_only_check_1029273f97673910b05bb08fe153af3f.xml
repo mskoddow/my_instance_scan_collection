@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>If system property "glide.sg.allow_rooted_jailbroken_device" is not set to the recommended value of "false", then the mobile app will allow users to use the app from jailbroken or rooted mobile devices. Jailbroken or rooted mobile devices run untrusted code at the system level that can bypass the platform's security model which our mobile apps rely on. Setting "allow_rooted_jailbroken_device" to "false" enables a limited client-side check to display an error message to the user if attempting to use the app from one of these devices. &#13;
+&#13;
+This configuration maps to MASVS v1.4.2 requirement 8.1 at R-level.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-block-rooted-or-jailbroken-mobile-devices.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Blocking of rooted or jailbroken Mobile Devices is not disabled</name>
+        <priority>3</priority>
+        <resolution_details>Ensure the property "glide.sg.allow_rooted_jailbroken_device" is set to "false".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_1029273f97673910b05bb08fe153af3f','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+  
+	var _strPropertyName = 'glide.sg.allow_rooted_jailbroken_device';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'false';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+	
+})(engine);]]></script>
+        <short_description>Blocking of rooted or jailbroken Mobile Devices is not disabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-12 16:32:04</sys_created_on>
+        <sys_id>1029273f97673910b05bb08fe153af3f</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Blocking of rooted or jailbroken Mobile Devices is not disabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_1029273f97673910b05bb08fe153af3f</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 14:35:14</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=1029273f97673910b05bb08fe153af3f"/>
+</record_update>

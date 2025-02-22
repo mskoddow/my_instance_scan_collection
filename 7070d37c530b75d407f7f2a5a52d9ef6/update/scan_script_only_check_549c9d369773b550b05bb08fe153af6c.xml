@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>Enter the number of seconds to add to the NotBefore and NotOnOrAfter constraints to account for time differences between the Identity Provider (IdP) clock and Service Provider (SP) clock. These constraints prevent against replay attacks by denying requests that are not made within the specified time frame. If the IdP clock and SP clock are significantly different, network latency may result in the SAML request being unauthorized. This property adds a grace period during which SAML requests and responses are still considered valid.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-saml-notbefore-or-notonorafter-constraint.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>SAML "notBefore" or "notOnOrAfter" Constraint Duration is more than 60 Seconds</name>
+        <priority>2</priority>
+        <resolution_details>Ensure the property "glide.authenticate.sso.saml2.clockskew" is set to "60" or less.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_549c9d369773b550b05bb08fe153af6c','')=='' &amp;&amp; (GlidePluginManager.isActive('com.snc.integration.sso.multi.installer') &amp;&amp;  gs.getProperty('glide.authenticate.multisso.enabled', '') == 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.authenticate.sso.saml2.clockskew';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		var _numPropertyValue = parseInt(_strPropertyValue, 10);
+		
+		_hasFinding = 
+			_strPropertyType !== 'integer' || 
+			isNaN(_numPropertyValue) || 
+			_numPropertyValue > 60 ||
+			_numPropertyValue < 1;
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}	
+
+})(engine);]]></script>
+        <short_description>SAML "notBefore" or "notOnOrAfter" Constraint Duration is more than 60 Seconds</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-21 13:59:42</sys_created_on>
+        <sys_id>549c9d369773b550b05bb08fe153af6c</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>SAML "notBefore" or "notOnOrAfter" Constraint Duration is more than 60 Seconds</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_549c9d369773b550b05bb08fe153af6c</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-26 17:05:27</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=549c9d369773b550b05bb08fe153af6c"/>
+</record_update>

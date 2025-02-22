@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>The properties "glide.http.response.get_body.limit.enabled" and "glide.http.response.get_body.limit" were introduced to enable new functionality that prevents Out of memory exceptions being thrown as a result of a requests response body being too big. Out of memory exceptions can cause denial of service attacks as well as other issues that may aid attackers in compromising an instance.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-limit-http-response-body-size.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Max HTTP response body size is not restricted</name>
+        <priority>2</priority>
+        <resolution_details>Ensure the property "glide.http.response.get_body.limit.enabled" is set to true and "glide.http.response.get_body.limit" is no more than 524288000 Bytes (500 MB)</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_f32fdf3d6b4f75507608fb893c63fbee','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName1 = 'glide.http.response.get_body.limit.enabled';
+	var _strPropertyName2 = 'glide.http.response.get_body.limit';
+	var _grProperty1      = new GlideRecord('sys_properties');
+	var _grProperty2      = new GlideRecord('sys_properties');
+	var _hasFinding1      = true;
+	var _hasFinding2      = true;
+	
+	if (_grProperty1.get('name', _strPropertyName1)) {		
+		var _strPropertyType1  = String(_grProperty1.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue1 = String(_grProperty1.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding1 = _strPropertyType1 !== 'boolean' || _strPropertyValue1 !== 'true';
+	}
+	
+	if (_grProperty2.get('name', _strPropertyName2)) {		
+		var _strPropertyType2  = String(_grProperty2.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue2 = String(_grProperty2.getValue('value') || '').toLowerCase().trim();
+		var _numPropertyValue  = parseInt(_strPropertyValue2, 10);	
+		
+		_hasFinding2 = 
+			_strPropertyType2 !== 'integer' || 
+			isNaN(_numPropertyValue) || _numPropertyValue > 524288000  ||_numPropertyValue < 100000;
+	}
+
+	if (_hasFinding1) {
+		if (_grProperty1.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty1);
+		}
+		
+		engine.finding.increment();		
+	}
+	else if (_hasFinding2) {
+		if (_grProperty2.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty2);
+		}
+		
+		engine.finding.increment();
+	}
+
+})(engine);]]></script>
+        <short_description>Max HTTP response body size is not restricted</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-12-12 14:17:40</sys_created_on>
+        <sys_id>f32fdf3d6b4f75507608fb893c63fbee</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Max HTTP response body size is not restricted</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_f32fdf3d6b4f75507608fb893c63fbee</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:46</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=f32fdf3d6b4f75507608fb893c63fbee"/>
+</record_update>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>Use the "glide.script_processor.authorized_script_module_role" property to restrict the usage of running scripts from "sys_app_module" table to the defined role within the property. This property will restrict all system users of running any script from the "sys_app_module" unless they have the role specified within the property.
+Without appropriate authorization configured on script requests, unauthorized users may access sensitive content/data on the instance.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=authorization-script-execution.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Roles authorized for Script Execution are not defined</name>
+        <priority>2</priority>
+        <resolution_details>Ensure the property "glide.script_processor.authorized_script_module_role" is set to "true".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_22880d7b1b352110ef13a9b4bd4bcbee','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.script_processor.authorized_script_module_role';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+
+		if (_strPropertyType === 'string' && _strPropertyValue.length > 0) {
+			var _arrRoles = _strPropertyValue.split(',');
+			var _grRole = new GlideRecord('sys_user_role');
+			
+			for (var _numIndex = 0; _numIndex < _arrRoles.length; _numIndex++) {
+				_hasFinding = !_grRole.get('name', _arrRoles[_numIndex].trim());
+			}		
+		}
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+
+		engine.finding.increment();		
+	}
+
+})(engine);
+]]></script>
+        <short_description>Roles authorized for Script Execution are not defined</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-01 08:49:24</sys_created_on>
+        <sys_id>22880d7b1b352110ef13a9b4bd4bcbee</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Roles authorized for Script Execution are not defined</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_22880d7b1b352110ef13a9b4bd4bcbee</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:30</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=22880d7b1b352110ef13a9b4bd4bcbee"/>
+</record_update>

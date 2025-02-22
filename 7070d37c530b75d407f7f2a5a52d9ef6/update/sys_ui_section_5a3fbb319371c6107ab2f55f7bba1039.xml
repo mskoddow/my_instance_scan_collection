@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="5a3fbb319371c6107ab2f55f7bba1039" sys_domain="global" table="scan_finding" version="3" view="my_instance_scan_collection">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>result</element>
+            <position>0</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>93304c429371c6107ab2f55f7bba100d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>check</element>
+            <position>1</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>17304c429371c6107ab2f55f7bba100d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>source_table</element>
+            <position>2</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>97304c429371c6107ab2f55f7bba100d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>source</element>
+            <position>3</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>1b304c429371c6107ab2f55f7bba100d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>4</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>9b304c429371c6107ab2f55f7bba100d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>check.priority</element>
+            <position>5</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>1f304c429371c6107ab2f55f7bba100d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>check.category</element>
+            <position>6</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>9f304c429371c6107ab2f55f7bba100d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>scan_mute_rule.mute_reason</element>
+            <position>7</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>13304c429371c6107ab2f55f7bba100e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>task</element>
+            <position>8</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>93304c429371c6107ab2f55f7bba100e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>9</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>17304c429371c6107ab2f55f7bba100e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>finding_details</element>
+            <position>10</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>97304c429371c6107ab2f55f7bba100e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>check.resolution_details</element>
+            <position>11</position>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:26:27</sys_created_on>
+            <sys_id>1b304c429371c6107ab2f55f7bba100e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="scan_finding" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">5a3fbb319371c6107ab2f55f7bba1039</sys_ui_section>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:26:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>scan_finding</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2024-04-27 09:22:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>5a3fbb319371c6107ab2f55f7bba1039</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>scan_finding</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+            <sys_update_name>sys_ui_section_5a3fbb319371c6107ab2f55f7bba1039</sys_update_name>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2024-04-27 09:22:00</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="My Instance Scan Collection" name="my_instance_scan_collection">bd6a9e3d6b4b75507608fb893c63fb41</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

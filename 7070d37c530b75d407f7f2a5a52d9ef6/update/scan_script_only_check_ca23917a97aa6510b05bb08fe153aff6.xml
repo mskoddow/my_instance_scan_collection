@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>Due to the way the platform must load the data into memory while converting to .xls and .xlsx formats, there are known memory issues when exporting large reports to Excel. Therefore, the platform restricts the number of rows, columns and cells you can export.  This limitation is controlled via different properties.
+Sometimes these properties must be changed to fit business needs so full reports can be exported, which makes the platform vulnerable to low memory situations. This leads to users experiencing degraded performance on the affected node.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=c_ExportLimits.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>The PDF Columns Export Limit exceeds the recommended Value</name>
+        <priority>2</priority>
+        <resolution_details>Set the value of "glide.pdf.max_columns" to the recommended value of "25" or less.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_ca23917a97aa6510b05bb08fe153aff6','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.pdf.max_columns';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = false;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		var _numPropertyValue = parseInt(_strPropertyValue, 10);
+		
+		_hasFinding = 
+			_strPropertyType !== 'integer' || 
+			isNaN(_numPropertyValue) || 
+			_numPropertyValue > 25 ||
+			_numPropertyValue < 0;
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}	
+
+})(engine);]]></script>
+        <short_description>The PDF Columns Export Limit exceeds the recommended Value</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-05 13:48:57</sys_created_on>
+        <sys_id>ca23917a97aa6510b05bb08fe153aff6</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>The PDF Columns Export Limit exceeds the recommended Value</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_ca23917a97aa6510b05bb08fe153aff6</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:43</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=ca23917a97aa6510b05bb08fe153aff6"/>
+</record_update>

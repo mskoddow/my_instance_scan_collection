@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>When the system property "glide.security.enforce_auth_roleless_acl" is not set to true, GlideRecordSecure API will grant access to unauthenticated users when an underlying ACL protecting data is missing a role or conditions. As a result, there is the potential for unauthenticated data leakage, impacting confidentiality.&#13;
+&#13;
+ACLs are often left blank by developers intending for access to be granted to all authenticated users on an instance. Anyone will "pass" a check for any empty ACL. This property ensures that only authenticated users will pass checks for empty ACLs. The public role will need to be explicitly used to grant access to unauthenticated users.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-enforce-authentication-for-roleless-acl.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Authentication for Roleless ACL is not enforced</name>
+        <priority>2</priority>
+        <resolution_details>Ensure system property "glide.security.enforce_auth_roleless_acl" is set to "true".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_80a7e3a16b53f5907608fb893c63fbfe','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+	
+	var _strPropertyName = 'glide.security.enforce_auth_roleless_acl';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}	
+
+})(engine);]]></script>
+        <short_description>Authentication for Roleless ACL is not enforced</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-12-24 06:25:59</sys_created_on>
+        <sys_id>80a7e3a16b53f5907608fb893c63fbfe</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Authentication for Roleless ACL is not enforced</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_80a7e3a16b53f5907608fb893c63fbfe</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 14:35:18</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=80a7e3a16b53f5907608fb893c63fbfe"/>
+</record_update>

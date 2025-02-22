@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_check_suite_check">
+    <scan_check_suite_check action="INSERT_OR_UPDATE">
+        <check display_value="Workflows with Notification Activities">2fbace2693318a107ab2f55f7bba10cf</check>
+        <score_weight>1</score_weight>
+        <suite display_value="[My Instance Scan Collection] Implementation">0845c50a2f3b11106daa821df699b697</suite>
+        <sys_class_name>scan_check_suite_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-29 10:24:28</sys_created_on>
+        <sys_id>ecb0a26a933102107ab2f55f7bba10fa</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_check_suite_check_ecb0a26a933102107ab2f55f7bba10fa</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-02 09:42:09</sys_updated_on>
+    </scan_check_suite_check>
+    <sys_claim action="INSERT_OR_UPDATE">
+        <claim_owner_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</claim_owner_scope>
+        <claim_timestamp>1924c9bc2320000001</claim_timestamp>
+        <metadata_update_name>scan_check_suite_check_ecb0a26a933102107ab2f55f7bba10fa</metadata_update_name>
+        <previous_claim_app_version>2024.05</previous_claim_app_version>
+        <previous_claim_name>TSI Instance Scan</previous_claim_name>
+        <previous_claim_scope>7070d37c530b75d407f7f2a5a52d9ef6</previous_claim_scope>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-02 09:42:09</sys_created_on>
+        <sys_id>710fe57483c51210c1321429feaad364</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-02 09:42:09</sys_updated_on>
+    </sys_claim>
+</record_update>

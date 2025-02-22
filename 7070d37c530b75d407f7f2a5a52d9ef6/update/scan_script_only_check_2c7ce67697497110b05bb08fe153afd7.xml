@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>Large property value with com.snc.pa.dc.max_row_count_indicator_source and/or com.snc.pa.dc.max_records  may lead to performance issue or cause OOM on the node. </description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0635475</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Critical PA-related properties</name>
+        <priority>2</priority>
+        <resolution_details>Set the property com.snc.pa.dc.max_row_count_indicator_source to a lower value. This limits the maximum number of records included in any indicator source. By default, this property allows 50,000 records per indicator source.
+
+Set the property com.snc.pa.dc.max_records to a lower value to limit the maximum number of records collected for snapshots. By default, this property allows 5000 records to be collected. You can also clear the Collect records field for indicators to disable snapshots for those indicators.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_2c7ce67697497110b05bb08fe153afd7','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName1 = 'com.snc.pa.dc.max_row_count_indicator_source';
+	var _strPropertyName2 = 'com.snc.pa.dc.max_records';
+	var _grProperty1      = new GlideRecord('sys_properties');
+	var _grProperty2      = new GlideRecord('sys_properties');
+	var _hasFinding1      = false;
+	var _hasFinding2      = false;
+	
+	if (_grProperty1.get('name', _strPropertyName1)) {		
+		var _strPropertyType1  = String(_grProperty1.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue1 = String(_grProperty1.getValue('value') || '').toLowerCase().trim();
+		var _numPropertyValue1 = parseInt(_strPropertyValue1, 10);
+		
+		_hasFinding1 = 
+			_strPropertyType1 !== 'integer' || isNaN(_numPropertyValue1) || _numPropertyValue1 > 200000;
+	}
+	
+	if (_grProperty2.get('name', _strPropertyName2)) {		
+		var _strPropertyType2  = String(_grProperty2.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue2 = String(_grProperty2.getValue('value') || '').toLowerCase().trim();
+		var _numPropertyValue2 = parseInt(_strPropertyValue2, 10);
+		
+		_hasFinding2 = 
+			_strPropertyType2 !== 'integer' || isNaN(_numPropertyValue2) || _numPropertyValue2 > 2000000;
+	}
+	
+	if (_hasFinding1) {
+		if (_grProperty1.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty1);
+		}
+		
+		engine.finding.increment();		
+	}	
+
+	if (_hasFinding2) {
+		if (_grProperty2.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty2);
+		}
+		
+		engine.finding.increment();
+	}		
+
+})(engine);]]></script>
+        <short_description>Critical PA-related properties</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-09-07 02:56:01</sys_created_on>
+        <sys_id>2c7ce67697497110b05bb08fe153afd7</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Critical PA-related properties</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_2c7ce67697497110b05bb08fe153afd7</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:31</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=2c7ce67697497110b05bb08fe153afd7"/>
+</record_update>

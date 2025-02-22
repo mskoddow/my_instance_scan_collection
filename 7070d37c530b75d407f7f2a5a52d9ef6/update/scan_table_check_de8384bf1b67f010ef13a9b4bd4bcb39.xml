@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <category>manageability</category>
+        <conditions/>
+        <description>When two Script Includes exist with the same name in the same scope, when those script includes are called it is unreliable as to which Script Include will actually be instantiated.</description>
+        <documentation_url>http://docs.servicenow.com/csh?topicname=c_ScriptIncludes.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Duplicated Script Include Names</name>
+        <priority>2</priority>
+        <resolution_details>Ensure all your Script Includes have unique names. Rename any script include with a duplicate name with a unique name.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_de8384bf1b67f010ef13a9b4bd4bcb39','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+    var gaScriptInclude = new GlideAggregate('sys_script_include');
+	
+    gaScriptInclude.addQuery('api_name', current.api_name);
+    gaScriptInclude.addAggregate('COUNT');
+    gaScriptInclude.query();
+    gaScriptInclude.next();
+
+    if (gaScriptInclude.getAggregate('COUNT') >= 2) {
+        engine.finding.increment();
+		
+		engine.finding.count = gaScriptInclude.getAggregate('COUNT');
+	}
+	
+})(engine);]]></script>
+        <short_description>Duplicated Script Include Names</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2021-11-07 15:04:20</sys_created_on>
+        <sys_id>de8384bf1b67f010ef13a9b4bd4bcb39</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Duplicated Script Include Names</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_de8384bf1b67f010ef13a9b4bd4bcb39</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:44</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=de8384bf1b67f010ef13a9b4bd4bcb39"/>
+</record_update>

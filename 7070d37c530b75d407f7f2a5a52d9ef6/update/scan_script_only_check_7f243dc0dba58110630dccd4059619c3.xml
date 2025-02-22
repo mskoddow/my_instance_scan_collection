@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>upgradability</category>
+        <description>These artifacts have been modified from the OOTB baseline and therefore will not be altered upon an upgrade.</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Differs from Baseline</name>
+        <priority>2</priority>
+        <resolution_details>Review the changes to these artifacts and revert to the baseline version if appropriate. Otherwise, thoroughly test after an upgrade.
+
+https://docs.servicenow.com/csh?topicname=upgrademon-process-skip-list.html</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_7f243dc0dba58110630dccd4059619c3','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	[
+		'sys_script_client',         // Client Scripts
+		'sys_script_include',        // Script Includes
+		'sys_ui_macro',              // UI Macros
+		'sys_ui_action',             // UI Actions
+		'sys_ui_page',               // UI Pages
+		'sys_script',                // Business Rules
+		'sys_ui_policy',             // UI Policies
+		'sys_data_policy2',          // Data Policies
+		'sys_relationship',          // Relationships
+		'sys_ui_context_menu',       // Context Menu
+		'sys_filter_option_dynamic', // Dynamic Filter Options
+		'sys_security_acl',          // ACLs
+		'sys_script_fix',            // Fix Scripts
+		'sysevent_in_email_action',  // Inbound Email Actions
+		'sys_script_email',          // Email Scripts
+		'sysauto',                   // Scheduled Jobs
+		'sysevent_script_action'     // Script Action
+
+	].forEach(function(strTableName) {
+		var _grCurrent        = new GlideRecord(strTableName);
+		var _gumUpdateManager = new GlideUpdateManager2();
+
+		_grCurrent.addEncodedQuery(
+			'sys_updated_by!=developer.program@snc^' + 
+			'sys_updated_by!=system^' +
+			'sys_updated_by!=service.now^' +
+			'sys_updated_by!=maint'
+		);
+	
+		_grCurrent.query();
+			
+		while (_grCurrent.next()) {
+			//determine the unique artifact ID
+			var _strUpdateName = String(
+					_grCurrent.getValue('sys_update_name') || 
+					_gumUpdateManager.getUpdateName(_grCurrent) ||
+					''
+				);
+				
+			//Is this artifact tracked with versions?
+			if (_strUpdateName.length > 0) {
+				var _grUpdateXml = new GlideRecord('sys_update_xml');
+
+				//get the latest query all versions
+				_grUpdateXml.addQuery('name', _strUpdateName);
+				_grUpdateXml.orderByDesc('sys_recorded_at');
+				_grUpdateXml.setLimit(1);
+				_grUpdateXml.query();
+
+				//was the artifact changed?
+				if (_grUpdateXml.next() && !_grUpdateXml.replace_on_upgrade) {		
+					var _isOOTB    = false;
+					var _grVersion = new GlideRecord('sys_update_version');
+
+					_grVersion.addQuery('name', _strUpdateName);
+					_grVersion.orderByDesc('sys_recorded_at');
+					_grVersion.query();
+
+					//iterate the versions to check whether there is an OOTB artifact available
+					while (!_isOOTB && _grVersion.next()) {
+						var _strSource = _grVersion.getValue('source_table') || '';
+
+						_isOOTB = 
+							_strSource === 'sys_upgrade_history' || 
+							_strSource === 'sys_store_app';
+					}
+
+					if (_isOOTB) {
+						engine.finding.setCurrentSource(_grCurrent);
+						engine.finding.increment();
+					}
+				}
+			}
+		}
+	});
+
+})(engine);]]></script>
+        <short_description>Differs from Baseline</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-02-03 17:54:39</sys_created_on>
+        <sys_id>7f243dc0dba58110630dccd4059619c3</sys_id>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>Differs from Baseline</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_7f243dc0dba58110630dccd4059619c3</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-02-06 02:00:19</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=7f243dc0dba58110630dccd4059619c3"/>
+</record_update>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>user_experience</category>
+        <description>When trying to delete a record using Delete UI Action, nothing happens and a console error is seen:
+
+Error:
+Uncaught TypeError: Cannot read property 'split' of null at getCascadeDelTablesDoneForm </description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0824028</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Delete UI Action not working on Forms</name>
+        <priority>2</priority>
+        <resolution_details>This is related to PRB1363518
+To resolve the issue, navigate to the below list to identify the fm_expense_line records with empty sys_class_name:
+
+https://instance_name.service-now.com/fm_expense_line_list.do?sysparm_query=sys_class_name%3DNULL&amp;sysparm_view=
+
+Run the following script to update the class name for these records from scripts background:
+
+var grExpenseLine = new GlideRecord('fm_expense_line');
+
+grExpenseLine.addEncodedQuery('sys_class_name=NULL');
+grExpenseLine.setLimit(5); //Limit the number records to update if required.
+grExpenseLine.query();
+
+while(grExpenseLine.next()) {
+  grExpenseLine.sys_class_name="fm_expense_line";
+  grExpenseLine.update();
+}
+
+Note that the check's findings is limited to the first 100 findings.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_360b549d977ead10b05bb08fe153af95','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+    var _grExpenseLine = new GlideRecord('fm_expense_line');
+	
+    _grExpenseLine.addEncodedQuery('sys_class_name=NULL');
+    _grExpenseLine.query();
+    
+	var _numFindings = 0;
+    
+	while (_numFindings < 100 && _grExpenseLine.next()) {
+        engine.finding.setCurrentSource(_grExpenseLine);
+        engine.finding.increment();
+        
+		_numFindings++;
+    }
+
+})(engine);]]></script>
+        <short_description>Delete UI Action not working on Forms</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-13 04:08:37</sys_created_on>
+        <sys_id>360b549d977ead10b05bb08fe153af95</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Delete UI Action not working on Forms</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_360b549d977ead10b05bb08fe153af95</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:32</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=360b549d977ead10b05bb08fe153af95"/>
+</record_update>

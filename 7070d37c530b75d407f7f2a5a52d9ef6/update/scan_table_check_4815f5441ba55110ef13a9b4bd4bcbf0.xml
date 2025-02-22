@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <category>security</category>
+        <conditions table="sys_report">roles!=null^user=GLOBAL^EQ<item endquery="false" field="roles" goto="false" newquery="false" operator="!=" or="false" value="null"/>
+            <item endquery="false" field="user" goto="false" newquery="false" operator="=" or="false" value="GLOBAL"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>Reports shared with a role which does not exist might lead to unforeseen behaviour. Once a role with this name is created, immediately all the reports are shared with this role.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=r_AdministerReports.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Report shared with a specific Role which does not exist</name>
+        <priority>2</priority>
+        <resolution_details>Reports shared with a role which does not exist might lead to unforeseen behaviour, once a role with this name is created and immediately all the reports are shared with this role. Consider removing the role by editing the report and only share the report with valid roles.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_4815f5441ba55110ef13a9b4bd4bcbf0','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+    var arrRoles = engine.current.roles.split(',');
+	
+    for (var numIndex = 0; numIndex < arrRoles.length; numIndex++) {
+        var grUserRole = new GlideRecord('sys_user_role');
+		
+        if (!grUserRole.get('name', arrRoles[numIndex])) {
+            engine.finding.increment();
+        }
+    }
+
+})(engine);]]></script>
+        <short_description>Report shared with a specific Role which does not exist</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-21 13:59:52</sys_created_on>
+        <sys_id>4815f5441ba55110ef13a9b4bd4bcbf0</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Report shared with a specific Role which does not exist</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_4815f5441ba55110ef13a9b4bd4bcbf0</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:33</sys_updated_on>
+        <table>sys_report</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=4815f5441ba55110ef13a9b4bd4bcbf0"/>
+</record_update>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_ui_action">conditionISEMPTY<item endquery="false" field="condition" goto="false" newquery="false" operator="ISEMPTY" or="false" value=""/>
+        </conditions>
+        <description>UI Actions without conditions may allow unintended users to update/delete records.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=t_EditingAUIAction.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>UI Actions without Conditions</name>
+        <priority>3</priority>
+        <resolution_details>Define conditions on UI Action to control its visibility to the intended users.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_eb30cedc979f2110b05bb08fe153af6f','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>UI Actions without Conditions</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-06-04 05:33:02</sys_created_on>
+        <sys_id>eb30cedc979f2110b05bb08fe153af6f</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>UI Actions without Conditions</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_eb30cedc979f2110b05bb08fe153af6f</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:45</sys_updated_on>
+        <table>sys_ui_action</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=eb30cedc979f2110b05bb08fe153af6f"/>
+</record_update>

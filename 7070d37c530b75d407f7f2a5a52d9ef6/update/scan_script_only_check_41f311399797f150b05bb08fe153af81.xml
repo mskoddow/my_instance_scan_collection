@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>When the system property "glide.sg.device_encryption_enabled" is set to true, the ServiceNow mobile app will check that device encryption is enabled and that device passcode is enabled. If encryption or passcode is not enabled, the user will not be allowed to log into the instance on mobile. This property enforces FIPS 140-2 Encryption. Mobile device encryption and passcode are important security features for ensuring an unauthorized user cannot access the content of the device even if the device is physically obtained.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-enforce-device-encryption-and-passcode-requirements.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Device Encryption and Passcode Requirements are not enforced</name>
+        <priority>3</priority>
+        <resolution_details>Ensure system property "glide.sg.device_encryption_enabled" is set to "true".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_41f311399797f150b05bb08fe153af81','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+	
+	var _strPropertyName = 'glide.sg.device_encryption_enabled';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}	
+
+})(engine);]]></script>
+        <short_description>Device Encryption and Passcode Requirements are not enforced</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-12-24 14:16:45</sys_created_on>
+        <sys_id>41f311399797f150b05bb08fe153af81</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Device Encryption and Passcode Requirements are not enforced</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_41f311399797f150b05bb08fe153af81</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 14:35:16</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=41f311399797f150b05bb08fe153af81"/>
+</record_update>

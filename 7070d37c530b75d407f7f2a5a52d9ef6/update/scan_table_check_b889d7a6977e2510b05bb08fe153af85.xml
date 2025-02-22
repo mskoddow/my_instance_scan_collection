@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>user_experience</category>
+        <conditions table="sys_ui_policy_action">mandatory=true^disabled=true^NQmandatory=true^visible=false<item display_value="True" endquery="false" field="mandatory" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item display_value="True" endquery="false" field="disabled" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item display_value="True" endquery="false" field="mandatory" goto="false" newquery="true" operator="=" or="false" value="true"/>
+            <item display_value="False" endquery="false" field="visible" goto="false" newquery="false" operator="=" or="false" value="false"/>
+        </conditions>
+        <description>When configuring a UI policy, make sure that there are no UI Policy actions that are making the field read-only and mandatory at the same time OR making a non-visible field as mandatory.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0829277</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Invalid UI Policy Configurations</name>
+        <priority>2</priority>
+        <resolution_details>The fields that are set as read-only via the dictionary entry options or the ACLs cannot be set as mandatory as it is ignored by the platform. So, the users can submit the form despite the fact that there is a UI policy that is set up to make the field mandatory. The action of the UI policy is ignored in that case.  Rectify by modifying field permission and UI Policy configuration.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_b889d7a6977e2510b05bb08fe153af85','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Invalid UI Policy Configurations</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-17 15:17:32</sys_created_on>
+        <sys_id>b889d7a6977e2510b05bb08fe153af85</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Invalid UI Policy Configurations</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_b889d7a6977e2510b05bb08fe153af85</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:42</sys_updated_on>
+        <table>sys_ui_policy_action</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=b889d7a6977e2510b05bb08fe153af85"/>
+</record_update>

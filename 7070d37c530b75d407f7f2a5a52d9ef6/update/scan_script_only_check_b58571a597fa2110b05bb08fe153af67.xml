@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>ServiceNow has deprecated the ServiceNow Classic App in July September 15, 2022.
+
+That means:
+- Only existing classic users will have continued access; however, without support, and without future updates.
+- Starting  September 15, 2022 customers will not be able to add new users to ServiceNow Mobile Classic app because it is removed from the iOS and Google Play stores.</description>
+        <documentation_url>https://www.servicenow.com/community/mobile-apps-platform-articles/update-servicenow-classic-mobile-app-deprecation-effective/ta-p/2301729</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Push Notifications using the Mobile Classic App</name>
+        <priority>2</priority>
+        <resolution_details>Migrate to the "Now Mobile" or the "Agent Mobile" app. Open the documentation link to get more information.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_b58571a597fa2110b05bb08fe153af67','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grNotification = new GlideRecord('sysevent_email_action');
+
+	_grNotification.addEncodedQuery('active=true^push_message_only=true^message_listISNOTEMPTY');
+	_grNotification.query();
+
+	while (_grNotification.next()) {
+		var _strPushMessages = _grNotification.getValue('message_list');
+		var _grPushMessage  = new GlideRecord('sys_push_notif_msg');
+
+		_grPushMessage.addEncodedQuery(
+			'push_app=ab704041ff1102009738ffffffffff33^ORpush_app=c2abd43253020200601fa3fc9ec5875d' +
+			'^sys_idIN' + _strPushMessages
+		);
+		_grPushMessage.query();
+
+		while (_grPushMessage.next()) {
+			engine.finding.setCurrentSource(_grPushMessage);
+			engine.finding.increment();
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>Push Notifications using the Mobile Classic App</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-14 05:23:26</sys_created_on>
+        <sys_id>b58571a597fa2110b05bb08fe153af67</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Push Notifications using the Mobile Classic App</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_b58571a597fa2110b05bb08fe153af67</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:42</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=b58571a597fa2110b05bb08fe153af67"/>
+</record_update>

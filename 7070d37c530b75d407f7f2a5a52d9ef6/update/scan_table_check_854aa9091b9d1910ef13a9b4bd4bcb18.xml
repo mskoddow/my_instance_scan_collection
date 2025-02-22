@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_user">user_name=instance.sec.user^active=false^ORlocked_out=true^EQ<item endquery="false" field="user_name" goto="false" newquery="false" operator="=" or="false" value="instance.sec.user"/>
+            <item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="false"/>
+            <item endquery="false" field="locked_out" goto="false" newquery="false" operator="=" or="true" value="true"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>The instance.sec.user has been created as fallback, if the default System Administrator user is missing (or inactive or locked out). This will ensure that PA AppSec jobs will not fail. If both the instance.sec_user and the default system administrator don't exist, are inactive or are locked out, the PA AppSec jobs fails.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=instance-security-center.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>User "instance.sec.user" is inactive or locked out</name>
+        <priority>2</priority>
+        <resolution_details>Set the "Active" field to "true" and the "Locked out" field to false for the "instance.sec.user" user account.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_854aa9091b9d1910ef13a9b4bd4bcb18','')=='' &amp;&amp;(GlidePluginManager.isActive('sn_isc_core'))</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>User "instance.sec.user" is inactive or locked out</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-12 05:30:55</sys_created_on>
+        <sys_id>854aa9091b9d1910ef13a9b4bd4bcb18</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>User "instance.sec.user" is inactive or locked out</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_854aa9091b9d1910ef13a9b4bd4bcb18</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:38</sys_updated_on>
+        <table>sys_user</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=854aa9091b9d1910ef13a9b4bd4bcb18"/>
+</record_update>

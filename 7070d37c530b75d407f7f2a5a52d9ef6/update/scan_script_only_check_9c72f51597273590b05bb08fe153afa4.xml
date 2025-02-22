@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>The system property "com.glide.csp.self_script_src_svg" adds "script-src none" to the Content-Security-Policy header when SVGs are accessed via the ".iix" file extension, which prevents the exploitation of stored XSS from crafted file attachments stored within the instance. Without this policy, a malicious actor could trick a user into running arbitrary JavaScript code in their web browser leading to consequences such as data exfiltration or session takeover.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-set-safe-content-security-policy-for-svg-files.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Safe Content Security Policy for SVG Files is not enforced</name>
+        <priority>2</priority>
+        <resolution_details>Make sure the system property "com.glide.csp.self_script_src_svg" is set to "true"</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_9c72f51597273590b05bb08fe153afa4','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+      
+	var _strPropertyName = 'com.glide.csp.self_script_src_svg';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+		
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+	
+})(engine);
+]]></script>
+        <short_description>Safe Content Security Policy for SVG Files is not enforced</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-04 13:28:41</sys_created_on>
+        <sys_id>9c72f51597273590b05bb08fe153afa4</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Safe Content Security Policy for SVG Files is not enforced</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_9c72f51597273590b05bb08fe153afa4</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 14:35:18</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=9c72f51597273590b05bb08fe153afa4"/>
+</record_update>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>The system property "glide.security.manager" contains Java classname of current Java security manager. ServiceNow has standardized on the Contextual Security Manager. If "glide.security.manager" is not set to the recommended value of "com.glide.sys.security.ContextualSecurityManager", then the instance may be using an obsolete Java security manager which is missing expected hardening policies. Without this hardening, it may be possible for a malicious actor with script execution access to achieve remote code execution on the instance.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-enable-the-hardened-java-security-manager.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Hardened Java Security Manager is not enabled</name>
+        <priority>2</priority>
+        <resolution_details>Ensure the system property "glide.security.manager" is set to "com.glide.sys.security.ContextualSecurityManager".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_1e8c36fd97efb590b05bb08fe153af15','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+	var _strPropertyName = 'glide.security.manager';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			_strPropertyType !== 'string' || 
+			_strPropertyValue !== 'com.glide.sys.security.contextualsecuritymanager';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}	
+})(engine);]]></script>
+        <short_description>Hardened Java Security Manager is not enabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-06 08:09:23</sys_created_on>
+        <sys_id>1e8c36fd97efb590b05bb08fe153af15</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Hardened Java Security Manager is not enabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_1e8c36fd97efb590b05bb08fe153af15</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:29</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=1e8c36fd97efb590b05bb08fe153af15"/>
+</record_update>

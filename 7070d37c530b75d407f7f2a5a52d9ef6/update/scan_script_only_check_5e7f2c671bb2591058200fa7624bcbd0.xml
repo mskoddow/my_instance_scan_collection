@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>Activate the Explicit Role (com.glide.explicit_roles) plugin to provide the instance with the new snc_internal and snc_external roles for B2B and B2C applications, preventing external users from accessing internal data. Enterprise users (employees) must have the internal role while non-enterprise users (non-employees) must have the external role.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=explicit-role-plugin.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Explicit Roles Plugin is not activated</name>
+        <priority>3</priority>
+        <resolution_details>Ensure the plugin "com.glide.explicit_roles" is activated.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_5e7f2c671bb2591058200fa7624bcbd0','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+	
+  if (!GlidePluginManager.isActive('com.glide.explicit_roles'))
+    engine.finding.increment();
+	
+})(engine);]]></script>
+        <short_description>Explicit Roles Plugin is not activated</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-02 09:13:02</sys_created_on>
+        <sys_id>5e7f2c671bb2591058200fa7624bcbd0</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Explicit Roles Plugin is not activated</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_5e7f2c671bb2591058200fa7624bcbd0</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:35</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=5e7f2c671bb2591058200fa7624bcbd0"/>
+</record_update>

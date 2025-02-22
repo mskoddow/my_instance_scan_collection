@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <category>security</category>
+        <conditions table="sys_db_object">nameNOT LIKEm2m^sys_created_by!=system^super_class.name!=sys_import_set_row^sys_scope.scope!=polaris_app_shell<item endquery="false" field="name" goto="false" newquery="false" operator="NOT LIKE" or="false" value="m2m"/>
+            <item endquery="false" field="sys_created_by" goto="false" newquery="false" operator="!=" or="false" value="system"/>
+            <item endquery="false" field="super_class.name" goto="false" newquery="false" operator="!=" or="false" value="sys_import_set_row"/>
+            <item endquery="false" field="sys_scope.scope" goto="false" newquery="false" operator="!=" or="false" value="polaris_app_shell"/>
+        </conditions>
+        <description>Tables should be secured with access controls, data in the table should be limited access to only necessary audience.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0753582</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Missing ACLs on Tables</name>
+        <priority>2</priority>
+        <resolution_details>Make sure that all tables should have ACL's. Rules for access control lists (ACLs) restrict access to data by requiring users to pass a set of requirements before they can interact with it.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_58fc0e0c1bd11110ef13a9b4bd4bcb96','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grACL = new GlideRecord('sys_security_acl');
+
+	_grACL.addQuery('name', 'CONTAINS', engine.current.name);
+	_grACL.addActiveQuery();
+	_grACL.setLimit(1);
+	_grACL.query();
+
+	if (!_grACL.next()) {
+		engine.finding.setCurrentSource(current);
+		engine.finding.increment();
+	}
+
+})(engine);]]></script>
+        <short_description>Missing ACLs on Tables</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-09 05:28:30</sys_created_on>
+        <sys_id>58fc0e0c1bd11110ef13a9b4bd4bcb96</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Missing ACLs on Tables</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_58fc0e0c1bd11110ef13a9b4bd4bcb96</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-09-30 03:10:05</sys_updated_on>
+        <table>sys_db_object</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=58fc0e0c1bd11110ef13a9b4bd4bcb96"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>58fc0e0c1bd11110ef13a9b4bd4bcb96</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-09-30 03:10:04</sys_created_on>
+        <sys_id>3a12cac8834dd210c1321429feaad3f3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-09-30 03:10:04</sys_updated_on>
+        <table>scan_table_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

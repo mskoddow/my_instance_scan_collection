@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>The "bm.scheduler" user accpunt is required for Benchmarks data collection.  If the "bm.scheduler" user does not exist, is inactive or is locked out, the Benchmarks data collection fails.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=c_BenchOverview.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>User "bm.scheduler" is missing</name>
+        <priority>2</priority>
+        <resolution_details>Restore the "bm.scheduler" user account.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_e91740a21bcc2150ef13a9b4bd4bcb48','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grUser = new GlideRecord('sys_user');
+
+	if (!_grUser.get('user_name', 'bm.scheduler')) {
+		engine.finding.increment();
+	}
+	
+})(engine);]]></script>
+        <short_description>User "bm.scheduler" is missing</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-12-31 07:01:09</sys_created_on>
+        <sys_id>e91740a21bcc2150ef13a9b4bd4bcb48</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>User "bm.scheduler" is missing</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_e91740a21bcc2150ef13a9b4bd4bcb48</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:45</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=e91740a21bcc2150ef13a9b4bd4bcb48"/>
+</record_update>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>This property enforces multi-factor authentication based on the roles assigned to the user. If this property is set to true, then it will enforce role-based multi-factor authentication for all users described in the multi_factor_criteria table. This table enforces multi-factor authentication based on the roles assigned to the user. If a user has been assigned "admin", "security_admin" or "user_admin" roles in the multi-factor roles list, MFA will be enforced.</description>
+        <documentation_url>https://docs.servicenow.com/?context=CSHelp:role-based-multi-factor-authentication&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Role Based Multi-Factor Authentication is not enabled</name>
+        <priority>2</priority>
+        <resolution_details>Ensure "multi_factor_criteria" table has a "Role base multi-factor authentication" record with the "Active" field set to "true" in case system property "glide.authenticate.multifactor" is set to "true"</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_9b9f20a71bb2591058200fa7624bcb04','')=='' &amp;&amp;(String(gs.getProperty('glide.authenticate.multifactor', '')).trim() === 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+ 
+  var _grMfaCriteria = new GlideRecord('multi_factor_criteria');
+	
+  _grMfaCriteria.addQuery('sys_id', 'd427668b73003300fdbd04fbc4f6a7b6');
+  _grMfaCriteria.addQuery('active', 'true');
+  _grMfaCriteria.query();
+
+  if (!_grMfaCriteria.hasNext()) {
+    engine.finding.increment();
+  } 
+	
+})(engine);]]></script>
+        <short_description>Role Based Multi-Factor Authentication is not enabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-02 09:13:38</sys_created_on>
+        <sys_id>9b9f20a71bb2591058200fa7624bcb04</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Role Based Multi-Factor Authentication is not enabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_9b9f20a71bb2591058200fa7624bcb04</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-20 12:29:07</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=9b9f20a71bb2591058200fa7624bcb04"/>
+</record_update>

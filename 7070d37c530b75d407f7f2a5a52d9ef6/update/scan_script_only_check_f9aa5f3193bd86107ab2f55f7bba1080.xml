@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>It is likely that almost every ServiceNow customer will encounter the issue of orphaned attachments on their instance. This can occur for a number of reasons, including incorrect configuration of the Table Cleaner, the addition of attachments to a new record that is subsequently abandoned, or incorrect manual data cleanups. These orphan attachments are of no use and cannot be used by anyone. They consume valuable table space and negatively impact performance. They will also contribute to database footprint over licensing.</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Orphaned Attachments</name>
+        <priority>3</priority>
+        <resolution_details>Verify that referenced target records still exist in the system. If not, the corresponding attachments are orphaned and may no longer be needed. </resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_f9aa5f3193bd86107ab2f55f7bba1080','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grAttachment    = new GlideRecord('sys_attachment');
+	var _grScriptInclude = new GlideRecord('sys_script_include');
+	var _grDbObject      = new GlideRecord('sys_db_object');
+	var _objEval         = new GlideScopedEvaluator();
+	var _objCachedScopes = {};
+
+	_grScriptInclude.addEncodedQuery('sys_scope=global');
+	_grScriptInclude.setLimit(1);
+	_grScriptInclude.query();
+	_grScriptInclude.next();
+
+	_grAttachment.addEncodedQuery(
+		'file_nameISNOTEMPTY'+
+		'^table_nameISNOTEMPTY' +
+		'^table_nameNOT LIKEinvisible.' +
+		'^table_name!=sys_attachment'
+	);
+	_grAttachment.query();
+
+
+	while (_grAttachment.next()) {
+		var _strTableName  = _grAttachment.getValue('table_name');
+		var _strTableSysID = _grAttachment.getValue('table_sys_id');
+
+		if (_strTableName.startsWith('ZZ_YY')) {
+			_strTableName = _strTableName.substring(5);
+		}
+
+		if (gs.tableExists(_strTableName)) {
+			var _strScope = _objCachedScopes[_strTableName] || null;
+
+			if (_strScope === null && _grDbObject.get('name', _strTableName)) {
+				_strScope                       = _grDbObject.getValue('sys_scope') || null;
+				_objCachedScopes[_strTableName] = _strScope;
+			}
+
+			if (_strScope !== null) {
+				_grScriptInclude.setValue('sys_scope', _strScope);
+
+				_grScriptInclude.script = 
+					"result = new GlideRecord('" + _strTableName + "').get('" + _strTableSysID + "');";
+
+				_objEval.putVariable('result', null);
+				_objEval.evaluateScript(_grScriptInclude, 'script');
+
+				if (!_objEval.getVariable('result')) {
+					engine.finding.setCurrentSource(_grAttachment);
+					engine.finding.increment();
+					engine.finding.setValue(
+						'finding_details',
+						'Referenced table: ' + _strTableName
+					);					
+				}
+			}
+		}
+		else {
+			engine.finding.setCurrentSource(_grAttachment);
+			engine.finding.increment();
+			engine.finding.setValue(
+				'finding_details',
+				'Referenced table "' + _strTableName + '" does not exist in that instance!'
+			);
+		}
+	}			
+
+})(engine);]]></script>
+        <short_description>Orphaned Attachments</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-04-27 07:06:35</sys_created_on>
+        <sys_id>f9aa5f3193bd86107ab2f55f7bba1080</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Orphaned Attachments</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_f9aa5f3193bd86107ab2f55f7bba1080</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-05-10 04:23:49</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=f9aa5f3193bd86107ab2f55f7bba1080"/>
+</record_update>

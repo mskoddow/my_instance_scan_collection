@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>If rollback is not cleaned up, shadow tables can grow extremely big.  It can cause degrated performance when deleting records from the tables and longer altering time. </description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=rollback-delete-recovery.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>"Clean Expired Rollback Contexts" Schedule does not exist</name>
+        <priority>4</priority>
+        <resolution_details>Set job to active. </resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_8684487297cd3110b05bb08fe153afe8','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grSchedule = new GlideRecord('sys_trigger');
+	
+	if (!_grSchedule.get('name', 'Clean Expired Rollback Contexts')) {
+		engine.finding.increment();
+	}
+
+})(engine);]]></script>
+        <short_description>"Clean Expired Rollback Contexts" Schedule does not exist</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-09-06 14:42:24</sys_created_on>
+        <sys_id>8684487297cd3110b05bb08fe153afe8</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>"Clean Expired Rollback Contexts" Schedule does not exist</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_8684487297cd3110b05bb08fe153afe8</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:39</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=8684487297cd3110b05bb08fe153afe8"/>
+</record_update>

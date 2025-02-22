@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>user_experience</category>
+        <description>This check will determine if sys_security_acl.do?sys_id=90029ca10a0a0b440114ffbb79bfe100 contains the following roles report_scheduler, report_global, report_publisher, report_group as per PRB1437770.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0862896</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Issue from PRB1437770 is present</name>
+        <priority>1</priority>
+        <resolution_details>See https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0862896 for details on how to resolve this.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_cedb883a97cd3110b05bb08fe153afff','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+    var _strRoleName = '';
+    var _arrRoles    = ['report_scheduler', 'report_global', 'report_publisher', 'report_group'];
+    var _grAclRole   = new GlideRecord('sys_security_acl_role');
+
+    _grAclRole.addEncodedQuery('sys_security_acl.sys_id=90029ca10a0a0b440114ffbb79bfe100');
+    _grAclRole.query();
+
+    while (_grAclRole.next()) {
+        _strRoleName = _grAclRole.getDisplayValue('sys_user_role');
+
+        if (_arrRoles.indexOf(_strRoleName) >= 0) {
+            engine.finding.setCurrentSource(_grAclRole);
+            engine.finding.increment();
+        }
+    }
+
+})(engine);]]></script>
+        <short_description>Issue from PRB1437770 is present</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-09-06 15:14:21</sys_created_on>
+        <sys_id>cedb883a97cd3110b05bb08fe153afff</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Issue from PRB1437770 is present</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_cedb883a97cd3110b05bb08fe153afff</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:43</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=cedb883a97cd3110b05bb08fe153afff"/>
+</record_update>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_user">user_name=sharedservice.worker^locked_out=true^ORactive=false^EQ<item endquery="false" field="user_name" goto="false" newquery="false" operator="=" or="false" value="sharedservice.worker"/>
+            <item endquery="false" field="locked_out" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="false" field="active" goto="false" newquery="false" operator="=" or="true" value="false"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>The solution training for predictive intelligence uses the out-of-the-box user account "sharedservice.worker". If that user does not exist, is inactive or is locked out, the solution training will fail due to user authentication.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=troubleshooting-predictive-intelligence.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>User "sharedservice.worker" is inactive or locked out</name>
+        <priority>2</priority>
+        <resolution_details>Set the "Active" field to "true" and the "Locked out" field to "false" for the "sharedservice.worker" user account.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_4d8a133d1bccad10ef13a9b4bd4bcb44','')=='' &amp;&amp;(GlidePluginManager.isActive('com.glide.platform_ml'))</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>User "sharedservice.worker" is inactive or locked out</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-12-29 14:29:28</sys_created_on>
+        <sys_id>4d8a133d1bccad10ef13a9b4bd4bcb44</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>User "sharedservice.worker" is inactive or locked out</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_4d8a133d1bccad10ef13a9b4bd4bcb44</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:34</sys_updated_on>
+        <table>sys_user</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=4d8a133d1bccad10ef13a9b4bd4bcb44"/>
+</record_update>

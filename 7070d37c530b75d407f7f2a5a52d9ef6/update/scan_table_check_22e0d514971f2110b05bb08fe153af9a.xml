@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <category>security</category>
+        <conditions table="sys_email_account">active=true^authentication=password^type=smtp^ORtype=imap^EQ<item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item display_value="Password" endquery="false" field="authentication" goto="false" newquery="false" operator="=" or="false" value="password"/>
+            <item display_value="SMTP" endquery="false" field="type" goto="false" newquery="false" operator="=" or="false" value="smtp"/>
+            <item display_value="IMAP" endquery="false" field="type" goto="false" newquery="false" operator="=" or="true" value="imap"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>Basic Auth as authentication method for Microsoft Email servers is deprecated.  </description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0781513</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Deprecated Method "Basic Auth" is used for a Microsoft Email Server</name>
+        <priority>3</priority>
+        <resolution_details>Check if instance has any email accounts connecting to Microsoft using basic auth and notify customers that they should use OAuth.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_22e0d514971f2110b05bb08fe153af9a','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+    var _strServer = String(current.getValue('server') || '').trim().toLowerCase();
+
+	if (_strServer == 'smtp.office365.com' || _strServer == 'outlook.office365.com') {
+        engine.finding.setCurrentSource(current);
+        engine.finding.increment();
+    }
+
+})(engine);]]></script>
+        <short_description>Deprecated Method "Basic Auth" is used for a Microsoft Email Server</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-06-04 02:01:26</sys_created_on>
+        <sys_id>22e0d514971f2110b05bb08fe153af9a</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Deprecated Method "Basic Auth" is used for a Microsoft Email Server</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_22e0d514971f2110b05bb08fe153af9a</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:30</sys_updated_on>
+        <table>sys_email_account</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=22e0d514971f2110b05bb08fe153af9a"/>
+</record_update>

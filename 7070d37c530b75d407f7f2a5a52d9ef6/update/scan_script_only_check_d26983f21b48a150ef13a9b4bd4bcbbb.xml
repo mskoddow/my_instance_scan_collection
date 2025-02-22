@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>Verify all the senders must have required role to trigger inbound action.</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Inbound Email Actions without requiring Roles</name>
+        <priority>1</priority>
+        <resolution_details>All inbound actions should have roles mentioned in "Required roles" field to secure actions triggered from inbound actions, only users with the required roles should be allowed to trigger inbound action</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_d26983f21b48a150ef13a9b4bd4bcbbb','')=='' &amp;&amp;(gs.getProperty('glide.email.read.active', 'false') === 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var grScannedRecords = new GlideRecord('sysevent_in_email_action');
+
+	grScannedRecords.addEncodedQuery('active=true^required_roles=^ORrequired_roles=NULL');
+	grScannedRecords.query();
+
+	while (grScannedRecords.next()) {
+		engine.finding.setCurrentSource(grScannedRecords);
+		engine.finding.increment();		
+	}	
+
+})(engine);]]></script>
+        <short_description>Inbound Email Actions without requiring Roles</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-01-01 15:50:38</sys_created_on>
+        <sys_id>d26983f21b48a150ef13a9b4bd4bcbbb</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Inbound Email Actions without requiring Roles</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_d26983f21b48a150ef13a9b4bd4bcbbb</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:44</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=d26983f21b48a150ef13a9b4bd4bcbbb"/>
+</record_update>

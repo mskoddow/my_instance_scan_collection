@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>security</category>
+        <conditions table="sys_security_acl_role">sys_user_role.name=snc_external^sys_security_acl.active=true^sys_security_acl.nameSTARTSWITHsys_audit<item endquery="false" field="sys_user_role.name" goto="false" newquery="false" operator="=" or="false" value="snc_external"/>
+            <item endquery="false" field="sys_security_acl.active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="false" field="sys_security_acl.name" goto="false" newquery="false" operator="STARTSWITH" or="false" value="sys_audit"/>
+        </conditions>
+        <description>This definition checks if the sys_audit table can be accessed by all external users.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=access-control-rules.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>External Users have Access to the "sys_audit" Table</name>
+        <priority>2</priority>
+        <resolution_details>Remove the "snc_external" role from all ACLs related to the "sys_audit" table.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_0219f50c1ba55110ef13a9b4bd4bcb20','')=='' &amp;&amp; GlidePluginManager.isActive('com.glide.explicit_roles')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script/>
+        <short_description>External Users have Access to the "sys_audit" Table</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-21 14:17:28</sys_created_on>
+        <sys_id>0219f50c1ba55110ef13a9b4bd4bcb20</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>External Users have Access to the "sys_audit" Table</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_0219f50c1ba55110ef13a9b4bd4bcb20</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-06 14:36:32</sys_updated_on>
+        <table>sys_security_acl_role</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=0219f50c1ba55110ef13a9b4bd4bcb20"/>
+</record_update>

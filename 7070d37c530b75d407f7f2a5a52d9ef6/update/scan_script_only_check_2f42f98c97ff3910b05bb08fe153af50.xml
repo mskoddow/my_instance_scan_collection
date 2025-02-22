@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>An out of band verifier is an alternate delivery method for a one time code for situations such as a need to reset an multifactor token. If this method is enabled by administrators in the Service Now Multifactor plugin, this allows a one-time code to be delivered via email.  If used, one-time out of band verifiers should expire after 10 minutes to limit the validty window. A larger time window allows more time for the code to be compromised such as through phishing, social engineering or shoulder surfing attacks which could lead to bypass of multi factor authentication and unauthorized access to the account.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-short-one-time-out-of-band-verifier-lifetime.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>The "one-time out of band" Verifier Lifetime exceeds the recommended Value</name>
+        <priority>4</priority>
+        <resolution_details>Set the value of "glide.multifactor.onetime.code.validity" to the recommended value of "10" or less.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_2f42f98c97ff3910b05bb08fe153af50','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.multifactor.onetime.code.validity';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = false;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		var _numPropertyValue = parseInt(_strPropertyValue, 10);
+		
+		_hasFinding = 
+			_strPropertyType !== 'integer' || 
+			isNaN(_numPropertyValue) || 
+			_numPropertyValue > 10 ||
+			_numPropertyValue < 0;
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}	
+
+})(engine);]]></script>
+        <short_description>The "one-time out of band" Verifier Lifetime exceeds the recommended Value</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-13 02:31:23</sys_created_on>
+        <sys_id>2f42f98c97ff3910b05bb08fe153af50</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>The "one-time out of band" Verifier Lifetime exceeds the recommended Value</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_2f42f98c97ff3910b05bb08fe153af50</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:31</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=2f42f98c97ff3910b05bb08fe153af50"/>
+</record_update>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_check_suite_check">
+    <scan_check_suite_check action="INSERT_OR_UPDATE">
+        <check display_value="Notification configured without a template">68c08d7d934a06107ab2f55f7bba1064</check>
+        <score_weight>1</score_weight>
+        <suite display_value="[My Instance Scan Collection] Implementation">0845c50a2f3b11106daa821df699b697</suite>
+        <sys_class_name>scan_check_suite_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-05-09 05:46:00</sys_created_on>
+        <sys_id>83d001bd934a06107ab2f55f7bba107d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_check_suite_check_83d001bd934a06107ab2f55f7bba107d</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-05-09 05:46:00</sys_updated_on>
+    </scan_check_suite_check>
+</record_update>

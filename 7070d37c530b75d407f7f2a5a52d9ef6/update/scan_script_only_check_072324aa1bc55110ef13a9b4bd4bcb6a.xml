@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>In general, for a single record only a few Workflow context will be running. If a high number of Workflow context are active, this often indicates an issue on the starting conditions of your Workflow. More then 10 active Workflow context is considered being a high number. </description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0538528</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>High Number of Workflows running for a single Record</name>
+        <priority>2</priority>
+        <resolution_details>Resolve the high number of triggered Workflow context and investigate the starting conditions of your Workflow and correct where necessary.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_072324aa1bc55110ef13a9b4bd4bcb6a','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var grCountWfContext = new GlideAggregate('wf_context');
+	
+	grCountWfContext.addEncodedQuery('active=true^state=executing');
+	grCountWfContext.groupBy('id');
+	grCountWfContext.addAggregate('COUNT');
+	grCountWfContext.query();
+
+	while (grCountWfContext.next()) {
+		if (grCountWfContext.getAggregate('COUNT') > 10) {
+			var grWfContext = new GlideRecord('wf_context');
+			
+			if (grWfContext.get('id', grCountWfContext.id)) {
+				var grScanFinding = new GlideRecord(grWfContext.getValue('table'));
+
+				if (grScanFinding.get(grWfContext.getValue('id'))) {
+					engine.finding.setCurrentSource(grScanFinding);
+					engine.finding.increment();
+				}
+			}
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>High Number of Workflows running for a single Record</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-04 05:55:29</sys_created_on>
+        <sys_id>072324aa1bc55110ef13a9b4bd4bcb6a</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>High Number of Workflows running for a single Record</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_072324aa1bc55110ef13a9b4bd4bcb6a</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:27</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=072324aa1bc55110ef13a9b4bd4bcb6a"/>
+</record_update>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>security</category>
+        <conditions table="sys_processor">active=true^require_csrf=false^type=script^EQ<item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="false" field="require_csrf" goto="false" newquery="false" operator="=" or="false" value="false"/>
+            <item display_value="script" endquery="false" field="type" goto="false" newquery="false" operator="=" or="false" value="script"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>All Processors of type "SCRIPT" must be protected with CSRF Token. CSRF Option should be checked for all Active Processors. This Option is to protect the processor from running unless the instance uses a CSRF token.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=t_SecureAProcessor.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Missing CSRF Token Protection for Processors of Type "SCRIPT"</name>
+        <priority>2</priority>
+        <resolution_details/>
+        <run_condition>gs.getProperty('scan_table_check_c02304b81b1d5510ef13a9b4bd4bcba5','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Missing CSRF Token Protection for Processors of Type "SCRIPT"</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-11 03:21:48</sys_created_on>
+        <sys_id>c02304b81b1d5510ef13a9b4bd4bcba5</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Missing CSRF Token Protection for Processors of Type "SCRIPT"</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_c02304b81b1d5510ef13a9b4bd4bcba5</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:42</sys_updated_on>
+        <table>sys_processor</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=c02304b81b1d5510ef13a9b4bd4bcba5"/>
+</record_update>

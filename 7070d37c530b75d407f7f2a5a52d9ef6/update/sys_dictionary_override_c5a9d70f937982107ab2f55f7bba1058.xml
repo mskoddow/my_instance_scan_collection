@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_dictionary_override">
+    <sys_dictionary_override action="INSERT_OR_UPDATE">
+        <attributes>condition_builder=v2,allow_related_list_query=true</attributes>
+        <attributes_override>true</attributes_override>
+        <base_table>scan_check</base_table>
+        <calculation/>
+        <calculation_override>false</calculation_override>
+        <default_value>Software License</default_value>
+        <default_value_override>false</default_value_override>
+        <dependent/>
+        <dependent_override>false</dependent_override>
+        <display_override>false</display_override>
+        <element>conditions</element>
+        <mandatory>false</mandatory>
+        <mandatory_override>false</mandatory_override>
+        <name>scan_table_check</name>
+        <read_only>false</read_only>
+        <read_only_override>false</read_only_override>
+        <reference_qual/>
+        <reference_qual_override>false</reference_qual_override>
+        <sys_class_name>sys_dictionary_override</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-05-01 03:50:13</sys_created_on>
+        <sys_id>c5a9d70f937982107ab2f55f7bba1058</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>conditions</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>sys_dictionary_override_c5a9d70f937982107ab2f55f7bba1058</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-05-01 03:53:46</sys_updated_on>
+    </sys_dictionary_override>
+    <sys_claim action="INSERT_OR_UPDATE">
+        <claim_owner_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</claim_owner_scope>
+        <claim_timestamp>18f324978710000001</claim_timestamp>
+        <metadata_update_name>sys_dictionary_override_c5a9d70f937982107ab2f55f7bba1058</metadata_update_name>
+        <previous_claim_app_version>2024.02</previous_claim_app_version>
+        <previous_claim_name>TSI Instance Scan</previous_claim_name>
+        <previous_claim_scope>7070d37c530b75d407f7f2a5a52d9ef6</previous_claim_scope>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-05-01 03:53:46</sys_created_on>
+        <sys_id>497a538f937982107ab2f55f7bba1091</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-05-01 03:53:46</sys_updated_on>
+    </sys_claim>
+</record_update>

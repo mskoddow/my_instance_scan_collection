@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_check_suite_check">
+    <scan_check_suite_check action="INSERT_OR_UPDATE">
+        <check display_value="Honoring Admin Override ACLs is not enabled">efe78c671b32591058200fa7624bcb08</check>
+        <score_weight>1</score_weight>
+        <suite display_value="[My Instance Scan Collection] Security">1cbeb4822f3b11106daa821df699b63a</suite>
+        <sys_class_name>scan_check_suite_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-07 06:09:16</sys_created_on>
+        <sys_id>0f55f9811bc75110ef13a9b4bd4bcbed</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_check_suite_check_0f55f9811bc75110ef13a9b4bd4bcbed</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2022-12-17 13:09:17</sys_updated_on>
+    </scan_check_suite_check>
+</record_update>

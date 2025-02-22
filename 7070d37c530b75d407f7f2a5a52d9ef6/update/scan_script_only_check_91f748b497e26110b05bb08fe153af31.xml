@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>Even when the "Advanced" checkbox is unchecked on any Business Rules, the code in the "Script" field is still executing, and it is still impacting the behavior of the Business Rule (and impacting system performance).</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=c_BusinessRules.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Hidden Business Rule Scripts which could be executed</name>
+        <priority>2</priority>
+        <resolution_details>Examine the findings and decide how to deal with the code within the "Script" field.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_91f748b497e26110b05bb08fe153af31','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    var _grBR = new GlideRecord('sys_script');
+
+	var _strDefaultCode = 
+		'(functionexecuteRule(current,previous/*nullwhenasync*/){//Addyourcodehere})(current,previous);';	
+
+	_grBR.addActiveQuery();
+	_grBR.addEncodedQuery('advanced=false^scriptISNOTEMPTY');
+	_grBR.query();
+	
+	while (_grBR.next()) {
+		if (_grBR.script.toString().replace(/\s/g,'') !== _strDefaultCode) {
+			engine.finding.setCurrentSource(_grBR);
+			engine.finding.increment();
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>Hidden Business Rule Scripts which could be executed</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-29 03:12:34</sys_created_on>
+        <sys_id>91f748b497e26110b05bb08fe153af31</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>Hidden Business Rule Scripts which could be executed</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_91f748b497e26110b05bb08fe153af31</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-17 02:47:56</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=91f748b497e26110b05bb08fe153af31"/>
+</record_update>

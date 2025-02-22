@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>It's a good practice to leave the default admin account enabled, leaving the admin role(s) intact, leaving fields like enable multifactor authentication and web service access only untouched. The default admin account is your fallback account in case no admin accounts are working anymore (e.g. user record deleted or deactivated, roles removed).
+The default admin account is out-of-the-box also used on several places like scheduled jobs that might fail.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0610548</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>User "admin" has not the "admin" Role</name>
+        <priority>1</priority>
+        <resolution_details>Restore the "admin" role on the "admin" user.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_f574c3d81bdd9110ef13a9b4bd4bcb1e','')=='' &amp;&amp;(new GlideRecord('sys_user').get('user_name', 'admin'))</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var grUserHasRole = new GlideRecord('sys_user_has_role');
+	
+	grUserHasRole.addQuery('user.user_name=admin^role.name=admin');
+	grUserHasRole.setLimit(1);
+	grUserHasRole.query();
+
+	if (!grUserHasRole.next()) {
+		var grUser = new GlideRecord('sys_user');
+
+		if (grUser.get('user_name', 'admin')) {
+			engine.finding.setCurrentSource(grUser);
+		}
+		
+		engine.finding.increment();
+	}
+
+})(engine);]]></script>
+        <short_description>User "admin" has not the "admin" Role</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-10 04:09:34</sys_created_on>
+        <sys_id>f574c3d81bdd9110ef13a9b4bd4bcb1e</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>User "admin" has not the "admin" Role</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_f574c3d81bdd9110ef13a9b4bd4bcb1e</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:46</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=f574c3d81bdd9110ef13a9b4bd4bcb1e"/>
+</record_update>

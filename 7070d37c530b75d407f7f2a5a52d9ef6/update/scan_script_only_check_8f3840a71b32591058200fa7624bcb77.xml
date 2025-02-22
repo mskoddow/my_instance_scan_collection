@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>If "glide.ip.authenticate.strict" is set to "true", then only IP ranges specified in "glide.ip.authenticate.allow.secured" can make inbound connections to the instance. This property contains a list of only essential ServiceNow internal IP ranges (Secure VPN, DC).
+
+If "glide.ip.authenticate.allow.secured" is not set to the recommended value of "10.0.0.0/8, 37.98.232.0/21, 103.23.64.0/22, 149.96.0.0/17, 149.96.0.0/16, 199.91.136.0/21, 148.139.0.0/16, 127.0.0.1, 0:0:0:0:0:0:0:1", it may allow untrusted sources outside of SN DataCenter and secure VPN to access sensitive monitoring endpoints on instances.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=strict-ip-restriction.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>IP Addresses Access Allowlist is not set</name>
+        <priority>4</priority>
+        <resolution_details>Ensure the property "glide.ip.authenticate.allow.secured" is set to "10.0.0.0/8, 37.98.232.0/21, 103.23.64.0/22, 149.96.0.0/17, 149.96.0.0/16, 199.91.136.0/21, 148.139.0.0/16, 127.0.0.1, 0:0:0:0:0:0:0:1".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_8f3840a71b32591058200fa7624bcb77','')=='' &amp;&amp;(gs.getProperty('glide.ip.authenticate.strict', '') === 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+	var _strPropertyName  = 'glide.ip.authenticate.allow.secured';
+	var _grProperty       = new GlideRecord('sys_properties');
+	var _hasFinding       = true;
+	var _strExpectedValue = 
+		'10.0.0.0/8, 37.98.232.0/21, 103.23.64.0/22, 149.96.0.0/17, 149.96.0.0/16, 199.91.136.0/21, 148.139.0.0/16, 127.0.0.1, 0:0:0:0:0:0:0:1';
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+
+		_hasFinding = !(_strPropertyType === 'string' && _strPropertyValue === _strExpectedValue)
+	}
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+
+		engine.finding.increment();		
+	}
+	
+})(engine);]]></script>
+        <short_description>IP Addresses Access Allowlist is not set</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-02 06:21:35</sys_created_on>
+        <sys_id>8f3840a71b32591058200fa7624bcb77</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>IP Addresses Access Allowlist is not set</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_8f3840a71b32591058200fa7624bcb77</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:39</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=8f3840a71b32591058200fa7624bcb77"/>
+</record_update>

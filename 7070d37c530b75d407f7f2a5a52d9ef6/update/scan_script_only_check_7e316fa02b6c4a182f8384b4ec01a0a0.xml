@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>Documenting artifacts such as configurations, customizations, and workflows ensures that knowledge about the ServiceNow instance is captured and shared among team members. This helps new team members onboard quickly and allows existing members to refer back to documentation when needed. 
+Also well-documented artifacts make it easier to maintain and troubleshoot the ServiceNow instance. Documentation provides insights into the purpose and functionality of various components, enabling administrators and developers to identify and address issues efficiently.</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Missing Description</name>
+        <priority>3</priority>
+        <resolution_details>Add an informative description and, whenever possible, a ticket ID for referencing further details.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_7e316fa02b6c4a182f8384b4ec01a0a0','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	[
+		'sys_script_client',         // Client Scripts
+		'sys_script_include',        // Script Includes
+		'sys_ui_macro',              // UI Macros
+		'sys_ui_action',             // UI Actions
+		'sys_ui_page',               // UI Pages
+		'sys_script',                // Business Rules
+		'sys_ui_policy',             // UI Policies
+		'sys_data_policy2',          // Data Policies
+		'sys_security_acl',          // ACLs
+		'sys_script_fix',            // Fix Scripts
+		'sys_db_view',               // Database Views
+		'sysevent_in_email_action',  // Inbound Email Actions
+		'sysevent_script_action',    // Script Action
+		'sys_properties'             // Properties
+
+	].forEach(function(strTableName) {
+		var _grCurrent           = new GlideRecord(strTableName);
+		var _objUpdateVersionAPI = new global.UpdateVersionAPI();
+
+		_grCurrent.addEncodedQuery('descriptionISEMPTY');
+		_grCurrent.query();
+
+		//reduce the result set to all custom records as we cannot fix all the OOTB records
+		var _arrCustomArtifactSysIDs = _objUpdateVersionAPI.getCustomerFileIds(_grCurrent); 
+		var _numFindings             = _arrCustomArtifactSysIDs.length || 0;
+
+		for (var _numIndex = 0; _numIndex < _numFindings; _numIndex++) {
+			if (_grCurrent.get(_arrCustomArtifactSysIDs[_numIndex])) {
+				engine.finding.setCurrentSource(_grCurrent);
+				engine.finding.increment();
+			}
+		}
+	});
+
+})(engine);]]></script>
+        <short_description>Missing Description</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-02-21 06:49:56</sys_created_on>
+        <sys_id>7e316fa02b6c4a182f8384b4ec01a0a0</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Missing Description</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_7e316fa02b6c4a182f8384b4ec01a0a0</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-05-05 14:02:39</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=7e316fa02b6c4a182f8384b4ec01a0a0"/>
+</record_update>

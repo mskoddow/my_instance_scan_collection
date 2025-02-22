@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_trigger">job_id=d8e37da5c0a80064009ff6d19882218a^state=-1^EQ<item display_table="sys_job" display_value="SMTP Sender" endquery="false" field="job_id" goto="false" newquery="false" operator="=" or="false" value="d8e37da5c0a80064009ff6d19882218a"/>
+            <item display_value="Error" endquery="false" field="state" goto="false" newquery="false" operator="=" or="false" value="-1"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>The "SMTP Sender" schedules are responsible for sending email messages to the SMTP server. If these jobs are not running, then no email will be sent from the instance.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0523599</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>"SMTP Sender" Schedule is not running</name>
+        <priority>1</priority>
+        <resolution_details>Set the "SMTP Sender" schedule's "State" field to "Ready". </resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_e748b54c1ba55110ef13a9b4bd4bcb8c','')=='' &amp;&amp;(gs.getProperty('glide.email.smtp.active', '') === 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>"SMTP Sender" Schedule is not running</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-21 14:14:02</sys_created_on>
+        <sys_id>e748b54c1ba55110ef13a9b4bd4bcb8c</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>"SMTP Sender" Schedule is not running</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_e748b54c1ba55110ef13a9b4bd4bcb8c</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-02-10 03:24:21</sys_updated_on>
+        <table>sys_trigger</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=e748b54c1ba55110ef13a9b4bd4bcb8c"/>
+</record_update>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>user_experience</category>
+        <description>If a table has more than one display value then any reference fields pointing to that table may display the wrong value or even remain blank. This might happen, for example, if a child table has its own display value defined, even though the parent table already has a display value configured for another field.</description>
+        <documentation_url>https://hishowcase.service-now.com/kb?id=kb_article_view&amp;sysparm_article=KB0693859</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Tables with more than one or no "Display" Field</name>
+        <priority>3</priority>
+        <resolution_details>Make sure your custom base tables have only field configured with "display" = "true".
+
+In case your custom table is a child of a parent table, which already has a display value configured (for example in the "task" table the display field is "number") use a dictionary override for configuring a different display field.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_a507f9fb97f26910b05bb08fe153afac','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grDbObject = GlideRecord('sys_db_object');
+
+	_grDbObject.query();
+
+	//reduce the result set to all custom records as we cannot fix all the OOTB records
+	var _arrCustomArtifactSysIDs = new global.UpdateVersionAPI().getCustomerFileIds(_grDbObject); 
+	var _numFindings             = _arrCustomArtifactSysIDs.length || 0;
+
+	for (var _numIndex1 = 0; _numIndex1 < _numFindings; _numIndex1++) {
+		if (_grDbObject.get(_arrCustomArtifactSysIDs[_numIndex1])) {
+			var _strTableName     = _grDbObject.getValue('name');
+			var _grTable          = new GlideRecord(_strTableName);
+			var _listElements     = _grTable.getElements();
+			var _numDisplayFields = 0;
+
+			for (var _numIndex2 = 0; _numIndex2 < _listElements.size(); _numIndex2++) {
+				var _objElement = _listElements.get(_numIndex2);
+
+				if (_objElement.getED().isDisplay()) {
+					_numDisplayFields++;
+				}
+			}
+
+			if (_numDisplayFields !== 1) {
+				engine.finding.setCurrentSource(_grDbObject);
+				engine.finding.increment();
+			}
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>Tables with more than one or no "Display" Field</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-21 05:27:11</sys_created_on>
+        <sys_id>a507f9fb97f26910b05bb08fe153afac</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Tables with more than one or no "Display" Field</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_a507f9fb97f26910b05bb08fe153afac</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-17 04:08:30</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=a507f9fb97f26910b05bb08fe153afac"/>
+</record_update>

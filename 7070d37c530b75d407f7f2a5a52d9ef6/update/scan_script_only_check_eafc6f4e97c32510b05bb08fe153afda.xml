@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>As an additional layer of security you can your Mobile App users to generate a six-digit PIN code. The PIN must be entered when they log in to an instance from their mobile device, or after the application has been inactive for more than five minutes. If your users have faceID, touchID, or similar biometric security configured on their phone, they can use biometric authentication in place of the PIN.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=require-app-pin.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Requiring an App PIN for the Mobile App is not enabled</name>
+        <priority>2</priority>
+        <resolution_details>Ensure the property "glide.sg.require_mobile_application_pin" is set to "true".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_eafc6f4e97c32510b05bb08fe153afda','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+      
+	var _strPropertyName = 'glide.sg.require_mobile_application_pin';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+	
+})(engine);]]></script>
+        <short_description>Requiring an App PIN for the Mobile App is not enabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-28 13:46:57</sys_created_on>
+        <sys_id>eafc6f4e97c32510b05bb08fe153afda</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Requiring an App PIN for the Mobile App is not enabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_eafc6f4e97c32510b05bb08fe153afda</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 14:00:37</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=eafc6f4e97c32510b05bb08fe153afda"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>eafc6f4e97c32510b05bb08fe153afda</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-04 14:00:36</sys_created_on>
+        <sys_id>935df0a583c15210c1321429feaad3e6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 14:00:36</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

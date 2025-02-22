@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>The Zero Trust- Policy Based Session Access plugin enables security admins to reduce user access in a session based on parameters such as IP address, location, identify provider attributes, and user attributes with adaptive authentication policies.  When this plugin is enabled, the property 'glide.authenticate.session_access.mobile.refresh_token_interval' governs the length of time after which a mobile device user will be forced to re-authenticate. This only applies if the admin has configured the Identity Provider attributes (which can vary for each login) in the session access policy and the user authenticates via Single Sign On . The property value is an integer in seconds. The recommended value is 1800 (30 minutes). A large value may grant a larger timeframe for session access to be hijacked by an attacker.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-limit-policy-based-session-access-mobile-refresh.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Policy Based Session Access Mobile Refresh Token Interval is too large</name>
+        <priority>3</priority>
+        <resolution_details>Ensure the System Property 'glide.authenticate.session_access.mobile.refresh_token_interval' is set to a value of '1800' or below.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_1003dbce83891610c1321429feaad386','')=='' &amp;&amp; GlidePluginManager.isActive('com.snc.zero_trust_session_access')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.authenticate.session_access.mobile.refresh_token_interval';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = false;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		var _numPropertyValue = parseInt(_strPropertyValue, 10);
+		
+		_hasFinding = 
+			_strPropertyType !== 'integer' || 
+			isNaN(_numPropertyValue) || 
+			_numPropertyValue > 1800 ||
+			_numPropertyValue < 0;
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}	
+
+})(engine);]]></script>
+        <short_description>Policy Based Session Access Mobile Refresh Token Interval is too large</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-06 14:11:21</sys_created_on>
+        <sys_id>1003dbce83891610c1321429feaad386</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Policy Based Session Access Mobile Refresh Token Interval is too large</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_1003dbce83891610c1321429feaad386</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-06 14:13:03</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=1003dbce83891610c1321429feaad386"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>1003dbce83891610c1321429feaad386</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-06 14:12:19</sys_created_on>
+        <sys_id>d233978e83891610c1321429feaad394</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-06 14:12:19</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

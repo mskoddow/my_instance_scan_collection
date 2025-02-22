@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>The system property "glide.authenticate.max.concurrent.interactive.sessions" controls the number of active sessions that can be open for a user when the Limit Concurrent Sessions (com.glide.limit.concurrent.sessions) plugin is enabled. It is recommended that this value be the default of "1" to reduce the number of sessions that can be left open for a user. A greater number of open sessions means there are more sessions that can potentially be hijacked.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-glide-authenticate-max-concurrent-interactive-sessions.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>More than 1 concurrent interactive Sessions allowed</name>
+        <priority>3</priority>
+        <resolution_details>Ensure that system property "glide.authenticate.max.concurrent.interactive.sessions" is set to "1" when the "com.glide.limit.concurrent.sessions" plugin is active.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_d78e984697e7f590b05bb08fe153af17','')=='' &amp;&amp;(GlidePluginManager.isActive('com.glide.limit.concurrent.sessions'))</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.authenticate.max.concurrent.interactive.sessions';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		var _numPropertyValue = parseInt(_strPropertyValue, 10);
+		
+		_hasFinding = 
+			_strPropertyType !== 'integer' || 
+			isNaN(_numPropertyValue) || 
+			_numPropertyValue > 1 ||
+			_numPropertyValue < 0;
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}	
+
+})(engine);]]></script>
+        <short_description>More than 1 concurrent interactive Sessions allowed</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-06 15:17:37</sys_created_on>
+        <sys_id>d78e984697e7f590b05bb08fe153af17</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>More than 1 concurrent interactive Sessions allowed</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_d78e984697e7f590b05bb08fe153af17</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:44</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=d78e984697e7f590b05bb08fe153af17"/>
+</record_update>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>user_experience</category>
+        <description>You can set one IdP as the primary IdP to which new users are automatically redirected when they access the base instance URL. You can also set one IdP as the default IdP.  Therefore this check validates if the property "glide.authenticate.sso.redirect.idp" is pointing to a valid identity provider record.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=t_SetTheIdPIssuerURL.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Invalid Multi-SSO configuration</name>
+        <priority>3</priority>
+        <resolution_details>Please adjust property "glide.authenticate.sso.redirect.idp" to point to valid identity provider record in "sso_properties" table.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_a94336f19743e110b05bb08fe153af7f','')=='' &amp;&amp; (GlidePluginManager.isActive('com.snc.integration.sso.multi.installer') &amp;&amp;  gs.getProperty('glide.authenticate.multisso.enabled', '') == 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.authenticate.sso.redirect.idp';
+	var _grProperty      = new GlideRecord('sys_properties');
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strIdpSysId = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		if (!GlideStringUtil.isEligibleSysID(_strIdpSysId)) {
+			engine.finding.setValue(
+				'finding_details', 
+				'System Property "' + _strPropertyName + '" does not represent a valid Sys ID'
+			);
+			engine.finding.increment();
+			return;
+		}
+	
+		var _grSsoProperties = new GlideRecord('sso_properties');
+		
+		_grSsoProperties.addQuery('sys_id', _strIdpSysId);
+		_grSsoProperties.addActiveQuery();
+		_grSsoProperties.query();
+		
+		if (!_grSsoProperties.next()) {
+			engine.finding.setValue(
+				'finding_details', 
+				'For the value "' + _strIdpSysId + '" in system property "' + _strPropertyName +
+				'" no corresponding record at table "sso_properties" could be found'
+			);			
+			engine.finding.increment();
+		}
+	}
+	
+})(engine);]]></script>
+        <short_description>Invalid Multi-SSO configuration</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-27 14:56:08</sys_created_on>
+        <sys_id>a94336f19743e110b05bb08fe153af7f</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Invalid Multi-SSO configuration</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_a94336f19743e110b05bb08fe153af7f</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-26 17:05:46</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=a94336f19743e110b05bb08fe153af7f"/>
+</record_update>

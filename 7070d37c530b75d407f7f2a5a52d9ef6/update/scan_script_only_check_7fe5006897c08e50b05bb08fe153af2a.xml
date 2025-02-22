@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>If system property "glide.import.error_message.generic" is not set to "false" a verbose SQL error message is returned, potentially causing sensitive information disclosure.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-disable-locked-form-elements-debugging.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Enabled Debug Logging on PROD onverbose SQL Error Messages for Import Processor</name>
+        <priority>4</priority>
+        <resolution_details>Ensure thesystem property "glide.import.error_message.generic" is set to "false".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_7fe5006897c08e50b05bb08fe153af2a','') == '' &amp;&amp; gs.getProperty('sn_appclient.instance_type') === 'production'</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+	var _strPropertyName = 'glide.import.error_message.generic';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'false';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+	
+})(engine);]]></script>
+        <short_description>Enabled Debug Logging on PROD onverbose SQL Error Messages for Import Processor</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-26 18:10:34</sys_created_on>
+        <sys_id>7fe5006897c08e50b05bb08fe153af2a</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Enabled Debug Logging on PROD onverbose SQL Error Messages for Import Processor</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_7fe5006897c08e50b05bb08fe153af2a</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-02-10 06:27:49</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=7fe5006897c08e50b05bb08fe153af2a"/>
+</record_update>

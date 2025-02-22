@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>We flag an ACL record as a finding if ACL has no script, no condition, no security attribute, no role or role is public.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB1553688</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Empty ACLs</name>
+        <priority>2</priority>
+        <resolution_details>Ensure ACL has roles, conditions or script.&#13;
+If only the "public" role is configured, the ACLs needs to have a script to make sure no unintended access is provided.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_2c264dbf83b09210c1321429feaad3e3','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grACL         = new GlideRecord('sys_security_acl');
+	var _strPublicRole = 'b0593b350a0a0aa7001d689e4542dc28';
+
+	_grACL.addActiveQuery();
+	_grACL.addNullQuery('condition');
+
+	if (_grACL.isValidField('security_attribute')) {
+		_grACL.addNullQuery('security_attribute');
+	}
+
+	_grACL.query();
+
+	//reduce the result set to all custom records as we cannot fix all the OOTB records
+	var _arrCustomArtifactSysIDs = new global.UpdateVersionAPI().getCustomerFileIds(_grACL); 
+	var _numFindings             = _arrCustomArtifactSysIDs.length || 0;
+
+	for (var _numIndex = 0; _numIndex < _numFindings; _numIndex++) {
+		if (_grACL.get(_arrCustomArtifactSysIDs[_numIndex])) {
+			var _strScript = String(_grACL.getValue('script') || '').trim();
+			var _grRole    = new GlideRecord('sys_security_acl_role');
+
+			_grRole.addQuery('sys_security_acl', _grACL.getUniqueValue());
+			_grRole.query();
+
+			if (_grRole.hasNext()) {
+				while (_grRole.next()) {
+					if (String(_grRole.sys_user_role.sys_id) === _strPublicRole &&
+						_strScript === ''
+					) {
+						engine.finding.setCurrentSource(_grACL);
+						engine.finding.increment();
+						break;
+					}
+				}
+			}
+			else if (_strScript === '') {
+				engine.finding.setCurrentSource(_grACL);
+				engine.finding.increment();
+			}
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>Empty ACLs</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-09-29 04:11:53</sys_created_on>
+        <sys_id>2c264dbf83b09210c1321429feaad3e3</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Empty ACLs</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_2c264dbf83b09210c1321429feaad3e3</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-09-29 04:50:47</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=2c264dbf83b09210c1321429feaad3e3"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>2c264dbf83b09210c1321429feaad3e3</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-09-29 04:11:52</sys_created_on>
+        <sys_id>1aa6c5bf83b09210c1321429feaad3d7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-09-29 04:11:52</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_email">state=ready^sys_created_onRELATIVELT@minute@ago@5^type=send-ready^EQ<item display_value="Ready" endquery="false" field="state" goto="false" newquery="false" operator="=" or="false" value="ready"/>
+            <item endquery="false" field="sys_created_on" goto="false" newquery="false" operator="RELATIVE" or="false" value="LT@minute@ago@5"/>
+            <item display_value="send-ready" endquery="false" field="type" goto="false" newquery="false" operator="=" or="false" value="send-ready"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>Emails with a state 'ready' are processed at the next interval of the SMTP sender schedule (out-of-the-box repeat interval is 1 minute). When there are unprocessed outgoing emails, this can indicate a large volume of outgoing emails, or a processing issue in general.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=r_OutboundMailConfiguration.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Unprocessed Outgoing Emails</name>
+        <priority>1</priority>
+        <resolution_details>Investigate the unprocessed send-ready emails.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_4b3c31c41be55110ef13a9b4bd4bcb06','')=='' &amp;&amp;(gs.getProperty('glide.email.smtp.active', '') === 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Unprocessed Outgoing Emails</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-21 14:31:13</sys_created_on>
+        <sys_id>4b3c31c41be55110ef13a9b4bd4bcb06</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Unprocessed Outgoing Emails</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_4b3c31c41be55110ef13a9b4bd4bcb06</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:33</sys_updated_on>
+        <table>sys_email</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=4b3c31c41be55110ef13a9b4bd4bcb06"/>
+</record_update>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <category>security</category>
+        <conditions table="sys_app">scopeISNOTEMPTY^EQ<item endquery="false" field="scope" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>Having many cross privileges in a custom application, might be an indication that during development these Cross Scope privileges were added unintentionally.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=c_CrossScopePrivilegeRecord.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Unintentional Cross Scope Privileges</name>
+        <priority>3</priority>
+        <resolution_details>Recommendation is to investigate each cross scope privilege and identify whether this is really needed as part of the application. If not remove the privilege.
+Removing privileges might require regression testing to ensure that nothing will break. The extend of testing will depend on the Application size.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_babb7dc01be55110ef13a9b4bd4bcb5c','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+    var numThreshold = 25; 	
+    var grPrivilege  = new GlideAggregate('sys_scope_privilege');
+	
+    grPrivilege.addQuery('sys_scope', engine.current.getValue('sys_id'));
+    grPrivilege.addAggregate('COUNT');
+    grPrivilege.query(); 
+    
+	if (grPrivilege.next()) {
+        if (grPrivilege.getAggregate('COUNT') > numThreshold) {
+            engine.finding.setCurrentSource(current);
+            engine.finding.increment();
+        }
+    }
+
+})(engine);]]></script>
+        <short_description>Unintentional Cross Scope privileges</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-21 14:29:00</sys_created_on>
+        <sys_id>babb7dc01be55110ef13a9b4bd4bcb5c</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Unintentional Cross Scope Privileges</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_babb7dc01be55110ef13a9b4bd4bcb5c</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:42</sys_updated_on>
+        <table>sys_app</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=babb7dc01be55110ef13a9b4bd4bcb5c"/>
+</record_update>

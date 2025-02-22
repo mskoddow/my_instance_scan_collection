@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_script_client">type=onSubmit^scriptNOT LIKEgetActionName^scriptLIKEgetXML(^ORscriptLIKEgetXMLAnswer(<item display_value="onSubmit" endquery="false" field="type" goto="false" newquery="false" operator="=" or="false" value="onSubmit"/>
+            <item endquery="false" field="script" goto="false" newquery="false" operator="NOT LIKE" or="false" value="getActionName"/>
+            <item endquery="false" field="script" goto="false" newquery="false" operator="LIKE" or="false" value="getXML("/>
+            <item endquery="false" field="script" goto="false" newquery="false" operator="LIKE" or="true" value="getXMLAnswer("/>
+        </conditions>
+        <description>The GlideAjax (Asynchronous) does not work on onSubmit Client Script. This is because of the fundamental behavior of Asynchronous scripts which are non-blocking by nature.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0783579</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Usage of asynchronous AJAX calls in onSubmit Client Scripts</name>
+        <priority>4</priority>
+        <resolution_details>Modify the client script as per the following documentation.
+1) https://support.servicenow.com/kb?id=kb_article_view&amp;sys_kb_id=752ed2fddbfc0490d58ea345ca96196e
+2) https://community.servicenow.com/community?id=community_blog&amp;sys_id=dc49feeadbdd7f0c54250b55ca96191d</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_699f5e3897836d10b05bb08fe153af34','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Usage of asynchronous AJAX calls in onSubmit Client Scripts</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-24 10:48:55</sys_created_on>
+        <sys_id>699f5e3897836d10b05bb08fe153af34</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Usage of asynchronous AJAX calls in onSubmit Client Scripts</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_699f5e3897836d10b05bb08fe153af34</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:36</sys_updated_on>
+        <table>sys_script_client</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=699f5e3897836d10b05bb08fe153af34"/>
+</record_update>

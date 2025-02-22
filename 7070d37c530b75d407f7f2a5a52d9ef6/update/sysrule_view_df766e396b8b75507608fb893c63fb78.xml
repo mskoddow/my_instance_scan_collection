@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sysrule_view">
+    <sysrule_view action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <condition table="scan_script_only_check">sys_scope=7070d37c530b75d407f7f2a5a52d9ef6^EQ<item display_table="sys_scope" display_value="My Instance Scan Collection" endquery="false" field="sys_scope" goto="false" newquery="false" operator="=" or="false" value="7070d37c530b75d407f7f2a5a52d9ef6"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </condition>
+        <description/>
+        <device_type>browser</device_type>
+        <match_conditions>ALL</match_conditions>
+        <name>Script Only Check</name>
+        <order>100</order>
+        <overrides_user_preference>true</overrides_user_preference>
+        <script/>
+        <sys_class_name>sysrule_view</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-12-12 10:27:38</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>df766e396b8b75507608fb893c63fb78</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Script Only Check</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>sysrule_view_df766e396b8b75507608fb893c63fb78</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2025-02-22 03:00:20</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <view>my_instance_scan_collection</view>
+    </sysrule_view>
+</record_update>

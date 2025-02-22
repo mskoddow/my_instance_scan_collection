@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="scan_table_check" relationship="" sys_domain="global" table="scan_check_suite_check" version="2" view="my_instance_scan_collection">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>suite</element>
+            <list_id display_value="scan_check_suite_check" element="NULL" name="scan_check_suite_check" parent="scan_table_check" relationship="NULL" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">66d711f16b8775507608fb893c63fb2f</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2023-12-12 04:18:06</sys_created_on>
+            <sys_id>62d711f16b8775507608fb893c63fb30</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2023-12-12 04:18:06</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>sys_scope</element>
+            <list_id display_value="scan_check_suite_check" element="NULL" name="scan_check_suite_check" parent="scan_table_check" relationship="NULL" sys_domain="global" view="bd6a9e3d6b4b75507608fb893c63fb41">66d711f16b8775507608fb893c63fb2f</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2023-12-12 04:18:06</sys_created_on>
+            <sys_id>e2d711f16b8775507608fb893c63fb30</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2023-12-12 04:18:06</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>scan_check_suite_check</name>
+            <parent>scan_table_check</parent>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>maik.skoddow</sys_created_by>
+            <sys_created_on>2023-12-12 04:18:06</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>66d711f16b8775507608fb893c63fb2f</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>scan_check_suite_check</sys_name>
+            <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+            <sys_update_name>sys_ui_list_scan_check_suite_check_scan_table_check_null</sys_update_name>
+            <sys_updated_by>maik.skoddow</sys_updated_by>
+            <sys_updated_on>2023-12-12 09:13:17</sys_updated_on>
+            <sys_user/>
+            <view display_value="My Instance Scan Collection" name="my_instance_scan_collection">bd6a9e3d6b4b75507608fb893c63fb41</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

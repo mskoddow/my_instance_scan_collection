@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <category>security</category>
+        <conditions/>
+        <description>OOB ServiceNow does not restrict accessing UI pages and admins need to create explicit ACLs to block internal users from accessing any UI Page. When there is no ACL for an UI Page, by default the UI Page can be accessed by all the logged-in internal users. If there are no script-level permission checks, such as gs.hasRole('user_admin'), any logged-in user can access this UI page and may be able to perform actions for which they do not have permissions</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=r_UIPages.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Missing Access Controls on UI Pages</name>
+        <priority>2</priority>
+        <resolution_details>UI Pages  should have ACL's implemented.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_6a9a65bf971ae510b05bb08fe153afe5','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (finding, current) {
+
+	var _grACL = new GlideRecord('sys_security_acl');
+
+	_grACL.addQuery('type', 'ui_page');
+	_grACL.addQuery('name', current.getValue('name'));
+	_grACL.addActiveQuery();
+	_grACL.query();
+
+	if (!_grACL.hasNext()) {
+		engine.finding.setCurrentSource(current);
+		engine.finding.increment();
+	}
+
+})(finding, current);]]></script>
+        <short_description>Missing Access Controls on UI Pages</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-26 07:50:30</sys_created_on>
+        <sys_id>6a9a65bf971ae510b05bb08fe153afe5</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Missing Access Controls on UI Pages</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_6a9a65bf971ae510b05bb08fe153afe5</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:36</sys_updated_on>
+        <table>sys_ui_page</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=6a9a65bf971ae510b05bb08fe153afe5"/>
+</record_update>

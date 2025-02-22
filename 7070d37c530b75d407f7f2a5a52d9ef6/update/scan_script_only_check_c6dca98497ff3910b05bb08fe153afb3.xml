@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>The system property "glide.script_processor.admin" holds the required role to access Script Background module. If "glide.script_processor.admin" is not set to the recommended value of "admin", "security_admin", or "maint", then users having a lower privileged role will be able to run background scripts on the instance. This will lead to a complete bypass of the ACL system allowing full access to tables.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-escape-xml-response.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Access to Background Script is not restricted</name>
+        <priority>2</priority>
+        <resolution_details>Ensure the property "glide.script_processor.admin" is set to "admin".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_c6dca98497ff3910b05bb08fe153afb3','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+  
+	var _strPropertyName   = 'glide.script_processor.admin';
+	var _grProperty        = new GlideRecord('sys_properties');
+	var _arrExpectedValues = ['admin', 'security_admin', 'maint'];
+	var _hasFinding        = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			_strPropertyType !== 'string' || 
+			_arrExpectedValues.indexOf(_strPropertyValue) === -1;
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+	
+})(engine);]]></script>
+        <short_description>Access to Background Script is not restricted</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-13 02:07:32</sys_created_on>
+        <sys_id>c6dca98497ff3910b05bb08fe153afb3</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Access to Background Script is not restricted</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_c6dca98497ff3910b05bb08fe153afb3</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 13:53:34</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=c6dca98497ff3910b05bb08fe153afb3"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>c6dca98497ff3910b05bb08fe153afb3</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-04 13:53:34</sys_created_on>
+        <sys_id>8ccb78e183c15210c1321429feaad370</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 13:53:34</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

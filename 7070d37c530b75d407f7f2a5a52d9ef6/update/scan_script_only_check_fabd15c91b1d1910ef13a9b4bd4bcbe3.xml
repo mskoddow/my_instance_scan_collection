@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>When flow engine context records are queued, the actual flow has not started yet. (A)synchronous flows should be handled by the flow engine event handler schedule which runs every 2 seconds. If this job is not running, actual flows are not started.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0756569</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>"Flow Engine Event Handler" Schedule does not exist</name>
+        <priority>1</priority>
+        <resolution_details>You can import the flow engine event handler job from an out-of-the-box instance or you can create a new one.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_fabd15c91b1d1910ef13a9b4bd4bcbe3','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grSchedule = new GlideRecord('sys_trigger');
+	
+	if (!_grSchedule.get('name', 'Flow Engine Event Handler')) {
+		engine.finding.increment();
+	}
+
+})(engine);]]></script>
+        <short_description>"Flow Engine Event Handler" Schedule does not exist</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-12 04:36:09</sys_created_on>
+        <sys_id>fabd15c91b1d1910ef13a9b4bd4bcbe3</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>"Flow Engine Event Handler" Schedule does not exist</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_fabd15c91b1d1910ef13a9b4bd4bcbe3</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:47</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=fabd15c91b1d1910ef13a9b4bd4bcbe3"/>
+</record_update>

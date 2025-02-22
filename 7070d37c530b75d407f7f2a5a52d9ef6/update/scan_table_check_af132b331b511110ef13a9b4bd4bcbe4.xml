@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_update_set">state!=ignore^EQ<item display_value="Ignore" endquery="false" field="state" goto="false" newquery="false" operator="!=" or="false" value="ignore"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>On a PROD instance there should be only Update Sets in state "Ignore". This state ensures the Update Set are not reapplied when cloning the instance.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=get-started-update-sets.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Update Sets not in "Ignore" State on PROD</name>
+        <priority>4</priority>
+        <resolution_details>Update the value for field state to "Ignore"</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_af132b331b511110ef13a9b4bd4bcbe4','')=='' &amp;&amp;(gs.getProperty('sn_appclient.instance_type') == 'production')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Update Sets not in "Ignore" State on PROD</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-21 03:22:14</sys_created_on>
+        <sys_id>af132b331b511110ef13a9b4bd4bcbe4</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Update Sets not in "Ignore" State on PROD</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_af132b331b511110ef13a9b4bd4bcbe4</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:41</sys_updated_on>
+        <table>sys_update_set</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=af132b331b511110ef13a9b4bd4bcbe4"/>
+</record_update>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>user_experience</category>
+        <conditions table="sp_widget">client_scriptLIKEg_navigation^EQ<item endquery="false" field="client_script" goto="false" newquery="false" operator="LIKE" or="false" value="g_navigation"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>g_navigation comes from GlideNavigation.js and is available in Desktop UI only but not in Service Portal.</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Found "g_navigation" references in Service Portal Widgets</name>
+        <priority>3</priority>
+        <resolution_details>Instead of g_navigation please use window.open on portal.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_b550993997cdb110b05bb08fe153af5d','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (finding, current) {
+
+    // Add your code here
+
+})(finding, current);]]></script>
+        <short_description>Found "g_navigation" references in Service Portal Widgets</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-09-03 17:39:41</sys_created_on>
+        <sys_id>b550993997cdb110b05bb08fe153af5d</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Found "g_navigation" references in Service Portal Widgets</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_b550993997cdb110b05bb08fe153af5d</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-02-11 02:22:43</sys_updated_on>
+        <table>sp_widget</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=b550993997cdb110b05bb08fe153af5d"/>
+</record_update>

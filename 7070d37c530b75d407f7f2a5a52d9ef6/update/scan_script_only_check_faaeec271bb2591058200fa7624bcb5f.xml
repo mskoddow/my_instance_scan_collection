@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>The "SNC User Lockout Check" or "SNC User Lockout Check with Auto Unlock" script actions enable the administrator to manage the number of failed login attempts for a user. Two script actions are available that enable a site administrator to manage the number of times a user can provide correct password before getting locked out from the Now Platform. 
+
+Additionally, the "glide.user.max_unlock_attempts" property controls the number of allowed failed login attempts. If the value of "glide.user.max_unlock_attempts" is increased above the recommended value of "5",  it will increase the number of login attempts an attacker could make against a given user. </description>
+        <documentation_url>https://docs.servicenow.com/?context=CSHelp:managing-failed-login-attempts&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Failed Login Attempts are not managed</name>
+        <priority>2</priority>
+        <resolution_details>Ensure at least one of the script actions: "SNC User Lockout Check" or "SNC User Lockout Check with Auto Unlock" are enabled to manage failed login attempts. Additionally, ensure the property "glide.user.max_unlock_attempts" is set to "5" or less.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_faaeec271bb2591058200fa7624bcb5f','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+	
+    var _grScriptAction1 = new GlideRecord('sysevent_script_action');
+    var _grScriptAction2 = new GlideRecord('sysevent_script_action');
+	
+    _grScriptAction1.addQuery('sys_id', '5e44f9bf0a0a0a0a019a6440b2137767');
+    _grScriptAction1.addQuery('active', '1');
+    _grScriptAction1.query();
+    _grScriptAction2.addQuery('sys_id', 'd92636b2975301008e00958e3b297567');
+    _grScriptAction2.addQuery('active', '1');
+    _grScriptAction2.query();
+	
+	var _isScriptActivated1 = _grScriptAction1.hasNext();
+	var _isScriptActivated2 = _grScriptAction2.hasNext();
+	var _hasFinding         = !(_isScriptActivated1 || _isScriptActivated2);
+	var _strPropertyName    = 'glide.user.unlock_timeout_in_mins';
+	var _grProperty         = new GlideRecord('sys_properties');
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		var _numPropertyValue = parseInt(_strPropertyValue, 10);
+		
+		_hasFinding = 
+			_hasFinding || 
+			_strPropertyType !== 'integer' || isNaN(_numPropertyValue) || _numPropertyValue > 5;
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}		
+
+})(engine);]]></script>
+        <short_description>Failed Login Attempts are not managed</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-02 09:09:31</sys_created_on>
+        <sys_id>faaeec271bb2591058200fa7624bcb5f</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Failed Login Attempts are not managed</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_faaeec271bb2591058200fa7624bcb5f</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:47</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=faaeec271bb2591058200fa7624bcb5f"/>
+</record_update>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>This property prevents external users from being assigned the snc_internal role. If "glide.security.explicit_roles.enable_internal_user_blacklist" is set to the recommended value of "true", then it enables "glide.security.explicit_roles.internal_user_blacklist" property which allows to assign 'snc_external' role. If the value is set to false, it disables "glide.security.explicit_roles.internal_user_blacklist" property.  </description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=explicit-roles-in-csm.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Critical Tables are not on the Deny List for internal Users</name>
+        <priority>3</priority>
+        <resolution_details>Ensure the property "glide.security.explicit_roles.internal_user_blacklist" includes the dangerous items "csm_consumer_user,customer_contact".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_164c78571bb6191058200fa7624bcbe5','')=='' &amp;&amp; GlidePluginManager.isActive('com.glide.explicit_roles')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+	
+	var _strPropertyName = 'glide.security.explicit_roles.enable_internal_user_blacklist';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+
+		if (_strPropertyValue === 'true') {
+			_strPropertyName = 'glide.security.explicit_roles.internal_user_blacklist';
+			
+			if (_grProperty.get('name', _strPropertyName)) {
+				_strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+				_strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+
+				if (_strPropertyType === 'string') {
+					var _arrPropertyValue  = _strPropertyValue.split(',');
+					var _hasCriticalTable1 = _arrPropertyValue.indexOf('csm_consumer_user') > -1;
+					var _hasCriticalTable2 = _arrPropertyValue.indexOf('customer_contact') > -1;
+                   
+					if (_hasCriticalTable1 && _hasCriticalTable2) {
+						_hasFinding = false;
+					}
+				}
+			}
+			else {
+				engine.finding.setValue(
+					'finding_details', 
+					'System Property "' + _strPropertyName + '" does not exist'
+				);
+			}
+		}
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+
+		engine.finding.increment();		
+	}	
+	
+})(engine);]]></script>
+        <short_description>Critical Tables are not on the Deny List for internal Users</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-01 15:30:31</sys_created_on>
+        <sys_id>164c78571bb6191058200fa7624bcbe5</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>Critical Tables are not on the Deny List for internal Users</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_164c78571bb6191058200fa7624bcbe5</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-06 14:35:50</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=164c78571bb6191058200fa7624bcbe5"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>164c78571bb6191058200fa7624bcbe5</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-06 14:35:49</sys_created_on>
+        <sys_id>2e98970a83c91610c1321429feaad35c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-06 14:35:49</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

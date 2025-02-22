@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>Users in inactive Groups are still receiving Roles from these Groups.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0696820</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Inactive Groups with active Users</name>
+        <priority>2</priority>
+        <resolution_details>Remove active users from all inactive Groups.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_d3c763161b4c2150ef13a9b4bd4bcb30','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _gaGroupMember = new GlideAggregate('sys_user_grmember');
+
+	_gaGroupMember.groupBy('group');
+	_gaGroupMember.addEncodedQuery(
+		'groupISNOTEMPTY^group.sys_idISNOTEMPTY^group.active=false^' +
+		'userISNOTEMPTY^user.sys_idISNOTEMPTY^user.active=true'
+	)
+	_gaGroupMember.query();
+
+	while (_gaGroupMember.next()) {
+		var _grGroup = _gaGroupMember.group.getRefRecord();
+
+		if (_grGroup.isValidRecord()) {
+			engine.finding.setCurrentSource(_grGroup);
+			engine.finding.increment();		
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>Inactive Groups with active Users</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-12-31 04:48:33</sys_created_on>
+        <sys_id>d3c763161b4c2150ef13a9b4bd4bcb30</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Inactive Groups with active Users</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_d3c763161b4c2150ef13a9b4bd4bcb30</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:44</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=d3c763161b4c2150ef13a9b4bd4bcb30"/>
+</record_update>

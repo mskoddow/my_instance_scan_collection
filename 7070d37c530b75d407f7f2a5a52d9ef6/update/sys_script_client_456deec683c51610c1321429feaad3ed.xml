@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>true</applies_extended>
+        <condition/>
+        <description>This Client Script will display a warning whenver the user tries to uncheck the "Active" field. </description>
+        <field>active</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Show warning when Deactivating Check</name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+	if (isLoading) {
+		return;
+	}
+
+	g_form.hideFieldMsg('active', true);
+
+	if (newValue !== 'true') {
+		g_form.showFieldMsg(
+			'active',
+			'To disable this Scan Check you\'d better create a system property ' +
+			'with name "' + g_form.getTableName() + '_' + g_form.getUniqueValue() + '" ' +
+			'and any value!',
+			'warn'
+		);
+   }
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-06 11:35:09</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>456deec683c51610c1321429feaad3ed</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>Show warning when Deactivating Check</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>sys_script_client_456deec683c51610c1321429feaad3ed</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-21 14:14:57</sys_updated_on>
+        <table>scan_check</table>
+        <type>onChange</type>
+        <ui_type>10</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

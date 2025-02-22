@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>If the Multi SSO plugin is enabled on an instance, the v2 version should be enabled. Versions prior to MultiSSOv2, including SAML 1.1 and SAML 2.0, do not follow best practice and use opensaml library versions with known CVEs. If the known CVEs were exploitable in outdated opensaml libraries, this could allow the attacker to forge messages and bypass authentication through XML Signature Wrapping attacks, impersonate entities or allow person-in-the-middle attackers to gain unauthorized access to the platform.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-updated-version-of-multi-sso-plugin-is-enabled.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Updated Version of Multi-SSO Plugin is not enabled</name>
+        <priority>2</priority>
+        <resolution_details>Ensure the system property "glide.authenticate.multissov2_feature.enabled" is set to "true"</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_fa610358973bb910b05bb08fe153af8e','')=='' &amp;&amp; GlidePluginManager.isActive('com.snc.integration.sso.multi.installer') &amp;&amp;  gs.getProperty('glide.authenticate.multisso.enabled', '') == 'true'</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+      
+	var _strPropertyName = 'glide.authenticate.multissov2_feature.enabled';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}	
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+	
+})(engine);
+]]></script>
+        <short_description>Updated Version of Multi-SSO Plugin is not enabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-14 02:55:31</sys_created_on>
+        <sys_id>fa610358973bb910b05bb08fe153af8e</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Updated Version of Multi-SSO Plugin is not enabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_fa610358973bb910b05bb08fe153af8e</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-06 12:08:15</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=fa610358973bb910b05bb08fe153af8e"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>fa610358973bb910b05bb08fe153af8e</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-04 14:06:15</sys_created_on>
+        <sys_id>0eae782983c15210c1321429feaad3ad</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 14:06:15</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

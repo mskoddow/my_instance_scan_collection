@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_check_suite_check">
+    <scan_check_suite_check action="INSERT_OR_UPDATE">
+        <check display_value="SOAP Fault Stack Trace Display is not disabled">1cdd7ad4973bb910b05bb08fe153af54</check>
+        <score_weight>1</score_weight>
+        <suite display_value="[My Instance Scan Collection] Security">1cbeb4822f3b11106daa821df699b63a</suite>
+        <sys_class_name>scan_check_suite_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-28 16:10:23</sys_created_on>
+        <sys_id>b29df501938882107ab2f55f7bba102b</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_check_suite_check_b29df501938882107ab2f55f7bba102b</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-09 07:29:07</sys_updated_on>
+    </scan_check_suite_check>
+    <sys_claim action="INSERT_OR_UPDATE">
+        <claim_owner_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</claim_owner_scope>
+        <claim_timestamp>192702e7bae0000001</claim_timestamp>
+        <metadata_update_name>scan_check_suite_check_b29df501938882107ab2f55f7bba102b</metadata_update_name>
+        <previous_claim_app_version>2024.10</previous_claim_app_version>
+        <previous_claim_name>TSI Instance Scan</previous_claim_name>
+        <previous_claim_scope>7070d37c530b75d407f7f2a5a52d9ef6</previous_claim_scope>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-09 07:29:07</sys_created_on>
+        <sys_id>1db3914783451210c1321429feaad31e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-09 07:29:07</sys_updated_on>
+    </sys_claim>
+</record_update>

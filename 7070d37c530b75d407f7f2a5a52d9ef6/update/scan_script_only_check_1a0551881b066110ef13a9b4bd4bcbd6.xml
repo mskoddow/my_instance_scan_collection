@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>ServiceNow provides a feature to load the standalone Virtual Agent web client to onto a browser via URL link: https://instance.service-now.com/$sn-va-web-client-app.do or via iFrame (if embedding into a web page). But this web client is by default accessible publicly (even for unauthenticated users) even though the topics are not made public.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0716436</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Standalone Virtual Agent Page is publicly accessible</name>
+        <priority>4</priority>
+        <resolution_details>Remove the record with "Page" = "$sn-va-web-client-app" from table "sys_public"</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_1a0551881b066110ef13a9b4bd4bcbd6','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    var _grPublicPage = new GlideRecord('sys_public');
+
+	_grPublicPage.addEncodedQuery('pageSTARTSWITH$^page=$sn-va-web-client-app^active=true');
+	_grPublicPage.setLimit(1);
+	_grPublicPage.query();
+
+	if (_grPublicPage.next()) {
+		engine.finding.setCurrentSource(_grPublicPage);
+		engine.finding.increment();
+	}
+
+})(engine);]]></script>
+        <short_description>Standalone Virtual Agent Page is publicly accessible</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-02 04:26:42</sys_created_on>
+        <sys_id>1a0551881b066110ef13a9b4bd4bcbd6</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Standalone Virtual Agent Page is publicly accessible</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_1a0551881b066110ef13a9b4bd4bcbd6</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:29</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=1a0551881b066110ef13a9b4bd4bcbd6"/>
+</record_update>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>If "glide.security.url.whitelist.strict_check" is not set to the recommended value of "true", and if "glide.security.url.whitelist" is not set to an organization's approved URL, then all external URLs are allowed for redirection. This could allow an attacker to redirect a user to a malicious website.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=url-whitelist-for-logout-redirects.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Enforcing URL Allowlist Check is not enabled</name>
+        <priority>2</priority>
+        <resolution_details>Ensure the property "glide.security.url.whitelist.strict_check" is set to "true" and the property "glide.security.url.whitelist" is set to a value.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_a87780671b32591058200fa7624bcbb5','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+	var _strPropertyName1 = 'glide.security.url.whitelist.strict_check';
+	var _strPropertyName2 = 'glide.security.url.whitelist';
+	var _grProperty1      = new GlideRecord('sys_properties');
+	var _grProperty2      = new GlideRecord('sys_properties');
+	var _hasFinding1      = true;
+	var _hasFinding2      = true;
+	
+	if (_grProperty1.get('name', _strPropertyName1)) {		
+		var _strPropertyType1  = String(_grProperty1.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue1 = String(_grProperty1.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding1 = _strPropertyType1 !== 'boolean' || _strPropertyValue1 !== 'true'
+	}
+	
+	if (_grProperty2.get('name', _strPropertyName2)) {		
+		var _strPropertyType2  = String(_grProperty2.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue2 = String(_grProperty2.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding2 = _strPropertyType2 !== 'string' || _strPropertyValue2.length === 0;
+	}
+
+	if (_hasFinding1) {
+		if (_grProperty1.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty1);
+		}
+		
+		engine.finding.increment();		
+	}
+	else if (_hasFinding2) {
+		if (_grProperty2.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty2);
+		}
+		
+		engine.finding.increment();
+	}
+	
+})(engine);]]></script>
+        <short_description>Enforcing URL Allowlist Check is not enabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-02 06:18:09</sys_created_on>
+        <sys_id>a87780671b32591058200fa7624bcbb5</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Enforcing URL Allowlist Check is not enabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_a87780671b32591058200fa7624bcbb5</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:41</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=a87780671b32591058200fa7624bcbb5"/>
+</record_update>

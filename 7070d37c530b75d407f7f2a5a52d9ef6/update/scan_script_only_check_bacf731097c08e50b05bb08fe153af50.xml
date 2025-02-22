@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>The demo certificates provided by ServiceNow should not be used in production SAML configurations. The certificates are common among all instances with known passphrase. If one of the SAML properties utilizing a certificate keystore is active ( require_signed_authnrequest, require_signed_logoutrequest or encrypt_assertion ) then the demo data must not be used. Since demo data is shared among all instance, there is no integrity garuntee of requests signed with shared certifcates. Any message encrypted by the IDP could be decrypted by any actor, if intercepted.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-do-not-use-demo-certificates-for-active-saml-configurations.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>An active SAML Configuration uses a Demo Certificate</name>
+        <priority>4</priority>
+        <resolution_details>Set up a custom keystore, following the documentation. The value of system property "glide.authenticate.sso.saml2.keystore" should be set to the Sys ID of a custom &amp; active keystore.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_bacf731097c08e50b05bb08fe153af50','') == '' &amp;&amp; (GlidePluginManager.isActive('com.snc.integration.sso.multi.installer') &amp;&amp; gs.getProperty('glide.authenticate.multisso.enabled', '') == 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(finding) {
+
+    var _strPropertyName = 'glide.authenticate.sso.saml2.keystore';
+    var _grProperty      = new GlideRecord('sys_properties');
+    var _hasFinding      = true;
+
+    if (_grProperty.get('name', _strPropertyName)) {		
+        var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+        var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+        
+        if (_strPropertyType == 'string' && GlideStringUtil.isEligibleSysID(_strPropertyValue)) {
+            var _grSamlProps = new GlideRecord('saml2_update1_properties');
+
+            _grSamlProps.addQuery('active=true');
+            _grSamlProps.query();
+
+			_hasFinding = _grSamlProps.hasNext();
+
+            while (_grSamlProps.next()) {
+                _hasFinding =  
+                    _grSamlProps.require_signed_authnrequest ||
+                    _grSamlProps.require_signed_logoutrequest ||
+                    _grSamlProps.encrypt_assertion;
+
+                if (_hasFinding) {
+                    var _strSysID1 = 'c60ad24b732220103a5b0dd43cf6a7db';
+                    var _strSysID2 = '3685fc22930212003c5537ae867ffb91';
+
+                    if (_strPropertyValue == _strSysID1 || strPropertyValue == _strSysID2) {
+                        var _grAttachment = 
+							new GlideSysAttachment().getAttachments('sys_certificate', _strPropertyValue);
+                        
+						var _strHash = 
+							'b2a36b7b894e51c5293461b4cda0eaa7c6cd90b4f4ddfb9520e0339a119a92e9';
+                        
+                        if (_grAttachment.next()) {
+                            _hasFinding = 
+                                (_strPropertyValue == _strSysID1 && _grAttachment.hash == _strHash) 
+                                ||
+                                (_strPropertyValue == _strSysID2 && 
+                                _grAttachment.file_name == 'saml2sp_key2048withsha256.jks' &&
+                                _grAttachment.sys_id == 'cfe67062930212003c5537ae867ffb66' &&
+                                _grAttachment.size_bytes == 2286);
+                        }
+						else {
+							engine.finding.setValue(
+								'finding_details', 
+								'An attachment for table name "sys_certificate" and table Sys ID "' + 
+								_strPropertyValue + '" does not exist!'
+							);
+						}
+                    }
+					else {
+						_hasFinding = false;
+					}
+                }
+            }
+        }
+		else {
+			engine.finding.setValue(
+				'finding_details', 
+				'System Property "' + _strPropertyName + '" does not represent a valid Sys ID!'
+			);
+		}
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+		
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+
+})(finding);]]></script>
+        <short_description>An active SAML Configuration uses a Demo Certificate</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-26 17:43:44</sys_created_on>
+        <sys_id>bacf731097c08e50b05bb08fe153af50</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>An active SAML Configuration uses a Demo Certificate</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_bacf731097c08e50b05bb08fe153af50</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 13:52:00</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=bacf731097c08e50b05bb08fe153af50"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>bacf731097c08e50b05bb08fe153af50</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-04 13:51:59</sys_created_on>
+        <sys_id>016bb4a183c15210c1321429feaad38e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 13:51:59</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

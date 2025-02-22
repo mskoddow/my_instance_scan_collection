@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>If system property "password_reset.verification.delay" is not set to the recommended value of "1000" or more, then it will lead the login more susceptable to brute force attacks. This number of milliseconds delay limits the ability of a malicious actor to attempt to guess users identification or verification details, by using automation tools ("bots").</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-reset-password-verification-delay.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>The Interval between two Password Resets is too small</name>
+        <priority>3</priority>
+        <resolution_details>Ensure the property "password_reset.verification.delay" is set to "1000" or more.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_d182b7dc97408e50b05bb08fe153afc8','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+	
+	var _strPropertyName = 'password_reset.verification.delay';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		var _numPropertyValue = parseInt(_strPropertyValue, 10);
+		
+		_hasFinding = 
+			!(_strPropertyType === 'integer' || _strPropertyType === 'string') || 
+			isNaN(_numPropertyValue) || 
+			_numPropertyValue < 1000;
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+	
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}	
+	
+})(engine);]]></script>
+        <short_description>The Interval between two Password Resets is too small</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-26 16:45:44</sys_created_on>
+        <sys_id>d182b7dc97408e50b05bb08fe153afc8</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>The Interval between two Password Resets is too small</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_d182b7dc97408e50b05bb08fe153afc8</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-26 16:49:03</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=d182b7dc97408e50b05bb08fe153afc8"/>
+    <sys_claim action="INSERT_OR_UPDATE">
+        <claim_owner_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</claim_owner_scope>
+        <claim_timestamp>18d46acc1180000001</claim_timestamp>
+        <metadata_update_name>scan_script_only_check_d182b7dc97408e50b05bb08fe153afc8</metadata_update_name>
+        <previous_claim_app_version>1.0.0</previous_claim_app_version>
+        <previous_claim_name>TSI Instance Scan</previous_claim_name>
+        <previous_claim_scope>7070d37c530b75d407f7f2a5a52d9ef6</previous_claim_scope>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-26 16:49:03</sys_created_on>
+        <sys_id>f943b35097808e50b05bb08fe153afe5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-26 16:49:03</sys_updated_on>
+    </sys_claim>
+</record_update>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>manageability</category>
+        <conditions table="sys_trigger">name=Email Reader^sys_updated_onRELATIVELT@minute@ago@10^EQ<item endquery="false" field="name" goto="false" newquery="false" operator="=" or="false" value="Email Reader"/>
+            <item endquery="false" field="sys_updated_on" goto="false" newquery="false" operator="RELATIVE" or="false" value="LT@minute@ago@10"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>The "Email Reader" schedule is responsible for retrieving email messages from the POP3/IMAP server.  This schedule runs once every 2 minutes.  If the "Email Reader" schedule has not been updated in a few minutes, then it may be stuck causing inbound email to be delayed.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0755063</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>"Email Reader" Schedule is stuck</name>
+        <priority>2</priority>
+        <resolution_details>Find out why the "Email Reader" schedule has not been updated lately.  Perhaps it is "stuck" handling one job that takes a long time to process.  The /stats.do and /threads.do pages should provide you with more info on what type of job the Email Reader is handling at the moment.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_080c6dd397aae510b05bb08fe153afbc','')=='' &amp;&amp;(gs.getProperty('glide.email.read.active', 'false') === 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (finding, current) {
+
+    // Add your code here
+
+})(finding, current);]]></script>
+        <short_description>"Email Reader" Schedule is stuck</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-07 04:54:28</sys_created_on>
+        <sys_id>080c6dd397aae510b05bb08fe153afbc</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>"Email Reader" Schedule is stuck</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_080c6dd397aae510b05bb08fe153afbc</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:27</sys_updated_on>
+        <table>sys_trigger</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=080c6dd397aae510b05bb08fe153afbc"/>
+</record_update>

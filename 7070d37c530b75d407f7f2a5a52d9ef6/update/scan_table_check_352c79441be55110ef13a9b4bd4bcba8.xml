@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>performance</category>
+        <conditions table="sys_flow_context">state=QUEUED^sys_created_onRELATIVELT@minute@ago@5^EQ<item display_value="Queued" endquery="false" field="state" goto="false" newquery="false" operator="=" or="false" value="QUEUED"/>
+            <item endquery="false" field="sys_created_on" goto="false" newquery="false" operator="RELATIVE" or="false" value="LT@minute@ago@5"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>When flow engine context records are queued, the actual flow has not started yet. (A)synchronous flows should be handled by the flow engine event handler schedule which runs every 2 seconds, so records still queued after 5 minutes would be abnormal behavior.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB1179826</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Unprocessed Flow Engine Context Records</name>
+        <priority>2</priority>
+        <resolution_details>Investigate the queued records, is there a huge volume perhaps, or might the Flow Engine Event Handler schedules not be processing.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_352c79441be55110ef13a9b4bd4bcba8','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Unprocessed Flow Engine Context Records</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-21 14:30:51</sys_created_on>
+        <sys_id>352c79441be55110ef13a9b4bd4bcba8</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Unprocessed Flow Engine Context Records</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_352c79441be55110ef13a9b4bd4bcba8</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:32</sys_updated_on>
+        <table>sys_flow_context</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=352c79441be55110ef13a9b4bd4bcba8"/>
+</record_update>

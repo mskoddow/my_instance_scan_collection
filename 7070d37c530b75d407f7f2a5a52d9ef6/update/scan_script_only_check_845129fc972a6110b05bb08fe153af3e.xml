@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description/>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0965239</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>"Run as" User defined for a Scheduled Job is not valid</name>
+        <priority>2</priority>
+        <resolution_details>Update the "Run as" field in the affected Scheduled Job to a different user, or ensure that the current user record is active and the "User ID" field is populated.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_845129fc972a6110b05bb08fe153af3e','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grSysAuto = new GlideRecord('sysauto');
+
+	_grSysAuto.addEncodedQuery(
+		'run_asISNOTEMPTY^' +
+		'run_as!=system^run_as!=maint^run_as!=glide.maint^' +
+		'run_as.sys_idISEMPTY^ORrun_as.active=false^ORrun_as.activeISEMPTY'
+	);
+
+	_grSysAuto.query();
+
+	while (_grSysAuto.next()) {
+		engine.finding.setCurrentSource(_grSysAuto);
+		engine.finding.increment();		
+	}    
+
+})(engine);]]></script>
+        <short_description>"Run as" User defined for a Scheduled Job is not valid</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-29 09:47:00</sys_created_on>
+        <sys_id>845129fc972a6110b05bb08fe153af3e</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>"Run as" User defined for a Scheduled Job is not valid</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_845129fc972a6110b05bb08fe153af3e</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:38</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=845129fc972a6110b05bb08fe153af3e"/>
+</record_update>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>Key deleter job table cleaner should be enabled to ensure the relevant tables are kept as trimmed as necessary. Should this job remain disabled for a long time, the tables will grow to be very large and transaction performance will decrease over time. This can also lead to disk space capacity issues as the instance is not cleaning up the temporary/transient records.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0961966</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>"Table Cleaner" Schedule does not exist</name>
+        <priority>1</priority>
+        <resolution_details>You can import the flow engine event handler job from an out-of-the-box instance or you can create a new one.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_7bc4d0dc1b721110ef13a9b4bd4bcba4','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grSchedule = new GlideRecord('sys_trigger');
+	
+	if (!_grSchedule.get('name', 'Table Cleaner')) {
+		engine.finding.increment();
+	}
+
+})(engine);]]></script>
+        <short_description>"Table Cleaner" Schedule does not exist</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-23 04:56:17</sys_created_on>
+        <sys_id>7bc4d0dc1b721110ef13a9b4bd4bcba4</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>"Table Cleaner" Schedule does not exist</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_7bc4d0dc1b721110ef13a9b4bd4bcba4</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:38</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=7bc4d0dc1b721110ef13a9b4bd4bcba4"/>
+</record_update>

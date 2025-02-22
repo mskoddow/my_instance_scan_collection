@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>If "single currency mode" is enabled validate the FX records are using the correct currency.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0751553</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Other Currencies than defined in the Single Currency Code found</name>
+        <priority>4</priority>
+        <resolution_details>Review found records and update them to use correct currency.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_b260c03097a26110b05bb08fe153afbc','')=='' &amp;&amp;(String(gs.getProperty('glide.i18n.single_currency', 'false')).trim() === 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+    //validate all currency matches single currency code
+    var _strSingleCurrencyCode = String(gs.getProperty('glide.i18n.single_currency.code', '')).trim();
+	
+	if (_strSingleCurrencyCode.length < 2) {
+		return;
+	}
+	
+    var _grFxPrice   = new GlideRecord('fx_price');
+	var _numFindings = 0;
+    
+	_grFxPrice.addEncodedQuery(
+		'reference_currency!=' + _strSingleCurrencyCode + 
+		'^ORcurrency!=' + _strSingleCurrencyCode
+	);
+    _grFxPrice.query();
+    
+	while (_grFxPrice.next() && _numFindings < 100) {
+        engine.finding.setCurrentSource(_grFxPrice);
+        engine.finding.increment();
+		
+		_numFindings++;
+    }
+
+})(engine);]]></script>
+        <short_description>Other Currencies than defined in the Single Currency Code found</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-29 02:39:37</sys_created_on>
+        <sys_id>b260c03097a26110b05bb08fe153afbc</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Other Currencies than defined in the Single Currency Code found</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_b260c03097a26110b05bb08fe153afbc</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:42</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=b260c03097a26110b05bb08fe153afbc"/>
+</record_update>

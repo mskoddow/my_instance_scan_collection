@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>security</category>
+        <conditions table="sp_page">roles=NULL^EQ<item endquery="false" field="roles" goto="false" newquery="false" operator="=" or="false" value="NULL"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>As long as the "Service Portal User Criteria Support"plugin (com.glide.service-portal.user-criteria) is not installed and active all Service Portal pages should have specific role defined at page level to restrict access to required audience.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=configure-page-security.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>No Role Definition for Service Portal Pages</name>
+        <priority>3</priority>
+        <resolution_details>Make sure to define roles on service portal page to limit access to required audience.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_e7d5fdc01ba55110ef13a9b4bd4bcbd1','')=='' &amp;&amp;(gs.getProperty('glide.service_portal.user_criteria_enabled', 'false') === 'false')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (finding, current) {
+
+    // Add your code here
+
+})(finding, current);]]></script>
+        <short_description>No Role Definition for Service Portal Pages</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-21 14:03:23</sys_created_on>
+        <sys_id>e7d5fdc01ba55110ef13a9b4bd4bcbd1</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>No Role Definition for Service Portal Pages</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_e7d5fdc01ba55110ef13a9b4bd4bcbd1</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:45</sys_updated_on>
+        <table>sp_page</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=e7d5fdc01ba55110ef13a9b4bd4bcbd1"/>
+</record_update>

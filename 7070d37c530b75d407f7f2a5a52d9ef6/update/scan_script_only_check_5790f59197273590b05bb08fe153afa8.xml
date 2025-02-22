@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>When the system property "glide.security.strict_elevate_privilege" is set to '"rue", roles marked as "privileged" must always be manually elevated by an admin user upon new session creation in order for the user to be granted the role's capabilities. When 'false', roles marked as "privileged" are automatically elevated upon an admin user new session, and do not need to be manually elevated (with exception of "security_admin"). Setting this property to secure value will add an extra layer of security validation to role elevation by privileged user.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-enforce-strict-elevate-privilege.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Manual Elevating privileged Roles is not enforced</name>
+        <priority>3</priority>
+        <resolution_details>Make sure the system property "glide.security.strict_elevate_privilege" is set to "true"</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_5790f59197273590b05bb08fe153afa8','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+      
+	var _strPropertyName = 'glide.security.strict_elevate_privilege';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+		
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+	
+})(engine);
+]]></script>
+        <short_description>Manual Elevating privileged Roles is not enforced</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-04 13:20:42</sys_created_on>
+        <sys_id>5790f59197273590b05bb08fe153afa8</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Manual Elevating privileged Roles is not enforced</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_5790f59197273590b05bb08fe153afa8</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 14:35:16</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=5790f59197273590b05bb08fe153afa8"/>
+</record_update>

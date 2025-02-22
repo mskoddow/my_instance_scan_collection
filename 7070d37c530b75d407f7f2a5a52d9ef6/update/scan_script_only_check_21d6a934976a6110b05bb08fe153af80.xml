@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>This check will  ensure that all VTB records are associated with a valid table. If a visual task board does not reference a valid table, users will receive a blank screen and a 500 internal server error when accessing page /vtb.do.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0752553</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Visual Task Board for non-existing Table</name>
+        <priority>3</priority>
+        <resolution_details>Remove this record or associate it with a valid table</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_21d6a934976a6110b05bb08fe153af80','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grVTB = new GlideRecord('vtb_board');
+
+	_grVTB.addActiveQuery();
+	_grVTB.addEncodedQuery('active=true^tableISNOTEMPTY');
+	_grVTB.query();  
+
+	while (_grVTB.next()) {
+		if(!gs.tableExists(_grVTB.getValue('table'))) {
+			engine.finding.setCurrentSource(_grVTB);
+			engine.finding.increment();
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>Visual Task Board for non-existing Table</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-29 10:16:04</sys_created_on>
+        <sys_id>21d6a934976a6110b05bb08fe153af80</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Visual Task Board for non-existing Table</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_21d6a934976a6110b05bb08fe153af80</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:30</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=21d6a934976a6110b05bb08fe153af80"/>
+</record_update>

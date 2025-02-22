@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <category>performance</category>
+        <conditions table="sys_properties">nameLIKEdebug^ORname=glide.db.trace^ORname=glide.ui.template.trace^type=boolean^value=true^EQ<item endquery="false" field="name" goto="false" newquery="false" operator="LIKE" or="false" value="debug"/>
+            <item endquery="false" field="name" goto="false" newquery="false" operator="=" or="true" value="glide.db.trace"/>
+            <item endquery="false" field="name" goto="false" newquery="false" operator="=" or="true" value="glide.ui.template.trace"/>
+            <item display_value="true | false" endquery="false" field="type" goto="false" newquery="false" operator="=" or="false" value="boolean"/>
+            <item endquery="false" field="value" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>Having debugging enabled unnecessarily can cause performance issues and possibly leak data.</description>
+        <documentation_url>https://developer.servicenow.com/dev.do#!/guides/latest/now-platform/tpb-guide/debugging_best_practices</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Enabled "Debug" Logging on PROD</name>
+        <priority>3</priority>
+        <resolution_details>If not actively debugging in production, disable all debug system properties.</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_82a7e0fc1b519510ef13a9b4bd4bcb60','')=='' &amp;&amp;(gs.getProperty('sn_appclient.instance_type') == 'production')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+    // Add your code here
+
+})(engine);]]></script>
+        <short_description>Enabled "Debug" Logging on PROD</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-11 06:01:25</sys_created_on>
+        <sys_id>82a7e0fc1b519510ef13a9b4bd4bcb60</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Enabled "Debug" Logging on PROD</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_82a7e0fc1b519510ef13a9b4bd4bcb60</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:38</sys_updated_on>
+        <table>sys_properties</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=82a7e0fc1b519510ef13a9b4bd4bcb60"/>
+</record_update>

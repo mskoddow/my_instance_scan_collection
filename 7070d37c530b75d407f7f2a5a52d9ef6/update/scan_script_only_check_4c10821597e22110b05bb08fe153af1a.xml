@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>user_experience</category>
+        <description>If the activity stream is added to the sys_user form it can cause user records to load slowly.</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Activity Stream is placed on the sys_user form</name>
+        <priority>3</priority>
+        <resolution_details>1) Navigate to any sys_user record
+2) Right-click the form header and choose Configure &gt; Form Layout
+3) In the selected (right-hand) slush bucket, find the Activities (filtered) entry and move it to the left bucket
+4) Click save</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_4c10821597e22110b05bb08fe153af1a','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+	var _grUiElement = new GlideRecord('sys_ui_element');
+
+	_grUiElement.addQuery('element', 'activity.xml');
+	_grUiElement.addQuery('sys_ui_section.name', 'sys_user');
+	_grUiElement.query();
+
+	while (_grUiElement.next()) {  
+		engine.finding.setCurrentSource(_grUiElement);
+		engine.finding.increment();
+	}
+
+})(engine);]]></script>
+        <short_description>Activity Stream is placed on the sys_user form</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-05-01 01:14:16</sys_created_on>
+        <sys_id>4c10821597e22110b05bb08fe153af1a</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Activity Stream is placed on the sys_user form</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_4c10821597e22110b05bb08fe153af1a</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:34</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=4c10821597e22110b05bb08fe153af1a"/>
+</record_update>

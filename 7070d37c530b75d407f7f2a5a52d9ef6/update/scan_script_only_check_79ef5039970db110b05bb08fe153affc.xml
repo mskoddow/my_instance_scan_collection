@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>user_experience</category>
+        <description>Even when at least one language plugin is active, the language picker does not show the choices.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0695287</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Language Picker is not showing any Language</name>
+        <priority>3</priority>
+        <resolution_details>Make sure that there is at least one record in sys_choice table, for preferred_language field on sys_user</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_79ef5039970db110b05bb08fe153affc','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+
+	var _grChoice = new GlideRecord('sys_choice');
+
+	_grChoice.addEncodedQuery('name=sys_user^language=en^inactive=False^element=preferred_language');
+	_grChoice.query();
+
+	if (!_grChoice.next()) {
+		engine.finding.increment();	
+	}
+
+})(engine);]]></script>
+        <short_description>Language Picker is not showing any Language</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-09-03 14:08:03</sys_created_on>
+        <sys_id>79ef5039970db110b05bb08fe153affc</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Language Picker is not showing any Language</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_79ef5039970db110b05bb08fe153affc</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:38</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=79ef5039970db110b05bb08fe153affc"/>
+</record_update>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_table_check">
+    <scan_table_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <category>performance</category>
+        <conditions table="wf_context">active=true^idANYTHING^tableANYTHING^EQ<item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="false" field="id" goto="false" newquery="false" operator="ANYTHING" or="false" value=""/>
+            <item endquery="false" field="table" goto="false" newquery="false" operator="ANYTHING" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description>Workflows are generally run during the lifecycle of a record. When the record reaches a closed state, the Workflow should be finished. Still running Workflows might indicate an issue in your environment, for example the Workflow itself, related scripting, etc.</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Active Workflow Context Records with inactive related Records</name>
+        <priority>2</priority>
+        <resolution_details>Investigate the related records and decide how to proceed witht the related running Workflows</resolution_details>
+        <run_condition>gs.getProperty('scan_table_check_0f1cf7891bf33010ef13a9b4bd4bcb72','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strRelatedTableName = engine.current.getValue('table');
+	var _strRelatedSysID     = engine.current.getValue('id');
+	var _grDbObject          = new GlideRecord('sys_db_object');
+
+	if (_grDbObject.get('name', _strRelatedTableName)) {
+		var _grRelatedRecord = new GlideRecord(_strRelatedTableName);
+
+		_grRelatedRecord.initialize();
+
+		var _hasActiveField = false;
+		var _arrFields      = _grRelatedRecord.getElements();
+		var _intSize        = 0;
+
+		if (typeof _arrFields.size === 'function') {
+			_intSize = _arrFields.size();
+		}
+
+		for (var _numIndex = 0; _numIndex < _intSize && !_hasActiveField; _numIndex++) {
+			var _objGlideElement = _arrFields.get(_numIndex);
+			var _strFieldName = String(_objGlideElement.getName());
+			var _strFieldType = String(_objGlideElement.getED().getInternalType());
+
+			_hasActiveField = _strFieldName === 'active' && _strFieldType === 'boolean';
+		}
+
+		if (_hasActiveField && _grRelatedRecord.get(_strRelatedSysID)) {
+			if (!_grRelatedRecord.active) {
+				engine.finding.increment();
+			}
+		}
+	}
+
+})(engine);
+]]></script>
+        <short_description>Active Workflow Context Records with inactive related Records</short_description>
+        <sys_class_name>scan_table_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-11-12 06:22:47</sys_created_on>
+        <sys_id>0f1cf7891bf33010ef13a9b4bd4bcb72</sys_id>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>Active Workflow Context Records with inactive related Records</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_table_check_0f1cf7891bf33010ef13a9b4bd4bcb72</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-17 06:16:10</sys_updated_on>
+        <table>wf_context</table>
+        <use_manifest>false</use_manifest>
+    </scan_table_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=0f1cf7891bf33010ef13a9b4bd4bcb72"/>
+</record_update>

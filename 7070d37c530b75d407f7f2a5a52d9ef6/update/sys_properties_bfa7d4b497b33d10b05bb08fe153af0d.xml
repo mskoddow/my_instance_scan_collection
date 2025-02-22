@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>List of tables which should be excluded for instance scans</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>my_instance_scan_collection.table_exclusion_list</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-01-15 03:52:14</sys_created_on>
+        <sys_id>bfa7d4b497b33d10b05bb08fe153af0d</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>my_instance_scan_collection.table_exclusion_list</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>sys_properties_bfa7d4b497b33d10b05bb08fe153af0d</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2025-02-22 02:40:59</sys_updated_on>
+        <type>string</type>
+        <value>scan_check,scan_script_only_check,scan_table_check,sys_script_execution_history,sys_ux_lib_source_script,sys_update_version</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=bfa7d4b497b33d10b05bb08fe153af0d"/>
+</record_update>

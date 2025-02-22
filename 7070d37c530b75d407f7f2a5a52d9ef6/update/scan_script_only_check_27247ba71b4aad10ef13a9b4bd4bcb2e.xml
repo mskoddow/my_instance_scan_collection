@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>performance</category>
+        <description>If a cache flush is triggered as part of a non-ootb script execution this will require the platform to rebuild the cache before returning to its BAU state. This activity has a significant performance impact.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0822644</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Cache Flushes as part of Scripts</name>
+        <priority>2</priority>
+        <resolution_details>Remove any cache flush triggers unless necessary. Recommended is only the pre-defined cache flush actions that are built into out the box solutions.
+
+Do not make use of gs.cacheFlush() in scripts!!
+
+Care should be taken when setting system properties (sys_properties) using this method as it causes a system-wide cache flush. Each flush can cause system degradation while the caches rebuild. If a value must be updated often, it should not be stored as a system property. In general, you should only place values in the sys_properties table that do not frequently change.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_27247ba71b4aad10ef13a9b4bd4bcb2e','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strScanPattern      = 'gs.cacheFlush()';
+	var _grDictionary        = new GlideRecord('sys_dictionary');
+	var _objUpdateVersionAPI = new global.UpdateVersionAPI();
+	var _strPropertyName     = 'my_instance_scan_collection.table_exclusion_list';
+	var _strExcludedTables   = String(gs.getProperty(_strPropertyName, '')).trim();
+	var _strEncodedQuery = 
+		'sys_class_name=sys_dictionary^' +
+		'internal_typeINscript,script_client,script_plain,script_server';
+
+	if (_strExcludedTables.length > 0) {
+		var _arrExcludedTables      = _strExcludedTables.split(',');
+		var _arrFinalExcludedTables = [];
+
+		for (var _numIndex1 = 0; _numIndex1 < _arrExcludedTables.length; _numIndex1++) {
+			var _strExcludedTableName = _arrExcludedTables[_numIndex1].trim();
+
+			if (_strExcludedTableName.length > 0) {
+				if (gs.tableExists(_strExcludedTableName)) {
+					_arrFinalExcludedTables.push(_strExcludedTableName);
+				}
+			}				
+		}
+
+		if (_arrFinalExcludedTables.length > 0) {
+			_strEncodedQuery = _strEncodedQuery + '^nameNOT IN' + _strExcludedTables;
+		}
+	}
+
+	//lookup all table columns of any of the script types
+	_grDictionary.addEncodedQuery(_strEncodedQuery);	
+	_grDictionary.query();
+
+	while (_grDictionary.next()) {
+		var _strTableName  = _grDictionary.getValue('name') || '';
+		var _strColumnName = _grDictionary.getValue('element') || '';
+
+		if (_strTableName.length > 0 && _strColumnName.length > 0) {
+			try {
+				var _grTableWithScript = new GlideRecord(_strTableName);
+
+				//search within the respective table & field for all occurences of getRowCount()
+				_grTableWithScript.addEncodedQuery(_strColumnName + 'LIKE' + _strScanPattern);
+				_grTableWithScript.query();
+
+				//reduce the result set to all custom records as we cannot fix all the OOTB records
+				var _arrCustomArtifactSysIDs = _objUpdateVersionAPI.getCustomerFileIds(_grTableWithScript); 
+				var _numFindings             = _arrCustomArtifactSysIDs.length || 0;
+
+				for (var _numIndex2 = 0; _numIndex2 < _numFindings; _numIndex2++) {
+					if (_grTableWithScript.get(_arrCustomArtifactSysIDs[_numIndex2])) {
+						engine.finding.setCurrentSource(_grTableWithScript);
+						engine.finding.increment();
+					}
+				}
+			}
+			catch (e) {
+				gs.error('Could not query table "' + _strTableName + '"!');
+				gs.error(e);
+			}
+		}
+	}
+
+})(engine);]]></script>
+        <short_description>Cache Flushes as part of Scripts</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-04-13 13:00:53</sys_created_on>
+        <sys_id>27247ba71b4aad10ef13a9b4bd4bcb2e</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Cache Flushes as part of Scripts</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_27247ba71b4aad10ef13a9b4bd4bcb2e</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2025-02-22 02:48:59</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=27247ba71b4aad10ef13a9b4bd4bcb2e"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>27247ba71b4aad10ef13a9b4bd4bcb2e</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2025-02-22 02:48:59</sys_created_on>
+        <sys_id>f3cbe8fa83ff1210c1321429feaad344</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2025-02-22 02:48:59</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

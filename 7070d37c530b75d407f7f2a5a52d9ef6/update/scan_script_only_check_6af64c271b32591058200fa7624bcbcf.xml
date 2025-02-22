@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>Use the glide.cms.catalog_uri_relative property to enforce relative links from the URI parameter on /ess/catalog.do. If "glide.cms.catalog_uri_relative" is not set to the recommended value of "true", then it may not sanitize URL with the enforceRelativeURL(url) function.</description>
+        <documentation_url>https://docs.servicenow.com/?context=CSHelp:enforce-relative-links&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Enforcing Relative Links is disabled</name>
+        <priority>4</priority>
+        <resolution_details>Ensure the property "glide.cms.catalog_uri_relative" is set to "true".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_6af64c271b32591058200fa7624bcbcf','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.cms.catalog_uri_relative';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+
+		engine.finding.increment();		
+	}
+
+})(engine);]]></script>
+        <short_description>Enforcing Relative Links is disabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-02 06:16:06</sys_created_on>
+        <sys_id>6af64c271b32591058200fa7624bcbcf</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Enforcing Relative Links is disabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_6af64c271b32591058200fa7624bcbcf</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 13:34:34</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=6af64c271b32591058200fa7624bcbcf"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>6af64c271b32591058200fa7624bcbcf</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-04 13:34:33</sys_created_on>
+        <sys_id>bd67f82d83815210c1321429feaad399</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-04 13:34:33</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>manageability</category>
+        <description>The "SMTP Sender" schedules are responsible for sending email messages to the SMTP server. If these jobs are not present, emails from this instance cannot be sent out.</description>
+        <documentation_url>https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0523599</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>"SMTP Sender" Schedule does not exist</name>
+        <priority>1</priority>
+        <resolution_details>You can import the "SMTP Sender" schedule from an out-of-the-box instance or you can create a new one.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_8ee039451bdd1910ef13a9b4bd4bcbae','')=='' &amp;&amp;(gs.getProperty('glide.email.smtp.active') == 'true')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _grSchedule = new GlideRecord('sys_trigger');
+	
+	if (!_grSchedule.get('job_id', 'd8e37da5c0a80064009ff6d19882218a')) {
+		engine.finding.increment();
+	}
+
+})(engine);]]></script>
+        <short_description>"SMTP Sender" Schedule does not exist</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-12 05:59:56</sys_created_on>
+        <sys_id>8ee039451bdd1910ef13a9b4bd4bcbae</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>"SMTP Sender" Schedule does not exist</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_8ee039451bdd1910ef13a9b4bd4bcbae</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-02-10 03:31:52</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=8ee039451bdd1910ef13a9b4bd4bcbae"/>
+</record_update>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>The system property "sn_ext_usr_reg.allowed_email_domains" property defines which email addresses are allowed to self-register to a ServiceNow instance. If "sn_ext_usr_reg.allowed_email_domains" is not set with a list of acceptable domains, then users with any email address are allowed to register accounts on the instances. If not defined, malicious actors could perform registration using emails addresses from unwanted domains to gain authenticated access to the instance.</description>
+        <documentation_url>https://docs.servicenow.com/csh?topicname=sc-external-user-registration-email-domain-allowlist.html&amp;version=latest</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>External User Registration is not restricted to any Domain</name>
+        <priority>2</priority>
+        <resolution_details>nsure the property "sn_ext_usr_reg.allowed_email_domains" is not set to an empty value.</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_d03647ca83491610c1321429feaad3cc','')=='' &amp;&amp; GlidePluginManager.isActive('com.snc.external_user_self_registration')</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function(engine) {
+      
+	var _strPropertyName = 'sn_ext_usr_reg.allowed_email_domains';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+	
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+		
+		_hasFinding = 
+			_strPropertyType !== 'string' || 
+			_strPropertyValue === '';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+		
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+		
+		engine.finding.increment();		
+	}
+	
+})(engine);
+]]></script>
+        <short_description>External User Registration is not restricted to any Domain</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-06 13:15:22</sys_created_on>
+        <sys_id>d03647ca83491610c1321429feaad3cc</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>External User Registration is not restricted to any Domain</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_d03647ca83491610c1321429feaad3cc</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-06 13:16:06</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=d03647ca83491610c1321429feaad3cc"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>d03647ca83491610c1321429feaad3cc</id>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2024-10-06 13:15:51</sys_created_on>
+        <sys_id>df4687ca83491610c1321429feaad3c7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-10-06 13:15:51</sys_updated_on>
+        <table>scan_script_only_check</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>If the property "glide.ui.attachment.force_download_all_mime_types" is not set to true, then the "glide.ui.attachment.download_mime_types" property will be overridden so that all MIME types will be downloaded rather than rendered by the browser. For example, downloading text/html forces an HTML file to be downloaded to the client as a file rather than viewed inline in the browser, preventing a XSS attack. The ability to have XSS can lead to easily attained privilege escalation to higher roles such as admin where more lateral movement can be taken.</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=force-download-mime-types.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>Force Downloading all Mime Types is disabled</name>
+        <priority>2</priority>
+        <resolution_details>Ensure the property "glide.ui.attachment.force_download_all_mime_types" is set to "true".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_9ad418971b36191058200fa7624bcb67','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.ui.attachment.force_download_all_mime_types';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = true;
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+	else {
+		engine.finding.setValue(
+			'finding_details', 
+			'System Property "' + _strPropertyName + '" does not exist'
+		);
+	}
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+
+		engine.finding.increment();		
+	}
+})(engine);]]></script>
+        <short_description>Force Downloading all Mime Types is disabled</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2022-11-01 12:38:13</sys_created_on>
+        <sys_id>9ad418971b36191058200fa7624bcb67</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Force Downloading all Mime Types is disabled</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_9ad418971b36191058200fa7624bcb67</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 14:35:18</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=9ad418971b36191058200fa7624bcb67"/>
+</record_update>

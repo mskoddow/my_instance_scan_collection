@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>user_experience</category>
+        <description>SMTP 'Email Account' records' 'From' field [sys_email_account.from] value is used as the email address when sending email from this account.  If this value is empty, then the User name will be used as the return address for notifications sent from the instance.  It is best practice to include a valid email in the 'From' field.  This check is marked as 2-High because email sending from this account will fail if:
+- The 'From' field [sys_email_account.from] contains an invalid email address
+- The 'From' field [sys_email_account.from] is empty an invalid email address is used as the User name [sys_email_account.user_name] 
+
+</description>
+        <documentation_url>https://docs.servicenow.com/csh?version=latest&amp;topicname=t_ConfigureAnEmailAccount.html</documentation_url>
+        <finding_type>scan_finding</finding_type>
+        <name>SMTP Sender Email Address is not valid or missing</name>
+        <priority>2</priority>
+        <resolution_details>Best practice is to enter a valid email address for the 'From' field of the SMTP 'Email Account' record [sys_email_account.from]</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_717629ae97053110b05bb08fe153afb8','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _isBadFromEmailAddress = false;
+    var _grEmailAccount        = new GlideRecord("sys_email_account");
+
+    _grEmailAccount.addActiveQuery();
+    _grEmailAccount.addEncodedQuery("type=smtp");
+    _grEmailAccount.query();
+
+    while (_grEmailAccount.next()) {
+
+        //check if 'from' is empty
+        var _strFromEmailAddress = _grEmailAccount.from;
+        
+        if (!_strFromEmailAddress || _strFromEmailAddress.trim().length <= 0) {
+            _isBadFromEmailAddress = true;
+        }
+
+        //check if 'from' is an invalid email address
+        var _regExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (!_regExp.test(_strFromEmailAddress)) {
+            _isBadFromEmailAddress = true;
+        }
+
+        if (_isBadFromEmailAddress) {
+            engine.finding.setCurrentSource(sysEc);
+            engine.finding.increment();
+        }
+    }
+
+})(engine);]]></script>
+        <short_description>SMTP Sender Email Address is not valid or missing</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2023-09-06 03:11:47</sys_created_on>
+        <sys_id>717629ae97053110b05bb08fe153afb8</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>SMTP Sender Email Address is not valid or missing</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_717629ae97053110b05bb08fe153afb8</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2024-01-14 11:47:37</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=717629ae97053110b05bb08fe153afb8"/>
+</record_update>
