@@ -1,1 +1,1 @@
-# my_instance_scan_collection
+This application contains several hundred hand-picked and completely newly developed instance scan checks. They focus purely on basic platform and security aspects and are therefore ideal for hardening a freshly provisioned instance. I have also added some additional features to make using Instance Scan Checks more convenient.
