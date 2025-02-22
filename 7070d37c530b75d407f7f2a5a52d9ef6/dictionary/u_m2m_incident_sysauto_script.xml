@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><database>
-    <element db_object_id="48c657e983871610c1321429feaad337" label="u_m2m_Incidents_Scheduled Script Executions" max_length="40" name="u_m2m_incident_sysauto_script" type="collection">
-        <element label="Test" name="sysauto_script" reference="sysauto_script" type="reference"/>
-    </element>
-</database>
