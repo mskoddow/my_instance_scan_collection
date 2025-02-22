@@ -21,18 +21,18 @@ In addition to the instance scan checks, this application provides several extra
 
 To install this application, follow these steps:
 
-1. Fork the repository using the instructions provided at https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo.
+1. Fork the repository using the instructions provided [in the GitHub documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo).
 
    Tip: A clone is generally not required because tools like the ServiceNow Studio can connect to and work with remote repositories.
-2. Link and import the forked repository into ServiceNow by following the instructions in the great article at https://jessems.com/posts/2024-03-21-linking-a-servicenow-app-in-studio-to-a-github-repository.
+2. Link and import the forked repository into ServiceNow by following the instructions in [a great article by Jesse](https://jessems.com/posts/2024-03-21-linking-a-servicenow-app-in-studio-to-a-github-repository).
 
 ## Usage
 
-Once the application is imported into your ServiceNow instance, you can access the instance scan checks and prebuilt scan suites through the ServiceNow interface. Detailed usage instructions are available in the ServiceNow documentation pages at https://www.servicenow.com/docs/csh?topicname=hs-using-scans.html&version=latest.
+Once the application is imported into your ServiceNow instance, you can access the instance scan checks and prebuilt scan suites through the ServiceNow interface. Detailed usage instructions are available [in the ServiceNow documentation pages](https://www.servicenow.com/docs/csh?topicname=hs-using-scans.html&version=latest).
 
 ## Troubleshooting
 
-If you encounter any issues with the application, you can ...
+If you encounter any issues with the application, you can [create an issue](https://github.com/mskoddow/my_instance_scan_collection/issues)
 
 ## Contributing
 
@@ -40,4 +40,4 @@ I welcome contributions to improve this application and extend the collection wi
 
 ## License
 
-This project is licensed under the "GNU General Public License v3.0". See the LICENSE file for more details.
+This project is licensed under the "GNU General Public License v3.0". See the [LICENSE file](https://github.com/mskoddow/my_instance_scan_collection/blob/master/LICENSE) for more details.
