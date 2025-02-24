@@ -6,7 +6,7 @@ This repository contains a custom application for ServiceNow called **My Instanc
 
 - **Platform Security**: Checks to ensure that the platform is configured securely.
 - **Data Integrity**: Checks to ensure that the data within the platform is consistent and reliable.
-- **Performance Optimization**: Checks to identify and rectify performance bottlenecks.
+- **Implementation**: Checks to identify deviations from the development recommendations.
 - **Compliance**: Checks to ensure that the platform adheres to relevant compliance standards.
 
 ## Additional Functionalities
@@ -29,6 +29,10 @@ To install this application, follow these steps:
 ## Usage
 
 Once the application is imported into your ServiceNow instance, you can access the instance scan checks and prebuilt scan suites through the ServiceNow interface. Detailed usage instructions are available [in the ServiceNow documentation pages](https://www.servicenow.com/docs/csh?topicname=hs-using-scans.html&version=latest).
+
+Each check can be used individually or transferred to other applications or suites, as there are no central or external dependencies, such as script includes.
+
+In order to deactivate checks without touching them, I have built a condition into all checks which verifies whether a value exists for an related system property (consisting of table name and Sys ID). If yes, the condition returns “false” and the check is not executed.
 
 ## Troubleshooting
 
