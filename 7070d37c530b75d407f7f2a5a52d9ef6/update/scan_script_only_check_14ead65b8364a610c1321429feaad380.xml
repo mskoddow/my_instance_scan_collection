@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scan_script_only_check">
+    <scan_script_only_check action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>security</category>
+        <description>This property determines whether an instance will allow an un-authenticated user to run a UI macro. If "glide.ui.ng.authenticate_before_process" is not set to the recommended value of "true", then it will allow an unauthenticated user to run a UI macro. The default value of this property applies to releases up to and including Utah, the default is changed in future release versions.</description>
+        <documentation_url/>
+        <finding_type>scan_finding</finding_type>
+        <name>Running UI Macros for an unauthenticated Users is possible</name>
+        <priority>1</priority>
+        <resolution_details>Ensure the property "glide.ui.ng.authenticate_before_process" does not exist inthe "sys_properties table" or exists in the "sys_properties" table and is set to "true".</resolution_details>
+        <run_condition>gs.getProperty('scan_script_only_check_14ead65b8364a610c1321429feaad380','')==''</run_condition>
+        <score_max>100</score_max>
+        <score_min>0</score_min>
+        <score_scale>1</score_scale>
+        <script><![CDATA[(function (engine) {
+
+	var _strPropertyName = 'glide.ui.ng.authenticate_before_process';
+	var _grProperty      = new GlideRecord('sys_properties');
+	var _hasFinding      = false;
+
+	if (_grProperty.get('name', _strPropertyName)) {		
+		var _strPropertyType  = String(_grProperty.getValue('type') || '').toLowerCase().trim();
+		var _strPropertyValue = String(_grProperty.getValue('value') || '').toLowerCase().trim();
+
+		_hasFinding = 
+			!(_strPropertyType == 'boolean' || _strPropertyType == 'string') || 
+			_strPropertyValue !== 'true';
+	}
+
+	if (_hasFinding) {
+		if (_grProperty.isValidRecord()) {
+			engine.finding.setCurrentSource(_grProperty);
+		}
+
+		engine.finding.increment();		
+	}
+
+})(engine);
+]]></script>
+        <short_description>Running UI Macros for an unauthenticated Users is possible</short_description>
+        <sys_class_name>scan_script_only_check</sys_class_name>
+        <sys_created_by>maik.skoddow</sys_created_by>
+        <sys_created_on>2025-04-02 06:58:19</sys_created_on>
+        <sys_id>14ead65b8364a610c1321429feaad380</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Running UI Macros for an unauthenticated Users is possible</sys_name>
+        <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
+        <sys_update_name>scan_script_only_check_14ead65b8364a610c1321429feaad380</sys_update_name>
+        <sys_updated_by>maik.skoddow</sys_updated_by>
+        <sys_updated_on>2025-04-02 07:00:39</sys_updated_on>
+    </scan_script_only_check>
+    <sys_translated_text action="delete_multiple" query="documentkey=14ead65b8364a610c1321429feaad380"/>
+</record_update>

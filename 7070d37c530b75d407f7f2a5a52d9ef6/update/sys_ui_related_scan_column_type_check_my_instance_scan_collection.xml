@@ -8,11 +8,11 @@
             <related_list>scan_check_suite_check.check</related_list>
             <sys_class_name>sys_ui_related_list_entry</sys_class_name>
             <sys_created_by>maik.skoddow</sys_created_by>
-            <sys_created_on>2023-12-12 04:06:49</sys_created_on>
-            <sys_id>954511316b8775507608fb893c63fb96</sys_id>
+            <sys_created_on>2025-04-02 06:13:40</sys_created_on>
+            <sys_id>1ea09a5b8324a610c1321429feaad382</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>maik.skoddow</sys_updated_by>
-            <sys_updated_on>2023-12-12 04:06:49</sys_updated_on>
+            <sys_updated_on>2025-04-02 06:13:40</sys_updated_on>
         </sys_ui_related_list_entry>
         <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
             <filter/>
@@ -22,11 +22,11 @@
             <related_list>scan_finding.check</related_list>
             <sys_class_name>sys_ui_related_list_entry</sys_class_name>
             <sys_created_by>maik.skoddow</sys_created_by>
-            <sys_created_on>2023-12-12 04:06:49</sys_created_on>
-            <sys_id>9d4511316b8775507608fb893c63fb96</sys_id>
+            <sys_created_on>2025-04-02 06:13:40</sys_created_on>
+            <sys_id>12a09a5b8324a610c1321429feaad383</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>maik.skoddow</sys_updated_by>
-            <sys_updated_on>2023-12-12 04:06:49</sys_updated_on>
+            <sys_updated_on>2025-04-02 06:13:40</sys_updated_on>
         </sys_ui_related_list_entry>
         <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
             <filter/>
@@ -36,11 +36,11 @@
             <related_list>REL:a417da0c533233004733ddeeff7b12f6</related_list>
             <sys_class_name>sys_ui_related_list_entry</sys_class_name>
             <sys_created_by>maik.skoddow</sys_created_by>
-            <sys_created_on>2023-12-12 04:06:49</sys_created_on>
-            <sys_id>914511316b8775507608fb893c63fb97</sys_id>
+            <sys_created_on>2025-04-02 06:13:40</sys_created_on>
+            <sys_id>16a09a5b8324a610c1321429feaad383</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>maik.skoddow</sys_updated_by>
-            <sys_updated_on>2023-12-12 04:06:49</sys_updated_on>
+            <sys_updated_on>2025-04-02 06:13:40</sys_updated_on>
         </sys_ui_related_list_entry>
         <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
             <filter/>
@@ -50,11 +50,11 @@
             <related_list>REL:df364130c3110100bac1addbdfba8f78</related_list>
             <sys_class_name>sys_ui_related_list_entry</sys_class_name>
             <sys_created_by>maik.skoddow</sys_created_by>
-            <sys_created_on>2023-12-12 04:06:49</sys_created_on>
-            <sys_id>954511316b8775507608fb893c63fb97</sys_id>
+            <sys_created_on>2025-04-02 06:13:40</sys_created_on>
+            <sys_id>1aa09a5b8324a610c1321429feaad383</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>maik.skoddow</sys_updated_by>
-            <sys_updated_on>2023-12-12 04:06:49</sys_updated_on>
+            <sys_updated_on>2025-04-02 06:13:40</sys_updated_on>
         </sys_ui_related_list_entry>
         <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
             <filter/>
@@ -64,11 +64,11 @@
             <related_list>REL:67bdac52374010008687ddb1967334ee</related_list>
             <sys_class_name>sys_ui_related_list_entry</sys_class_name>
             <sys_created_by>maik.skoddow</sys_created_by>
-            <sys_created_on>2023-12-12 04:06:49</sys_created_on>
-            <sys_id>994511316b8775507608fb893c63fb97</sys_id>
+            <sys_created_on>2025-04-02 06:13:40</sys_created_on>
+            <sys_id>1ea09a5b8324a610c1321429feaad383</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>maik.skoddow</sys_updated_by>
-            <sys_updated_on>2023-12-12 04:06:49</sys_updated_on>
+            <sys_updated_on>2025-04-02 06:13:40</sys_updated_on>
         </sys_ui_related_list_entry>
         <sys_ui_related_list action="INSERT_OR_UPDATE">
             <calculated_name>Column Type Check - My Instance Scan Collection</calculated_name>
@@ -79,18 +79,18 @@
             <related_list/>
             <sys_class_name>sys_ui_related_list</sys_class_name>
             <sys_created_by>maik.skoddow</sys_created_by>
-            <sys_created_on>2023-12-12 04:06:48</sys_created_on>
+            <sys_created_on>2025-04-02 06:13:40</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>554511316b8775507608fb893c63fb94</sys_id>
-            <sys_mod_count>2</sys_mod_count>
+            <sys_mod_count>0</sys_mod_count>
             <sys_name>Column Type Check - My Instance Scan Collection</sys_name>
             <sys_package display_value="My Instance Scan Collection" source="7070d37c530b75d407f7f2a5a52d9ef6">7070d37c530b75d407f7f2a5a52d9ef6</sys_package>
             <sys_policy/>
             <sys_scope display_value="My Instance Scan Collection">7070d37c530b75d407f7f2a5a52d9ef6</sys_scope>
             <sys_update_name>sys_ui_related_scan_column_type_check_my_instance_scan_collection</sys_update_name>
             <sys_updated_by>maik.skoddow</sys_updated_by>
-            <sys_updated_on>2025-02-22 03:56:06</sys_updated_on>
+            <sys_updated_on>2025-04-02 06:13:40</sys_updated_on>
             <sys_user/>
             <view display_value="My Instance Scan Collection" name="my_instance_scan_collection">bd6a9e3d6b4b75507608fb893c63fb41</view>
             <view_name/>
