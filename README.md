@@ -26,6 +26,8 @@ To install this application, follow these steps:
    Tip: A clone is generally not required because tools like the ServiceNow Studio can connect to and work with remote repositories.
 2. Link and import the forked repository into ServiceNow by following the instructions in [a great article by Jesse](https://jessems.com/posts/2024-03-21-linking-a-servicenow-app-in-studio-to-a-github-repository).
 
+   Hint: As the new ServiceNow Studio still has no Git capabilities you have to do perform all Git-based activities in the legacy Studio.
+
 ## Usage
 
 Once the application is imported into your ServiceNow instance, you can access the instance scan checks and prebuilt scan suites through the ServiceNow interface. Detailed usage instructions are available [in the ServiceNow documentation pages](https://www.servicenow.com/docs/csh?topicname=hs-using-scans.html&version=latest).
